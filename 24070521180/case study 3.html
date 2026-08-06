@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Scholarship Checker</title>
+<style>
+  body { font-family: Arial; background: #f0f0f0; padding: 20px; }
+  input, button { padding: 8px; margin-top: 10px; width: 200px; }
+  #result { margin-top: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+<h2>Pratyaam Sinha (24070521180)</h2>
+<input type="number" id="marks" placeholder="Enter marks (0-100)" min="0" max="100">
+<button onclick="checkScholarship()">Check</button>
+<div id="result"></div>
+<script>
+function checkScholarship() {
+  const m = parseInt(document.getElementById('marks').value);
+  let msg = "";
+  if (isNaN(m)) { msg = "Please enter valid marks."; }
+  else if (m < 50) { msg = "Not eligible"; }
+  else if (m <= 69) { msg = "Bronze Scholarship"; }
+  else if (m <= 84) { msg = "Silver Scholarship"; }
+  else if (m <= 94) { msg = "Gold Scholarship"; }
+  else { msg = "Platinum Scholarship"; }
+  document.getElementById('result').innerText = msg;
+}
+</script>
+</body>
+</html>

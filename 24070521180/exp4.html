@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Palindrome Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9e2ff; /* Pastel purple */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #ff69b4; /* Pastel pink */
+      text-align: center;
+    }
+    .container {
+      background-color: #fff0f5; /* Pastel pinkish white */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 300px;
+      width: 100%;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      background-color: #87cefa; /* Pastel blue */
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00bfff; /* Bright blue on hover */
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h1>PRATYAAM (24070521180)</h1>
+<div class="container">
+  <input type="text" id="inputString" placeholder="Enter text">
+  <button onclick="checkPalindrome()">Check Palindrome</button>
+  <div id="result"></div>
+</div>
+
+<script>
+function checkPalindrome() {
+  const str = document.getElementById('inputString').value.trim().toLowerCase();
+  const reversed = str.split('').reverse().join('');
+  const resultDiv = document.getElementById('result');
+
+  if (str === "") {
+    resultDiv.innerText = "Please enter some text.";
+    return;
+  }
+
+  if (str === reversed) {
+    resultDiv.innerText = `"${str}" is a Palindrome!`;
+    resultDiv.style.color = "green";
+  } else {
+    resultDiv.innerText = `"${str}" is not a Palindrome.`;
+    resultDiv.style.color = "red";
+  }
+}
+</script>
+
+</body>
+</html>

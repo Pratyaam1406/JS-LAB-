@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pratyaam Sinha (24070521180)</title>
+    <style>
+        body {
+            background-color: #e0f7fa; /* pastel cyan/light blue */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #1a5cff;
+        }
+        .checker {
+            max-width: 500px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1a5cff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0d3fb0;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Student Scholarship Checker</h1>
+
+<div class="checker">
+    <form id="gradeForm">
+        <label for="grade1">Subject 1 Grade:</label>
+        <select id="grade1" required>
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+        </select>
+
+        <label for="grade2">Subject 2 Grade:</label>
+        <select id="grade2" required>
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+        </select>
+
+        <label for="grade3">Subject 3 Grade:</label>
+        <select id="grade3" required>
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+        </select>
+
+        <button type="button" onclick="checkScholarship()">Check Scholarship Eligibility</button>
+    </form>
+    <div id="result"></div>
+</div>
+
+<script>
+    function checkScholarship() {
+        const grades = [
+            document.getElementById('grade1').value,
+            document.getElementById('grade2').value,
+            document.getElementById('grade3').value
+        ];
+
+        // Convert grades to scores
+        const gradePoints = {
+            'A': 4,
+            'B': 3,
+            'C': 2,
+            'D': 1,
+            'F': 0
+        };
+
+        let totalPoints = 0;
+        let subjectCount = grades.length;
+        let eligible = true;
+
+        for (let grade of grades) {
+            if (grade === "") {
+                alert("Please select all grades.");
+                return;
+            }
+            totalPoints += gradePoints[grade];
+            if (grade === 'F') {
+                eligible = false;
+            }
+        }
+
+        const average = totalPoints / subjectCount;
+
+        // Define criteria for scholarship
+        if (average >= 3.5 && eligible) {
+            document.getElementById('result').innerText = "Congratulations! You are eligible for the scholarship.";
+            document.getElementById('result').style.color = "green";
+        } else {
+            document.getElementById('result').innerText = "Sorry, you are not eligible for the scholarship.";
+            document.getElementById('result').style.color = "red";
+        }
+    }
+</script>
+
+</body>
+</html>

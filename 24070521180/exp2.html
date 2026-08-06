@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pratyaam Sinha</title>
+    <style>
+        body {
+            background-color: #f0f8ff; /* pastel background */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #1af0ff;
+        }
+        .calculator {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        label {
+            width: 45%;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 50%;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        #total {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: right;
+            color: #333;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #1abeff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0d8fb0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Billing Calculator</h1>
+
+<div class="calculator">
+    <div class="item">
+        <label for="item1-price">Item 1 Price:</label>
+        <input type="number" id="item1-price" placeholder="Enter price" min="0" step="0.01">
+    </div>
+    <div class="item">
+        <label for="item1-quantity">Item 1 Quantity:</label>
+        <input type="number" id="item1-quantity" placeholder="Enter quantity" min="0" step="1">
+    </div>
+    <div class="item">
+        <label for="item2-price">Item 2 Price:</label>
+        <input type="number" id="item2-price" placeholder="Enter price" min="0" step="0.01">
+    </div>
+    <div class="item">
+        <label for="item2-quantity">Item 2 Quantity:</label>
+        <input type="number" id="item2-quantity" placeholder="Enter quantity" min="0" step="1">
+    </div>
+    <div class="item">
+        <label for="item3-price">Item 3 Price:</label>
+        <input type="number" id="item3-price" placeholder="Enter price" min="0" step="0.01">
+    </div>
+    <div class="item">
+        <label for="item3-quantity">Item 3 Quantity:</label>
+        <input type="number" id="item3-quantity" placeholder="Enter quantity" min="0" step="1">
+    </div>
+
+    <button onclick="calculateTotal()">Calculate Total</button>
+
+    <div id="total">Total: $0.00</div>
+</div>
+
+<script>
+    function calculateTotal() {
+        const items = [
+            { priceId: 'item1-price', qtyId: 'item1-quantity' },
+            { priceId: 'item2-price', qtyId: 'item2-quantity' },
+            { priceId: 'item3-price', qtyId: 'item3-quantity' }
+        ];
+
+        let total = 0;
+
+        items.forEach(item => {
+            const price = parseFloat(document.getElementById(item.priceId).value) || 0;
+            const qty = parseInt(document.getElementById(item.qtyId).value) || 0;
+            total += price * qty;
+        });
+
+        document.getElementById('total').innerText = 'Total: $' + total.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
