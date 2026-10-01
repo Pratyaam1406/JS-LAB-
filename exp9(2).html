@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-density="comfortable">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Storage Preferences Manager</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Inter & JetBrains Mono Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Inline FOUC Prevention Script Execution (Real-World Best Practice) -->
+  <script>
+    (function() {
+      try {
+        const targetStorage = localStorage.getItem('pref_storage_mode') === 'session' ? sessionStorage : localStorage;
+        const savedSettings = targetStorage.getItem('user_app_preferences');
+        if (savedSettings) {
+          const prefs = JSON.parse(savedSettings);
+          if (prefs.theme) document.documentElement.setAttribute('data-theme', prefs.theme);
+          if (prefs.density) document.documentElement.setAttribute('data-density', prefs.density);
+          if (prefs.fontSize) document.documentElement.style.setProperty('--user-font-size', prefs.fontSize + 'px');
+          if (prefs.accentColor) {
+            document.documentElement.style.setProperty('--accent-color', prefs.accentColor);
+            document.documentElement.style.setProperty('--accent-hover', prefs.accentColor + 'dd');
+          }
+        }
+      } catch (e) {
+        console.warn('FOUC Script fallback error:', e);
+      }
+    })();
+  </script>
+
+  <style>
+    /* Base Font Family */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    code, pre {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* CSS Theme Variable Definitions */
+    :root[data-theme="light"] {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-color: #3b82f6;
+      --accent-hover: #2563eb;
+      --shadow-color: rgba(15, 23, 42, 0.08);
+      --badge-bg: #e0f2fe;
+      --badge-text: #0369a1;
+    }
+
+    :root[data-theme="dark"] {
+      --bg-main: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-subtle: #0f172a;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --accent-color: #6366f1;
+      --accent-hover: #4f46e5;
+      --shadow-color: rgba(0, 0, 0, 0.35);
+      --badge-bg: #312e81;
+      --badge-text: #c7d2fe;
+    }
+
+    :root[data-theme="high-contrast"] {
+      --bg-main: #000000;
+      --bg-card: #0d0d0d;
+      --bg-card-subtle: #1a1a1a;
+      --text-main: #ffffff;
+      --text-muted: #d1d5db;
+      --border-color: #ffffff;
+      --accent-color: #facc15;
+      --accent-hover: #eab308;
+      --shadow-color: rgba(255, 255, 255, 0.2);
+      --badge-bg: #facc15;
+      --badge-text: #000000;
+    }
+
+    :root[data-theme="cyberpunk"] {
+      --bg-main: #0d0221;
+      --bg-card: #190a38;
+      --bg-card-subtle: #260c52;
+      --text-main: #00f0ff;
+      --text-muted: #ff70a6;
+      --border-color: #ff007f;
+      --accent-color: #ff007f;
+      --accent-hover: #d6006b;
+      --shadow-color: rgba(255, 0, 127, 0.3);
+      --badge-bg: #ff007f;
+      --badge-text: #ffffff;
+    }
+
+    /* Font Size Dynamic Property */
+    :root {
+      --user-font-size: 16px;
+    }
+
+    /* Applied Dynamic Theme Classes */
+    .themed-bg { background-color: var(--bg-main); }
+    .themed-card { 
+      background-color: var(--bg-card); 
+      border-color: var(--border-color);
+      box-shadow: 0 4px 20px -2px var(--shadow-color);
+    }
+    .themed-card-subtle { background-color: var(--bg-card-subtle); border-color: var(--border-color); }
+    .themed-text { color: var(--text-main); }
+    .themed-text-muted { color: var(--text-muted); }
+    .themed-border { border-color: var(--border-color); }
+
+    /* Density Configurations */
+    :root[data-density="comfortable"] .density-padding { padding: 1.5rem; }
+    :root[data-density="comfortable"] .density-gap { gap: 1.25rem; }
+    :root[data-density="comfortable"] .density-input { padding: 0.625rem 1rem; }
+
+    :root[data-density="compact"] .density-padding { padding: 0.875rem; }
+    :root[data-density="compact"] .density-gap { gap: 0.625rem; }
+    :root[data-density="compact"] .density-input { padding: 0.375rem 0.625rem; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    /* Accent Dynamic Style Utility */
+    .btn-accent {
+      background-color: var(--accent-color);
+      color: #ffffff;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    .btn-accent:hover {
+      background-color: var(--accent-hover);
+    }
+    :root[data-theme="high-contrast"] .btn-accent {
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .badge-accent {
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+    }
+
+    /* Pulse Notification Animation */
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .flash-update {
+      animation: pulse-subtle 0.6s ease-in-out;
+    }
+  </style>
+</head>
+<body class="themed-bg themed-text min-h-screen pb-12 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <header class="themed-card border-b sticky top-0 z-50 backdrop-blur-md bg-opacity-90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="p-2.5 rounded-xl btn-accent flex items-center justify-center shadow-lg">
+          <i class="fa-solid me-0 fa-database text-lg"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight tracking-tight">Web Storage Preferences Lab</h1>
+          <p class="text-xs themed-text-muted">Interactive LocalStorage vs SessionStorage Explorer</p>
+        </div>
+      </div>
+
+      <!-- Storage Selector Toggle -->
+      <div class="flex items-center bg-black/10 dark:bg-white/5 p-1 rounded-xl border themed-border">
+        <button id="btn-target-local" onclick="setStorageMode('local')" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200">
+          <i class="fa-solid fa-hard-drive"></i>
+          <span>Local Storage</span>
+          <span class="ml-1 px-1.5 py-0.5 text-[10px] rounded-full bg-blue-500/20 text-blue-400">Persists</span>
+        </button>
+        <button id="btn-target-session" onclick="setStorageMode('session')" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200">
+          <i class="fa-solid fa-clock"></i>
+          <span>Session Storage</span>
+          <span class="ml-1 px-1.5 py-0.5 text-[10px] rounded-full bg-amber-500/20 text-amber-400">Tab Only</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notification Toast Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    
+    <!-- Top Information Banner -->
+    <div class="mb-6 p-4 rounded-2xl themed-card-subtle border themed-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="flex items-start space-x-3">
+        <i class="fa-solid fa-circle-info text-sky-400 text-xl mt-0.5"></i>
+        <div>
+          <h2 class="text-sm font-semibold">Active Storage Target: <span id="active-storage-name" class="text-indigo-400 font-bold">LocalStorage</span></h2>
+          <p id="active-storage-desc" class="text-xs themed-text-muted mt-0.5">
+            Data will persist across browser restarts, tab closures, and page reloads.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2 w-full md:w-auto justify-end">
+        <button onclick="triggerMultiTabSyncTest()" class="px-3 py-1.5 rounded-lg text-xs font-medium border themed-border hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-arrows-rotate text-indigo-400"></i>
+          <span>Broadcast Sync Test</span>
+        </button>
+        <button onclick="resetToDefaults()" class="px-3 py-1.5 rounded-lg text-xs font-medium text-red-400 border border-red-500/20 hover:bg-red-500/10 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span>Reset Defaults</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- COLUMN 1: CONTROL PANEL (4 cols) -->
+      <section class="lg:col-span-4 space-y-6">
+        <div class="themed-card rounded-2xl density-padding border themed-border space-y-5">
+          <div class="flex items-center justify-between border-b themed-border pb-3">
+            <h2 class="font-bold text-base flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-indigo-400"></i> Preference Controls
+            </h2>
+            <span class="text-[11px] px-2 py-0.5 rounded-md themed-card-subtle font-mono text-muted">JSON Config</span>
+          </div>
+
+          <!-- 1. Theme Selection -->
+          <div class="space-y-2">
+            <label class="text-xs font-semibold uppercase tracking-wider text-muted flex items-center justify-between">
+              <span>Theme Mode</span>
+              <span id="label-current-theme" class="text-indigo-400 normal-case font-mono text-xs">Dark</span>
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="updateTheme('light')" class="theme-opt-btn flex items-center space-x-2 p-2.5 rounded-xl border themed-border hover:border-indigo-500 transition text-xs font-medium text-left">
+                <i class="fa-solid fa-sun text-amber-500"></i>
+                <span>Light</span>
+              </button>
+              <button onclick="updateTheme('dark')" class="theme-opt-btn flex items-center space-x-2 p-2.5 rounded-xl border themed-border hover:border-indigo-500 transition text-xs font-medium text-left">
+                <i class="fa-solid fa-moon text-indigo-400"></i>
+                <span>Dark</span>
+              </button>
+              <button onclick="updateTheme('high-contrast')" class="theme-opt-btn flex items-center space-x-2 p-2.5 rounded-xl border themed-border hover:border-indigo-500 transition text-xs font-medium text-left">
+                <i class="fa-solid fa-circle-half-stroke text-yellow-400"></i>
+                <span>High Contrast</span>
+              </button>
+              <button onclick="updateTheme('cyberpunk')" class="theme-opt-btn flex items-center space-x-2 p-2.5 rounded-xl border themed-border hover:border-indigo-500 transition text-xs font-medium text-left">
+                <i class="fa-solid fa-bolt text-pink-500"></i>
+                <span>Cyberpunk</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Accent Color Palette -->
+          <div class="space-y-2">
+            <label class="text-xs font-semibold uppercase tracking-wider text-muted flex items-center justify-between">
+              <span>Accent Color</span>
+              <span id="label-current-accent" class="text-indigo-400 font-mono text-xs">#6366f1</span>
+            </label>
+            <div class="flex items-center justify-between gap-2">
+              <button onclick="updateAccent('#3b82f6')" title="Blue" class="w-9 h-9 rounded-full bg-blue-500 hover:scale-110 transition-transform ring-2 ring-offset-2 ring-transparent focus:ring-blue-500"></button>
+              <button onclick="updateAccent('#6366f1')" title="Indigo" class="w-9 h-9 rounded-full bg-indigo-500 hover:scale-110 transition-transform ring-2 ring-offset-2 ring-transparent focus:ring-indigo-500"></button>
+              <button onclick="updateAccent('#10b981')" title="Emerald" class="w-9 h-9 rounded-full bg-emerald-500 hover:scale-110 transition-transform ring-2 ring-offset-2 ring-transparent focus:ring-emerald-500"></button>
+              <button onclick="updateAccent('#f43f5e')" title="Rose" class="w-9 h-9 rounded-full bg-rose-500 hover:scale-110 transition-transform ring-2 ring-offset-2 ring-transparent focus:ring-rose-500"></button>
+              <button onclick="updateAccent('#f59e0b')" title="Amber" class="w-9 h-9 rounded-full bg-amber-500 hover:scale-110 transition-transform ring-2 ring-offset-2 ring-transparent focus:ring-amber-500"></button>
+              <button onclick="updateAccent('#a855f7')" title="Purple" class="w-9 h-9 rounded-full bg-purple-500 hover:scale-110 transition-transform ring-2 ring-offset-2 ring-transparent focus:ring-purple-500"></button>
+            </div>
+          </div>
+
+          <!-- 3. Font Size Range -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-semibold uppercase tracking-wider text-muted">Font Size (px)</label>
+              <span id="font-size-display" class="font-mono text-xs text-indigo-400 font-semibold">16px</span>
+            </div>
+            <input type="range" id="input-font-size" min="12" max="22" step="1" value="16" 
+                   oninput="updateFontSize(this.value)"
+                   class="w-full accent-indigo-500 cursor-pointer h-2 bg-black/20 dark:bg-white/10 rounded-lg">
+            <div class="flex justify-between text-[10px] themed-text-muted font-mono">
+              <span>Small (12px)</span>
+              <span>Medium (16px)</span>
+              <span>Large (22px)</span>
+            </div>
+          </div>
+
+          <!-- 4. Layout Density -->
+          <div class="space-y-2">
+            <label class="text-xs font-semibold uppercase tracking-wider text-muted">Layout Density</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button id="btn-density-comfortable" onclick="updateDensity('comfortable')" class="p-2 rounded-xl border themed-border text-xs font-medium transition flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-expand"></i>
+                <span>Comfortable</span>
+              </button>
+              <button id="btn-density-compact" onclick="updateDensity('compact')" class="p-2 rounded-xl border themed-border text-xs font-medium transition flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-compress"></i>
+                <span>Compact</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Action Control Buttons -->
+          <div class="pt-3 border-t themed-border flex flex-col gap-2">
+            <button onclick="savePreferencesToStorage()" class="btn-accent w-full py-2.5 rounded-xl font-semibold text-sm flex items-center justify-center space-x-2 shadow-md hover:shadow-lg">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span>Save Settings to Storage</span>
+            </button>
+            <button onclick="clearStorageData()" class="w-full py-2 rounded-xl text-xs font-medium border border-red-500/30 text-red-400 hover:bg-red-500/10 transition flex items-center justify-center space-x-2">
+              <i class="fa-solid fa-trash-can"></i>
+              <span>Clear Storage Keys</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- COLUMN 2: LIVE PREVIEW & INSPECTOR (8 cols) -->
+      <section class="lg:col-span-8 space-y-6">
+
+        <!-- Live Component Preview Box -->
+        <div class="themed-card rounded-2xl density-padding border themed-border transition-all duration-300">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b themed-border">
+            <div class="flex items-center space-x-2">
+              <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+              <h2 class="font-bold text-base">Live Preview Component</h2>
+            </div>
+            <span class="badge-accent px-2.5 py-1 rounded-full text-xs font-semibold flex items-center space-x-1">
+              <i class="fa-solid fa-eye text-[10px]"></i>
+              <span>Dynamic Variables Applied</span>
+            </span>
+          </div>
+
+          <!-- Component Dynamic Content Target -->
+          <div id="preview-content-area" class="space-y-4 transition-all" style="font-size: var(--user-font-size);">
+            
+            <div class="p-4 rounded-xl themed-card-subtle border themed-border space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-lg">User Profile Dashboard Card</h3>
+                <span class="px-2 py-0.5 rounded text-xs font-mono badge-accent">Active Status</span>
+              </div>
+              <p class="themed-text-muted text-sm leading-relaxed">
+                This preview element dynamically updates its typography size, color variables, borders, padding density, and accent states directly in response to your storage configurations.
+              </p>
+              
+              <div class="flex flex-wrap gap-2 pt-2">
+                <button class="btn-accent px-4 py-2 rounded-lg text-sm font-medium shadow">
+                  Primary Action
+                </button>
+                <button class="px-4 py-2 rounded-lg text-sm font-medium border themed-border hover:bg-black/5 dark:hover:bg-white/5 transition">
+                  Secondary Action
+                </button>
+                <button class="px-3 py-2 rounded-lg text-xs font-medium border border-dashed themed-border themed-text-muted">
+                  <i class="fa-solid fa-tag mr-1"></i> Label Badge
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats Mini Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="p-3 rounded-xl border themed-border themed-card-subtle flex items-center space-x-3">
+                <div class="p-2.5 rounded-lg btn-accent">
+                  <i class="fa-solid fa-chart-line text-base"></i>
+                </div>
+                <div>
+                  <div class="text-xs themed-text-muted">Total Sessions</div>
+                  <div class="text-lg font-bold">1,284</div>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl border themed-border themed-card-subtle flex items-center space-x-3">
+                <div class="p-2.5 rounded-lg btn-accent">
+                  <i class="fa-solid fa-clock-history text-base"></i>
+                </div>
+                <div>
+                  <div class="text-xs themed-text-muted">Sync Latency</div>
+                  <div class="text-lg font-bold">0.12 ms</div>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl border themed-border themed-card-subtle flex items-center space-x-3">
+                <div class="p-2.5 rounded-lg btn-accent">
+                  <i class="fa-solid fa-shield-halved text-base"></i>
+                </div>
+                <div>
+                  <div class="text-xs themed-text-muted">State Sync</div>
+                  <div class="text-lg font-bold text-emerald-400">Valid</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Storage Inspector & Code Viewer -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Storage Raw Inspector -->
+          <div class="themed-card rounded-2xl density-padding border themed-border flex flex-col h-full">
+            <div class="flex items-center justify-between pb-3 border-b themed-border">
+              <h3 class="font-bold text-sm flex items-center space-x-2">
+                <i class="fa-solid fa-magnifying-glass text-indigo-400"></i>
+                <span>Storage Inspector</span>
+              </h3>
+              <span id="inspector-badge" class="px-2 py-0.5 text-[10px] rounded font-mono bg-indigo-500/20 text-indigo-300">
+                localStorage
+              </span>
+            </div>
+
+            <div class="mt-3 flex-grow space-y-2">
+              <p class="text-xs themed-text-muted">Raw JSON output stored in browser key <code class="text-indigo-400">"user_app_preferences"</code>:</p>
+              <pre id="storage-raw-output" class="bg-black/30 p-3 rounded-xl border themed-border text-xs text-indigo-300 overflow-x-auto min-h-[160px] max-h-[220px]">
+Loading storage data...
+              </pre>
+            </div>
+            <div class="pt-3 border-t themed-border flex items-center justify-between text-xs themed-text-muted">
+              <span>Keys Count: <strong id="storage-key-count" class="themed-text font-mono">0</strong></span>
+              <button onclick="refreshInspectorDisplay()" class="text-indigo-400 hover:underline flex items-center space-x-1">
+                <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                <span>Refresh Raw</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- JavaScript Execution Code Snippet -->
+          <div class="themed-card rounded-2xl density-padding border themed-border flex flex-col h-full">
+            <div class="flex items-center justify-between pb-3 border-b themed-border">
+              <h3 class="font-bold text-sm flex items-center space-x-2">
+                <i class="fa-solid fa-code text-indigo-400"></i>
+                <span>Live JS Syntax Code</span>
+              </h3>
+              <button onclick="copyCodeSnippet()" class="text-xs text-indigo-400 hover:text-indigo-300 flex items-center space-x-1">
+                <i class="fa-regular fa-copy"></i>
+                <span>Copy</span>
+              </button>
+            </div>
+
+            <div class="mt-3 flex-grow space-y-2">
+              <p class="text-xs themed-text-muted">Executed storage commands for current settings:</p>
+              <pre id="js-code-snippet" class="bg-black/30 p-3 rounded-xl border themed-border text-xs text-emerald-400 overflow-x-auto min-h-[160px] max-h-[220px]">
+// Storage operation snippet
+              </pre>
+            </div>
+            <div class="pt-3 border-t themed-border text-[11px] themed-text-muted">
+              <i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i>
+              <span>Note: Storage API only accepts String values. Use <code class="text-indigo-300">JSON.stringify</code>.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- FOUC Prevention Banner Explanation -->
+        <div class="themed-card rounded-2xl density-padding border themed-border space-y-3">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-bolt-lightning text-amber-400 text-lg"></i>
+            <h3 class="font-bold text-sm">Flash of Unstyled Content (FOUC) Prevention Explanation</h3>
+          </div>
+          <p class="text-xs themed-text-muted leading-relaxed">
+            When users set a preferred Dark Mode or custom layout, waiting for external JavaScript files to load causes a bright white flash on boot. 
+            To solve this, a lightweight synchronous inline script is placed in the HTML <code class="text-indigo-400">&lt;head&gt;</code> that reads storage and applies attributes before DOM rendering begins.
+          </p>
+          <div class="bg-black/30 p-3 rounded-xl border themed-border">
+            <pre class="text-[11px] text-sky-300 overflow-x-auto">
+&lt;!-- Placed in &lt;head&gt; before stylesheets render --&gt;
+&lt;script&gt;
+  const prefs = JSON.parse(localStorage.getItem('user_app_preferences') || '{}');
+  if (prefs.theme) document.documentElement.setAttribute('data-theme', prefs.theme);
+&lt;/script&gt;</pre>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // --- STATE MANAGEMENT ---
+    let storageMode = 'local'; // 'local' | 'session'
+    
+    // Default Fallback Settings
+    const defaultSettings = {
+      theme: 'dark',
+      accentColor: '#6366f1',
+      fontSize: 16,
+      density: 'comfortable'
+    };
+
+    // Current Active State Memory
+    let currentPreferences = { ...defaultSettings };
+
+    const STORAGE_KEY = 'user_app_preferences';
+    const MODE_KEY = 'pref_storage_mode';
+
+    // Helper: Resolve active storage instance
+    function getActiveStorage() {
+      return storageMode === 'session' ? sessionStorage : localStorage;
+    }
+
+    // --- INITIALIZATION ---
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Detect saved storage mode choice
+      const savedMode = localStorage.getItem(MODE_KEY);
+      if (savedMode === 'session' || savedMode === 'local') {
+        storageMode = savedMode;
+      }
+
+      // 2. Load stored settings or default
+      loadPreferencesFromStorage();
+
+      // 3. Setup window storage event listener (Cross-Tab Syncing)
+      window.addEventListener('storage', handleCrossTabStorageChange);
+
+      updateUIElements();
+      showToast(`Loaded preferences from ${storageMode === 'local' ? 'LocalStorage' : 'SessionStorage'}`, 'info');
+    });
+
+    // --- STORAGE API CORE FUNCTIONS ---
+
+    /**
+     * Switch storage targets between LocalStorage and SessionStorage
+     */
+    function setStorageMode(mode) {
+      storageMode = mode;
+      localStorage.setItem(MODE_KEY, mode);
+      
+      // Transfer current settings into the selected target storage
+      savePreferencesToStorage();
+      
+      updateUIElements();
+      showToast(`Switched active storage to ${mode === 'local' ? 'LocalStorage' : 'SessionStorage'}`, 'success');
+    }
+
+    /**
+     * Read preferences from active Web Storage
+     */
+    function loadPreferencesFromStorage() {
+      try {
+        const storage = getActiveStorage();
+        const raw = storage.getItem(STORAGE_KEY);
+        if (raw) {
+          currentPreferences = { ...defaultSettings, ...JSON.parse(raw) };
+        } else {
+          currentPreferences = { ...defaultSettings };
+        }
+      } catch (err) {
+        console.error('Error reading from Web Storage:', err);
+        currentPreferences = { ...defaultSettings };
+      }
+      applyPreferencesToDOM();
+    }
+
+    /**
+     * Save preferences to active Web Storage
+     */
+    function savePreferencesToStorage() {
+      try {
+        const storage = getActiveStorage();
+        const serialized = JSON.stringify(currentPreferences);
+        storage.setItem(STORAGE_KEY, serialized);
+        
+        refreshInspectorDisplay();
+        showToast('Preferences successfully saved to storage!', 'success');
+      } catch (err) {
+        console.error('Error writing to Web Storage:', err);
+        showToast('Failed to save to storage!', 'error');
+      }
+    }
+
+    /**
+     * Clear keys in Web Storage
+     */
+    function clearStorageData() {
+      try {
+        const storage = getActiveStorage();
+        storage.removeItem(STORAGE_KEY);
+        
+        currentPreferences = { ...defaultSettings };
+        applyPreferencesToDOM();
+        refreshInspectorDisplay();
+        
+        showToast(`Cleared key "${STORAGE_KEY}" from ${storageMode}Storage`, 'warning');
+      } catch (err) {
+        console.error('Error clearing Web Storage:', err);
+      }
+    }
+
+    /**
+     * Reset everything back to defaults
+     */
+    function resetToDefaults() {
+      currentPreferences = { ...defaultSettings };
+      applyPreferencesToDOM();
+      savePreferencesToStorage();
+      showToast('Reset all preferences to factory defaults', 'info');
+    }
+
+    // --- PREFERENCE UPDATERS ---
+
+    function updateTheme(themeName) {
+      currentPreferences.theme = themeName;
+      applyPreferencesToDOM();
+      savePreferencesToStorage();
+    }
+
+    function updateAccent(hexColor) {
+      currentPreferences.accentColor = hexColor;
+      applyPreferencesToDOM();
+      savePreferencesToStorage();
+    }
+
+    function updateFontSize(val) {
+      currentPreferences.fontSize = parseInt(val, 10);
+      applyPreferencesToDOM();
+      savePreferencesToStorage();
+    }
+
+    function updateDensity(densityType) {
+      currentPreferences.density = densityType;
+      applyPreferencesToDOM();
+      savePreferencesToStorage();
+    }
+
+    // --- DOM & VISUAL APPLICATION ---
+
+    function applyPreferencesToDOM() {
+      const root = document.documentElement;
+
+      // 1. Theme Attribute
+      root.setAttribute('data-theme', currentPreferences.theme);
+
+      // 2. Density Attribute
+      root.setAttribute('data-density', currentPreferences.density);
+
+      // 3. Dynamic Font Size CSS Variable
+      root.style.setProperty('--user-font-size', `${currentPreferences.fontSize}px`);
+
+      // 4. Accent Color CSS Variable
+      root.style.setProperty('--accent-color', currentPreferences.accentColor);
+      root.style.setProperty('--accent-hover', `${currentPreferences.accentColor}dd`);
+
+      updateUIElements();
+    }
+
+    function updateUIElements() {
+      // Storage Mode Toggle Buttons
+      const btnLocal = document.getElementById('btn-target-local');
+      const btnSession = document.getElementById('btn-target-session');
+
+      if (storageMode === 'local') {
+        btnLocal.className = "flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow transition-all duration-200";
+        btnSession.className = "flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold themed-text-muted hover:themed-text transition-all duration-200";
+        document.getElementById('active-storage-name').innerText = "LocalStorage";
+        document.getElementById('active-storage-desc').innerText = "Data persists indefinitely across browser tabs, windows, and restarts.";
+        document.getElementById('inspector-badge').innerText = "localStorage";
+      } else {
+        btnSession.className = "flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow transition-all duration-200";
+        btnLocal.className = "flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold themed-text-muted hover:themed-text transition-all duration-200";
+        document.getElementById('active-storage-name').innerText = "SessionStorage";
+        document.getElementById('active-storage-desc').innerText = "Data persists only for the duration of the current tab session.";
+        document.getElementById('inspector-badge').innerText = "sessionStorage";
+      }
+
+      // Labels Display Updates
+      document.getElementById('label-current-theme').innerText = currentPreferences.theme.toUpperCase();
+      document.getElementById('label-current-accent').innerText = currentPreferences.accentColor;
+      document.getElementById('font-size-display').innerText = `${currentPreferences.fontSize}px`;
+      document.getElementById('input-font-size').value = currentPreferences.fontSize;
+
+      // Density Buttons Active State
+      const btnComfortable = document.getElementById('btn-density-comfortable');
+      const btnCompact = document.getElementById('btn-density-compact');
+      if (currentPreferences.density === 'comfortable') {
+        btnComfortable.classList.add('border-indigo-500', 'text-indigo-400', 'bg-indigo-500/10');
+        btnCompact.classList.remove('border-indigo-500', 'text-indigo-400', 'bg-indigo-500/10');
+      } else {
+        btnCompact.classList.add('border-indigo-500', 'text-indigo-400', 'bg-indigo-500/10');
+        btnComfortable.classList.remove('border-indigo-500', 'text-indigo-400', 'bg-indigo-500/10');
+      }
+
+      refreshInspectorDisplay();
+      updateCodeSnippetDisplay();
+    }
+
+    /**
+     * Refresh Raw Inspector Code output
+     */
+    function refreshInspectorDisplay() {
+      const storage = getActiveStorage();
+      const rawData = storage.getItem(STORAGE_KEY);
+      const inspectorElem = document.getElementById('storage-raw-output');
+      const countElem = document.getElementById('storage-key-count');
+
+      if (rawData) {
+        try {
+          const parsed = JSON.parse(rawData);
+          inspectorElem.innerText = JSON.stringify(parsed, null, 2);
+        } catch(e) {
+          inspectorElem.innerText = rawData;
+        }
+      } else {
+        inspectorElem.innerText = `// Key "${STORAGE_KEY}" does not exist in ${storageMode}Storage`;
+      }
+
+      countElem.innerText = storage.length;
+    }
+
+    /**
+     * Generate dynamic syntax code string
+     */
+    function updateCodeSnippetDisplay() {
+      const targetApi = storageMode === 'session' ? 'sessionStorage' : 'localStorage';
+      const jsonStr = JSON.stringify(currentPreferences, null, 2);
+
+      const snippet = `// 1. Save preferences to ${targetApi}
+const preferences = ${jsonStr};
+
+${targetApi}.setItem(
+  '${STORAGE_KEY}', 
+  JSON.stringify(preferences)
+);
+
+// 2. Retrieve preferences on startup
+const saved = ${targetApi}.getItem('${STORAGE_KEY}');
+if (saved) {
+  const config = JSON.parse(saved);
+  console.log('Loaded Theme:', config.theme);
+}`;
+
+      document.getElementById('js-code-snippet').innerText = snippet;
+    }
+
+    /**
+     * Multi-Tab Synchronization Handler via `storage` event
+     */
+    function handleCrossTabStorageChange(event) {
+      if (event.key === STORAGE_KEY && event.storageArea === localStorage) {
+        showToast('Detected settings change from another tab! Syncing...', 'info');
+        if (event.newValue) {
+          currentPreferences = JSON.parse(event.newValue);
+          applyPreferencesToDOM();
+        } else {
+          resetToDefaults();
+        }
+      }
+    }
+
+    /**
+     * Test function to broadcast update across tabs
+     */
+    function triggerMultiTabSyncTest() {
+      if (storageMode !== 'local') {
+        showToast('Tab sync events only apply to LocalStorage!', 'warning');
+        return;
+      }
+      savePreferencesToStorage();
+      showToast('Saved to LocalStorage. Open this page in another tab to see real-time auto sync!', 'info');
+    }
+
+    /**
+     * Copy JavaScript snippet
+     */
+    function copyCodeSnippet() {
+      const codeText = document.getElementById('js-code-snippet').innerText;
+      
+      // Fallback copy execution
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = codeText;
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempTextArea);
+
+      showToast('Code snippet copied to clipboard!', 'success');
+    }
+
+    /**
+     * Toast notification utility UI
+     */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let borderClass = 'border-indigo-500';
+      let icon = 'fa-info-circle text-indigo-400';
+
+      if (type === 'success') {
+        borderClass = 'border-emerald-500';
+        icon = 'fa-circle-check text-emerald-400';
+      } else if (type === 'warning') {
+        borderClass = 'border-amber-500';
+        icon = 'fa-triangle-exclamation text-amber-400';
+      } else if (type === 'error') {
+        borderClass = 'border-red-500';
+        icon = 'fa-circle-xmark text-red-400';
+      }
+
+      toast.className = `pointer-events-auto flex items-center space-x-3 px-4 py-3 rounded-xl themed-card border ${borderClass} shadow-xl text-xs font-medium transform transition-all duration-300 translate-y-2 opacity-0`;
+      toast.innerHTML = `<i class="fa-solid ${icon} text-sm"></i><span>${message}</span>`;
+
+      container.appendChild(toast);
+
+      // Animate In
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      // Remove after 3.5 seconds
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

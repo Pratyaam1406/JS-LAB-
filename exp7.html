@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust-eze Pit Stop To-Do List | Pratyaam Sinh a(24070521180)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Orbitron & Racing Sans One -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Racing+Sans+One&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mcqueen: '#D22B2B',
+                        mcqueenDark: '#A01818',
+                        mcqueenYellow: '#FFC800',
+                        asphalt: '#1A1A1A',
+                        asphaltDark: '#111111',
+                        pistonGold: '#F39C12',
+                        radiatorTeal: '#00A896',
+                        rustOrange: '#E65100'
+                    },
+                    fontFamily: {
+                        racing: ['"Racing Sans One"', 'cursive'],
+                        tech: ['"Orbitron"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Cars Movie & Race Track Aesthetics */
+        body {
+            background-color: #121212;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(210, 43, 43, 0.25), transparent 70%),
+                linear-gradient(135deg, #1A1A1A 0%, #0A0A0A 100%);
+            color: #E0E0E0;
+            min-height: 100vh;
+        }
+
+        /* Checkerboard pattern border */
+        .checkerboard-border {
+            background-size: 20px 20px;
+            background-image: 
+                linear-gradient(45deg, #000 25%, transparent 25%), 
+                linear-gradient(-45deg, #000 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #000 75%), 
+                linear-gradient(-45deg, transparent 75%, #000 75%);
+            background-color: #FFF;
+        }
+
+        .checkerboard-strip {
+            height: 12px;
+            background-size: 16px 16px;
+            background-image: 
+                linear-gradient(45deg, #000 25%, transparent 25%), 
+                linear-gradient(-45deg, #000 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #000 75%), 
+                linear-gradient(-45deg, transparent 75%, #000 75%);
+            background-color: #FFF;
+        }
+
+        /* Metallic racing text gradient */
+        .text-lightning {
+            background: linear-gradient(180deg, #FFF066 0%, #FFC800 50%, #E65100 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 3px 6px rgba(0,0,0,0.8);
+        }
+
+        .text-chrome {
+            background: linear-gradient(180deg, #FFFFFF 0%, #B0B0B0 50%, #4A4A4A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* DOM Node Flash Highlight Animation */
+        @keyframes domFlash {
+            0% { background-color: rgba(255, 200, 0, 0.6); transform: scale(1.02); }
+            50% { background-color: rgba(210, 43, 43, 0.4); }
+            100% { background-color: transparent; transform: scale(1); }
+        }
+
+        .dom-highlight {
+            animation: domFlash 1.2s ease-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1A1A1A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D22B2B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFC800;
+        }
+
+        .speedometer-glow {
+            box-shadow: 0 0 20px rgba(255, 200, 0, 0.3), inset 0 0 10px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body class="font-sans pb-12 antialiased selection:bg-mcqueenYellow selection:text-black">
+
+    <!-- Top Checkerboard Racing Banner -->
+    <div class="checkerboard-strip border-b border-mcqueenYellow/30"></div>
+
+    <!-- Main Header Bar -->
+    <header class="bg-gradient-to-r from-asphaltDark via-mcqueenDark to-asphaltDark border-b-4 border-mcqueenYellow shadow-2xl relative overflow-hidden">
+        <!-- Background #95 Decal Effect -->
+        <div class="absolute -right-6 -bottom-10 opacity-10 pointer-events-none select-none font-racing text-9xl text-white italic">
+            95
+        </div>
+
+        <div class="max-w-6xl mx-mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+            <!-- Header Title & Student Tag -->
+            <div class="text-center md:text-left flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-mcqueen border-4 border-mcqueenYellow flex items-center justify-center font-racing text-white text-3xl shadow-lg transform -rotate-6">
+                    95
+                </div>
+                <div>
+                    <div class="flex items-center gap-2 justify-center md:justify-start">
+                        <span class="bg-mcqueenYellow text-black text-xs font-black px-2 py-0.5 rounded tracking-widest uppercase">Piston Cup Garage</span>
+                        <span class="text-xs text-gray-400 font-tech">RUST-EZE TASK RACING</span>
+                    </div>
+                    <!-- MANDATORY STUDENT IDENTIFIER HEADER -->
+                    <h1 class="text-2xl md:text-4xl font-racing text-lightning tracking-wider uppercase drop-shadow-md">
+                        Pratyaam Sinh a(24070521180)
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Controls: Audio & Reset -->
+            <div class="flex items-center gap-3">
+                <button id="audioToggleBtn" onclick="toggleAudio()" class="px-4 py-2 bg-asphalt hover:bg-gray-800 border-2 border-mcqueenYellow text-mcqueenYellow rounded-lg font-tech text-xs tracking-wider flex items-center gap-2 transition-all transform active:scale-95 shadow-md">
+                    <i class="fas fa-volume-up text-sm" id="audioIcon"></i>
+                    <span id="audioStatus">SOUND: ON</span>
+                </button>
+                <button onclick="resetPitStop()" class="px-4 py-2 bg-mcqueen hover:bg-mcqueenDark border-2 border-white text-white rounded-lg font-tech text-xs tracking-wider flex items-center gap-2 transition-all transform active:scale-95 shadow-md">
+                    <i class="fas fa-redo-alt"></i>
+                    <span>RESET PIT STOP</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- LEFT COLUMN: Dashboard & Add Task Form (4 Cols on LG) -->
+        <div class="lg:col-span-4 space-y-6">
+            
+            <!-- Speedometer Lap Progress Card -->
+            <div class="bg-asphalt rounded-2xl p-6 border-2 border-gray-800 shadow-xl speedometer-glow relative overflow-hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-racing text-xl text-mcqueenYellow tracking-wide flex items-center gap-2">
+                        <i class="fas fa-tachometer-alt"></i> PISTON CUP PROGRESS
+                    </h2>
+                    <span id="lapStatusTag" class="text-xs font-tech px-2 py-1 bg-gray-800 rounded border border-gray-700 text-gray-300">
+                        LAP 0/0
+                    </span>
+                </div>
+
+                <!-- Circular/Arc Gauge Indicator -->
+                <div class="relative flex flex-col items-center justify-center my-4">
+                    <div class="text-5xl font-racing text-white tracking-wider" id="completionPercent">
+                        0%
+                    </div>
+                    <div class="text-xs font-tech text-mcqueenYellow tracking-widest mt-1" id="lapCounterText">
+                        0 OF 0 LAPS FINISHED
+                    </div>
+                </div>
+
+                <!-- Custom Fuel Gauge / Progress Bar -->
+                <div class="w-full bg-gray-800 rounded-full h-4 p-0.5 border border-gray-700 relative overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-mcqueenYellow via-rustOrange to-mcqueen h-full rounded-full transition-all duration-500 w-0"></div>
+                </div>
+
+                <!-- Cheered Finish Indicator -->
+                <div id="finishFlag" class="hidden mt-4 bg-mcqueenYellow/10 border border-mcqueenYellow rounded-lg p-2 text-center text-mcqueenYellow text-xs font-tech animate-pulse">
+                    <i class="fas fa-flag-checkered mr-1"></i> KA-CHOW! ALL PIT STOPS COMPLETED!
+                </div>
+            </div>
+
+            <!-- Add Task Form Card -->
+            <div class="bg-asphalt rounded-2xl p-6 border-2 border-gray-800 shadow-xl relative">
+                <div class="border-b border-gray-800 pb-3 mb-4 flex items-center justify-between">
+                    <h2 class="font-racing text-lg text-white tracking-wide flex items-center gap-2">
+                        <i class="fas fa-wrench text-mcqueen"></i> ADD NEW PIT-STOP TASK
+                    </h2>
+                    <span class="text-xs font-tech text-gray-500">DOM: appendChild</span>
+                </div>
+
+                <form id="taskForm" onsubmit="handleAddTask(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-tech text-gray-400 mb-1">TASK DESCRIPTION</label>
+                        <input type="text" id="taskTitle" placeholder="e.g. Change Rear Tires at Rust-eze..." required 
+                            class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-mcqueenYellow transition-colors">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 mb-1">BOOST PRIORITY</label>
+                            <select id="taskPriority" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-mcqueenYellow">
+                                <option value="Lightning">⚡ Lightning (High)</option>
+                                <option value="Nitro" selected>🔥 Nitro (Medium)</option>
+                                <option value="Standard">⚙️ Standard (Low)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-tech text-gray-400 mb-1">PIT LANE (CATEGORY)</label>
+                            <select id="taskCategory" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-mcqueenYellow">
+                                <option value="Tires">🛞 Tires & Wheels</option>
+                                <option value="Engine">🏎️ Engine Tune-Up</option>
+                                <option value="Fuel">⛽ Rust-eze Fuel</option>
+                                <option value="Sponsor">🏆 Sponsor & Press</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-tech text-gray-400 mb-1">RACE DEADLINE (OPTIONAL)</label>
+                        <input type="date" id="taskDeadline" 
+                            class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-mcqueenYellow">
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-mcqueen to-mcqueenDark hover:from-mcqueenYellow hover:to-rustOrange hover:text-black text-white font-racing tracking-wider py-3 rounded-lg border border-mcqueenYellow/50 shadow-lg transition-all duration-200 transform active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fas fa-plus-circle"></i> ENTER PIT LANE
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Task List & DOM Explorer (8 Cols on LG) -->
+        <div class="lg:col-span-8 space-y-6">
+
+            <!-- Filter, Sort & Search Bar -->
+            <div class="bg-asphalt rounded-2xl p-4 border-2 border-gray-800 shadow-xl flex flex-wrap gap-4 items-center justify-between">
+                <!-- Status Filters -->
+                <div class="flex items-center bg-gray-900 p-1 rounded-lg border border-gray-800">
+                    <button onclick="setFilter('all')" id="filter-all" class="filter-btn px-3 py-1.5 rounded-md text-xs font-tech text-mcqueenYellow bg-gray-800 border border-mcqueenYellow/30">
+                        ALL (0)
+                    </button>
+                    <button onclick="setFilter('active')" id="filter-active" class="filter-btn px-3 py-1.5 rounded-md text-xs font-tech text-gray-400 hover:text-white">
+                        RACING (0)
+                    </button>
+                    <button onclick="setFilter('completed')" id="filter-completed" class="filter-btn px-3 py-1.5 rounded-md text-xs font-tech text-gray-400 hover:text-white">
+                        FINISHED (0)
+                    </button>
+                </div>
+
+                <!-- Sort Control -->
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-tech text-gray-400"><i class="fas fa-sort"></i> SORT:</span>
+                    <select id="sortBy" onchange="renderTasks()" class="bg-gray-900 border border-gray-700 text-xs text-white rounded-lg px-2 py-1.5 focus:outline-none">
+                        <option value="created">Order Added</option>
+                        <option value="priority">Priority Level</option>
+                        <option value="alphabetical">Task Name</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Task Container List -->
+            <div id="taskContainer" class="space-y-3 min-h-[220px]">
+                <!-- Tasks will be injected dynamically via JS DOM manipulation -->
+            </div>
+
+            <!-- Empty State Display -->
+            <div id="emptyState" class="hidden bg-asphalt rounded-2xl p-12 border-2 border-dashed border-gray-800 text-center">
+                <div class="w-16 h-16 bg-gray-900 text-mcqueenYellow rounded-full flex items-center justify-center mx-auto mb-4 text-2xl border border-gray-800">
+                    <i class="fas fa-flag-checkered"></i>
+                </div>
+                <h3 class="font-racing text-xl text-white mb-1">PIT LANE IS EMPTY!</h3>
+                <p class="text-xs text-gray-500 font-tech">No tasks currently queued. Add a new task above to start your lap.</p>
+            </div>
+
+            <!-- DOM Traversal & Update Inspector Log Panel -->
+            <div class="bg-asphaltDark rounded-2xl p-5 border-2 border-mcqueenYellow/30 shadow-2xl relative overflow-hidden">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-3 mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-block w-3 h-3 rounded-full bg-mcqueenYellow animate-ping"></span>
+                        <h3 class="font-tech text-xs tracking-widest text-mcqueenYellow uppercase">
+                            <i class="fas fa-code-branch"></i> LIVE DOM TRAVERSAL & UPDATE LOG
+                        </h3>
+                    </div>
+                    <span class="text-[10px] font-mono text-gray-500">Document Object Model Telemetry</span>
+                </div>
+
+                <!-- Console Stream Display -->
+                <div id="domLogContainer" class="font-mono text-xs text-green-400 bg-black/80 rounded-lg p-3 h-36 overflow-y-auto space-y-1.5 border border-gray-800 shadow-inner">
+                    <div class="text-gray-500 italic">// Ready to inspect DOM mutations and node traversals...</div>
+                </div>
+
+                <!-- DOM Node Traversal Quick Reference Cheat Bar -->
+                <div class="mt-3 pt-3 border-t border-gray-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono text-gray-400">
+                    <div class="bg-gray-900 p-1.5 rounded text-center border border-gray-800">
+                        <span class="text-mcqueenYellow">parentNode</span>: Container Target
+                    </div>
+                    <div class="bg-gray-900 p-1.5 rounded text-center border border-gray-800">
+                        <span class="text-mcqueenYellow">previousElementSibling</span>: Reorder Up
+                    </div>
+                    <div class="bg-gray-900 p-1.5 rounded text-center border border-gray-800">
+                        <span class="text-mcqueenYellow">nextElementSibling</span>: Reorder Down
+                    </div>
+                    <div class="bg-gray-900 p-1.5 rounded text-center border border-gray-800">
+                        <span class="text-mcqueenYellow">insertBefore()</span>: DOM Swap
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-asphalt border-2 border-mcqueenYellow rounded-2xl max-w-md w-full p-6 shadow-2xl relative transform transition-all">
+            <button onclick="closeEditModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <h3 class="font-racing text-xl text-lightning mb-4 flex items-center gap-2">
+                <i class="fas fa-edit"></i> RE-TUNE TASK (EDIT DOM NODE)
+            </h3>
+
+            <input type="hidden" id="editTaskId">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-tech text-gray-400 mb-1">TASK TITLE</label>
+                    <input type="text" id="editTaskTitle" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-mcqueenYellow">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-tech text-gray-400 mb-1">PRIORITY</label>
+                        <select id="editTaskPriority" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+                            <option value="Lightning">⚡ Lightning</option>
+                            <option value="Nitro">🔥 Nitro</option>
+                            <option value="Standard">⚙️ Standard</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-tech text-gray-400 mb-1">CATEGORY</label>
+                        <select id="editTaskCategory" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+                            <option value="Tires">🛞 Tires & Wheels</option>
+                            <option value="Engine">🏎️ Engine Tune-Up</option>
+                            <option value="Fuel">⛽ Rust-eze Fuel</option>
+                            <option value="Sponsor">🏆 Sponsor & Press</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-tech text-gray-400 mb-1">DEADLINE</label>
+                    <input type="date" id="editTaskDeadline" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button onclick="saveEditedTask()" class="flex-1 bg-mcqueenYellow hover:bg-yellow-400 text-black font-racing tracking-wider py-2.5 rounded-lg shadow transition-all">
+                        SAVE TUNING
+                    </button>
+                    <button onclick="closeEditModal()" class="px-4 bg-gray-800 hover:bg-gray-700 text-gray-300 font-tech text-xs rounded-lg">
+                        CANCEL
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           1. APPLICATION STATE & LOCALSTORAGE PERSISTENCE
+           ========================================================================== */
+        let tasks = [];
+        let currentFilter = 'all';
+        let audioEnabled = true;
+
+        // Default Cars Themed Initial Tasks
+        const defaultTasks = [
+            {
+                id: 'task-101',
+                title: 'Change Goodyear Racing Slick Tires',
+                priority: 'Lightning',
+                category: 'Tires',
+                deadline: '2026-10-15',
+                completed: false,
+                createdAt: Date.now() - 100000
+            },
+            {
+                id: 'task-102',
+                title: 'Refuel with Rust-eze Bumper Ointment & High-Octane Gas',
+                priority: 'Nitro',
+                category: 'Fuel',
+                deadline: '2026-10-18',
+                completed: true,
+                createdAt: Date.now() - 50000
+            },
+            {
+                id: 'task-103',
+                title: 'Inspect V8 Engine & Piston Cylinder Wall Gaskets',
+                priority: 'Standard',
+                category: 'Engine',
+                deadline: '',
+                completed: false,
+                createdAt: Date.now()
+            }
+        ];
+
+        /* Initialize Application on DOM Ready */
+        window.addEventListener('DOMContentLoaded', () => {
+            loadTasksFromStorage();
+            renderTasks();
+            logDomEvent('DOM System Initialized', 'document.addEventListener("DOMContentLoaded")', 'Mounted initial task tree.');
+        });
+
+        function loadTasksFromStorage() {
+            const saved = localStorage.getItem('mcqueen_tasks_24070521180');
+            if (saved) {
+                try {
+                    tasks = JSON.parse(saved);
+                } catch(e) {
+                    tasks = [...defaultTasks];
+                }
+            } else {
+                tasks = [...defaultTasks];
+                saveTasksToStorage();
+            }
+        }
+
+        function saveTasksToStorage() {
+            localStorage.setItem('mcqueen_tasks_24070521180', JSON.stringify(tasks));
+        }
+
+        /* ==========================================================================
+           2. WEB AUDIO API SOUND EFFECTS GENERATOR (No external files needed)
+           ========================================================================== */
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function playSound(type) {
+            if (!audioEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new AudioCtx();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'rev') {
+                    // Engine Rev Sound (Engine Acceleration Pitch)
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(80, now);
+                    osc.frequency.exponentialRampToValueAtTime(320, now + 0.3);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.5);
+
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                } else if (type === 'complete') {
+                    // Ka-Chow Crowd Victory Sound Tone
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                    osc.frequency.setValueAtTime(1046.50, now + 0.3); // C6
+
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.6);
+                } else if (type === 'click') {
+                    // Pit Wrench Click Sound
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(800, now);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'delete') {
+                    // Engine Shut Down / Screech
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(250, now);
+                    osc.frequency.exponentialRampToValueAtTime(40, now + 0.4);
+
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                }
+            } catch (e) {
+                console.warn('Web Audio not supported or blocked:', e);
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const btn = document.getElementById('audioStatus');
+            const icon = document.getElementById('audioIcon');
+            if (audioEnabled) {
+                btn.textContent = 'SOUND: ON';
+                icon.className = 'fas fa-volume-up text-sm';
+                playSound('click');
+            } else {
+                btn.textContent = 'SOUND: MUTED';
+                icon.className = 'fas fa-volume-mute text-sm';
+            }
+        }
+
+        /* ==========================================================================
+           3. EXPLICIT DOM TRAVERSAL & UPDATE TELEMETRY LOGGER
+           ========================================================================== */
+        function logDomEvent(action, domMethod, explanation) {
+            const container = document.getElementById('domLogContainer');
+            if (!container) return;
+
+            const timeStr = new Date().toLocaleTimeString().split(' ')[0];
+            const logEntry = document.createElement('div');
+            logEntry.className = 'border-b border-gray-800/50 pb-1 mb-1 leading-relaxed text-[11px] animate-fade-in';
+            logEntry.innerHTML = `
+                <span class="text-gray-500">[${timeStr}]</span>
+                <span class="text-mcqueenYellow font-bold">${action}</span>: 
+                <code class="text-cyan-300">${domMethod}</code>
+                <div class="text-gray-400 pl-3">${explanation}</div>
+            `;
+
+            // DOM Insertion: Prepend log at top of telemetry panel
+            if (container.firstElementChild) {
+                container.insertBefore(logEntry, container.firstElementChild);
+            } else {
+                container.appendChild(logEntry);
+            }
+        }
+
+        /* ==========================================================================
+           4. DOM MANIPULATION & TASK MANAGEMENT CORE
+           ========================================================================== */
+
+        // Add New Task
+        function handleAddTask(e) {
+            e.preventDefault();
+            const titleInput = document.getElementById('taskTitle');
+            const priorityInput = document.getElementById('taskPriority');
+            const categoryInput = document.getElementById('taskCategory');
+            const deadlineInput = document.getElementById('taskDeadline');
+
+            if (!titleInput.value.trim()) return;
+
+            const newTask = {
+                id: 'task-' + Date.now(),
+                title: titleInput.value.trim(),
+                priority: priorityInput.value,
+                category: categoryInput.value,
+                deadline: deadlineInput.value,
+                completed: false,
+                createdAt: Date.now()
+            };
+
+            tasks.unshift(newTask);
+            saveTasksToStorage();
+            renderTasks();
+
+            // Highlight newly added DOM Element
+            setTimeout(() => {
+                const newTaskElem = document.getElementById(newTask.id);
+                if (newTaskElem) {
+                    newTaskElem.classList.add('dom-highlight');
+                }
+            }, 50);
+
+            // DOM Traversal Logging
+            logDomEvent(
+                'ADD NODE',
+                'document.createElement() -> container.insertBefore()',
+                `Created & inserted element #${newTask.id} at firstChild of #taskContainer.`
+            );
+
+            playSound('rev');
+            titleInput.value = '';
+            deadlineInput.value = '';
+        }
+
+        // Toggle Task Complete State
+        function toggleTaskComplete(id) {
+            const index = tasks.findIndex(t => t.id === id);
+            if (index !== -1) {
+                tasks[index].completed = !tasks[index].completed;
+                saveTasksToStorage();
+                
+                // DOM Traversal Demo
+                const taskCard = document.getElementById(id);
+                if (taskCard) {
+                    // Traversing DOM tree from checkbox to parent container
+                    const titleNode = taskCard.querySelector('.task-title-text');
+                    if (titleNode) {
+                        if (tasks[index].completed) {
+                            titleNode.classList.add('line-through', 'text-gray-500');
+                            playSound('complete');
+                        } else {
+                            titleNode.classList.remove('line-through', 'text-gray-500');
+                            playSound('click');
+                        }
+                    }
+                }
+
+                logDomEvent(
+                    'UPDATE NODE ATTRIBUTE',
+                    'node.querySelector(".task-title-text").classList.toggle()',
+                    `Traversed from child target inside #${id} to toggle strike-through visual class.`
+                );
+
+                renderTasks();
+            }
+        }
+
+        // Move Task Up in DOM Tree
+        function moveTaskUp(id, e) {
+            e.stopPropagation();
+            const index = tasks.findIndex(t => t.id === id);
+            if (index > 0) {
+                // Swap in array
+                const temp = tasks[index];
+                tasks[index] = tasks[index - 1];
+                tasks[index - 1] = temp;
+                saveTasksToStorage();
+
+                // Perform DOM Node Manipulation directly
+                const currentElem = document.getElementById(id);
+                if (currentElem) {
+                    /* DOM Traversal using previousElementSibling */
+                    const prevElem = currentElem.previousElementSibling;
+                    if (prevElem) {
+                        // DOM update: insert currentElem before its previous sibling
+                        currentElem.parentNode.insertBefore(currentElem, prevElem);
+                        currentElem.classList.add('dom-highlight');
+
+                        logDomEvent(
+                            'REORDER DOM NODE (UP)',
+                            'node.parentNode.insertBefore(node, node.previousElementSibling)',
+                            `Traversed to previousElementSibling of #${id} and swapped node position.`
+                        );
+                    }
+                }
+                playSound('click');
+                updateProgressMetrics();
+            }
+        }
+
+        // Move Task Down in DOM Tree
+        function moveTaskDown(id, e) {
+            e.stopPropagation();
+            const index = tasks.findIndex(t => t.id === id);
+            if (index !== -1 && index < tasks.length - 1) {
+                // Swap in array
+                const temp = tasks[index];
+                tasks[index] = tasks[index + 1];
+                tasks[index + 1] = temp;
+                saveTasksToStorage();
+
+                const currentElem = document.getElementById(id);
+                if (currentElem) {
+                    /* DOM Traversal using nextElementSibling */
+                    const nextElem = currentElem.nextElementSibling;
+                    if (nextElem) {
+                        // DOM update: insert nextElem before currentElem (moves currentElem down)
+                        currentElem.parentNode.insertBefore(nextElem, currentElem);
+                        currentElem.classList.add('dom-highlight');
+
+                        logDomEvent(
+                            'REORDER DOM NODE (DOWN)',
+                            'node.parentNode.insertBefore(node.nextElementSibling, node)',
+                            `Traversed to nextElementSibling of #${id} and shifted down.`
+                        );
+                    }
+                }
+                playSound('click');
+                updateProgressMetrics();
+            }
+        }
+
+        // Delete Task from DOM
+        function deleteTask(id, e) {
+            e.stopPropagation();
+            const taskElem = document.getElementById(id);
+            if (taskElem) {
+                // Smooth transition remove animation
+                taskElem.style.transition = 'all 0.3s ease';
+                taskElem.style.opacity = '0';
+                taskElem.style.transform = 'translateX(50px)';
+
+                setTimeout(() => {
+                    /* DOM Node Removal */
+                    if (taskElem.parentNode) {
+                        taskElem.parentNode.removeChild(taskElem);
+                    }
+
+                    tasks = tasks.filter(t => t.id !== id);
+                    saveTasksToStorage();
+                    renderTasks();
+
+                    logDomEvent(
+                        'REMOVE DOM NODE',
+                        'node.parentNode.removeChild(node)',
+                        `Removed target #${id} directly from DOM container tree.`
+                    );
+                }, 300);
+
+                playSound('delete');
+            }
+        }
+
+        // Open Edit Modal
+        function openEditModal(id, e) {
+            e.stopPropagation();
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
+
+            document.getElementById('editTaskId').value = task.id;
+            document.getElementById('editTaskTitle').value = task.title;
+            document.getElementById('editTaskPriority').value = task.priority;
+            document.getElementById('editTaskCategory').value = task.category;
+            document.getElementById('editTaskDeadline').value = task.deadline || '';
+
+            document.getElementById('editModal').classList.remove('hidden');
+            playSound('click');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.add('hidden');
+        }
+
+        function saveEditedTask() {
+            const id = document.getElementById('editTaskId').value;
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.title = document.getElementById('editTaskTitle').value.trim();
+                task.priority = document.getElementById('editTaskPriority').value;
+                task.category = document.getElementById('editTaskCategory').value;
+                task.deadline = document.getElementById('editTaskDeadline').value;
+
+                saveTasksToStorage();
+                renderTasks();
+                closeEditModal();
+
+                logDomEvent(
+                    'MUTATE NODE TEXTCONTENT',
+                    'node.firstElementChild.textContent = newTitle',
+                    `Updated inline properties for task #${id}.`
+                );
+                playSound('click');
+            }
+        }
+
+        // Filter Setting
+        function setFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.className = 'filter-btn px-3 py-1.5 rounded-md text-xs font-tech text-gray-400 hover:text-white';
+            });
+            const activeBtn = document.getElementById(`filter-${filter}`);
+            if (activeBtn) {
+                activeBtn.className = 'filter-btn px-3 py-1.5 rounded-md text-xs font-tech text-mcqueenYellow bg-gray-800 border border-mcqueenYellow/30';
+            }
+            renderTasks();
+            playSound('click');
+        }
+
+        // Reset Pit Stop State
+        function resetPitStop() {
+            if (confirm('Are you sure you want to reset all pit stop tasks to default?')) {
+                tasks = [...defaultTasks];
+                saveTasksToStorage();
+                renderTasks();
+                logDomEvent('RESET DOM TREE', 'container.innerHTML = ""', 'Restored default task configuration.');
+                playSound('rev');
+            }
+        }
+
+        /* ==========================================================================
+           5. DOM RENDERER & PROGRESS CALCULATOR
+           ========================================================================== */
+        function renderTasks() {
+            const container = document.getElementById('taskContainer');
+            const emptyState = document.getElementById('emptyState');
+            if (!container) return;
+
+            // Sort logic
+            const sortBy = document.getElementById('sortBy')?.value || 'created';
+            let filteredTasks = [...tasks];
+
+            if (currentFilter === 'active') {
+                filteredTasks = filteredTasks.filter(t => !t.completed);
+            } else if (currentFilter === 'completed') {
+                filteredTasks = filteredTasks.filter(t => t.completed);
+            }
+
+            if (sortBy === 'priority') {
+                const priorityWeight = { 'Lightning': 3, 'Nitro': 2, 'Standard': 1 };
+                filteredTasks.sort((a, b) => priorityWeight[b.priority] - priorityWeight[a.priority]);
+            } else if (sortBy === 'alphabetical') {
+                filteredTasks.sort((a, b) => a.title.localeCompare(b.title));
+            }
+
+            // Clear Container
+            container.innerHTML = '';
+
+            if (filteredTasks.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+
+                filteredTasks.forEach((task, index) => {
+                    const card = createTaskCardNode(task, index, filteredTasks.length);
+                    container.appendChild(card);
+                });
+            }
+
+            updateFilterBadgeCounts();
+            updateProgressMetrics();
+        }
+
+        // Construct HTML Node for a Single Task
+        function createTaskCardNode(task, index, totalLength) {
+            const card = document.createElement('div');
+            card.id = task.id;
+            card.className = `bg-asphalt hover:bg-gray-900 border-2 ${task.completed ? 'border-gray-800 opacity-75' : 'border-gray-800 hover:border-mcqueenYellow/50'} rounded-xl p-4 shadow-lg transition-all duration-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group`;
+
+            // Priority Badge Colors
+            let priorityBadge = '';
+            if (task.priority === 'Lightning') {
+                priorityBadge = '<span class="bg-mcqueen/20 text-mcqueen border border-mcqueen/40 text-[10px] font-tech px-2 py-0.5 rounded">⚡ LIGHTNING</span>';
+            } else if (task.priority === 'Nitro') {
+                priorityBadge = '<span class="bg-rustOrange/20 text-rustOrange border border-rustOrange/40 text-[10px] font-tech px-2 py-0.5 rounded">🔥 NITRO</span>';
+            } else {
+                priorityBadge = '<span class="bg-gray-800 text-gray-300 border border-gray-700 text-[10px] font-tech px-2 py-0.5 rounded">⚙️ STANDARD</span>';
+            }
+
+            // Category Icon
+            let categoryIcon = '🏁';
+            if (task.category === 'Tires') categoryIcon = '🛞';
+            if (task.category === 'Engine') categoryIcon = '🏎️';
+            if (task.category === 'Fuel') categoryIcon = '⛽';
+            if (task.category === 'Sponsor') categoryIcon = '🏆';
+
+            card.innerHTML = `
+                <div class="flex items-center gap-3 flex-1 min-w-0">
+                    <!-- Checkbox -->
+                    <button onclick="toggleTaskComplete('${task.id}')" class="w-6 h-6 rounded-md border-2 ${task.completed ? 'bg-mcqueen border-mcqueen text-white' : 'border-gray-600 hover:border-mcqueenYellow'} flex items-center justify-center transition-colors flex-shrink-0">
+                        ${task.completed ? '<i class="fas fa-check text-xs"></i>' : ''}
+                    </button>
+
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center gap-2 flex-wrap mb-1">
+                            ${priorityBadge}
+                            <span class="text-[10px] font-tech text-gray-400 bg-gray-900 px-2 py-0.5 rounded border border-gray-800">
+                                ${categoryIcon} ${task.category}
+                            </span>
+                            ${task.deadline ? `<span class="text-[10px] font-tech text-mcqueenYellow"><i class="far fa-calendar-alt"></i> ${task.deadline}</span>` : ''}
+                        </div>
+                        <p class="task-title-text font-semibold text-sm ${task.completed ? 'line-through text-gray-500' : 'text-white'} truncate">
+                            ${escapeHtml(task.title)}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- DOM Reorder & Action Controls -->
+                <div class="flex items-center gap-1 self-end sm:self-center bg-gray-900/80 p-1 rounded-lg border border-gray-800 opacity-90 group-hover:opacity-100 transition-opacity">
+                    <!-- DOM Traversal: Move Up -->
+                    <button onclick="moveTaskUp('${task.id}', event)" ${index === 0 ? 'disabled class="text-gray-700 px-2 py-1 cursor-not-allowed"' : 'class="text-gray-400 hover:text-mcqueenYellow px-2 py-1"'} title="DOM Move Up (insertBefore)">
+                        <i class="fas fa-arrow-up text-xs"></i>
+                    </button>
+
+                    <!-- DOM Traversal: Move Down -->
+                    <button onclick="moveTaskDown('${task.id}', event)" ${index === totalLength - 1 ? 'disabled class="text-gray-700 px-2 py-1 cursor-not-allowed"' : 'class="text-gray-400 hover:text-mcqueenYellow px-2 py-1"'} title="DOM Move Down">
+                        <i class="fas fa-arrow-down text-xs"></i>
+                    </button>
+
+                    <div class="h-4 w-[1px] bg-gray-800 mx-1"></div>
+
+                    <!-- Edit Task -->
+                    <button onclick="openEditModal('${task.id}', event)" class="text-gray-400 hover:text-cyan-400 px-2 py-1" title="Edit Task DOM Node">
+                        <i class="fas fa-edit text-xs"></i>
+                    </button>
+
+                    <!-- Delete Task -->
+                    <button onclick="deleteTask('${task.id}', event)" class="text-gray-400 hover:text-mcqueen px-2 py-1" title="Remove DOM Node">
+                        <i class="fas fa-trash-alt text-xs"></i>
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Helper: Filter Counts
+        function updateFilterBadgeCounts() {
+            const allCount = tasks.length;
+            const activeCount = tasks.filter(t => !t.completed).length;
+            const completedCount = tasks.filter(t => t.completed).length;
+
+            const filterAllBtn = document.getElementById('filter-all');
+            const filterActiveBtn = document.getElementById('filter-active');
+            const filterCompBtn = document.getElementById('filter-completed');
+
+            if (filterAllBtn) filterAllBtn.textContent = `ALL (${allCount})`;
+            if (filterActiveBtn) filterActiveBtn.textContent = `RACING (${activeCount})`;
+            if (filterCompBtn) filterCompBtn.textContent = `FINISHED (${completedCount})`;
+        }
+
+        // Helper: Progress Gauge & Speedometer
+        function updateProgressMetrics() {
+            const total = tasks.length;
+            const completed = tasks.filter(t => t.completed).length;
+            const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+            const progressBar = document.getElementById('progressBar');
+            const percentText = document.getElementById('completionPercent');
+            const lapCounterText = document.getElementById('lapCounterText');
+            const lapStatusTag = document.getElementById('lapStatusTag');
+            const finishFlag = document.getElementById('finishFlag');
+
+            if (progressBar) progressBar.style.width = `${percent}%`;
+            if (percentText) percentText.textContent = `${percent}%`;
+            if (lapCounterText) lapCounterText.textContent = `${completed} OF ${total} LAPS FINISHED`;
+            if (lapStatusTag) lapStatusTag.textContent = `LAP ${completed}/${total}`;
+
+            if (finishFlag) {
+                if (total > 0 && completed === total) {
+                    finishFlag.classList.remove('hidden');
+                } else {
+                    finishFlag.classList.add('hidden');
+                }
+            }
+        }
+
+        // Utility: Escape HTML String Safety
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function(m) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[m];
+            });
+        }
+    </script>
+</body>
+</html>

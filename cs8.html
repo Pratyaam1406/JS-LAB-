@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form - Pratyaam Sinha (24070521180)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        pastel: {
+                            bg: '#F8F6F0',         /* Soft Cream background */
+                            card: '#FFFFFF',       /* Crisp white cards */
+                            teal: '#9CD2C2',       /* Soft Sage Teal */
+                            tealDark: '#4A8173',
+                            pink: '#F6C1CB',       /* Blush Pink */
+                            pinkDark: '#B85065',
+                            lavender: '#E0D6F5',   /* Soft Lavender */
+                            purpleDark: '#604C8D',
+                            yellow: '#F9E5AD',     /* Pastel Buttercup */
+                            yellowDark: '#8A7029',
+                            blue: '#BCE2EF',       /* Sky Pastel */
+                            blueDark: '#3A7085',
+                            mint: '#D1EAD8',       /* Soft Mint */
+                            mintDark: '#3C6B48',
+                            slate: '#5A626A'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom pastel scrollbar */
+        .log-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .log-scrollbar::-webkit-scrollbar-track {
+            background: #EAE6DF;
+            border-radius: 4px;
+        }
+        .log-scrollbar::-webkit-scrollbar-thumb {
+            background: #9CD2C2;
+            border-radius: 4px;
+        }
+        .log-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #7DB9A7;
+        }
+
+        /* Focus ring glow effect */
+        .pastel-focus:focus-within {
+            box-shadow: 0 0 0 3px rgba(156, 210, 194, 0.4);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Custom range input slider styling */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #4A8173;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transition: transform 0.1s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+<body class="bg-pastel-bg text-slate-700 font-sans min-h-screen p-3 sm:p-6 md:p-10">
+
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- Header Section -->
+        <header class="bg-white border border-slate-200/80 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
+            <!-- Decorative Pastel Gradient Orbs -->
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-gradient-to-tr from-pastel-pink/40 to-pastel-teal/40 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -left-10 -top-10 w-40 h-40 bg-gradient-to-br from-pastel-lavender/40 to-pastel-blue/40 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-1">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-pastel-teal/20 text-pastel-tealDark mb-1 border border-pastel-teal/30">
+                    <i class="fa-solid fa-briefcase text-xs"></i> Online Job Application Form
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">
+                    Pratyaam Sinha <span class="text-pastel-pinkDark font-bold text-xl sm:text-2xl">(24070521180)</span>
+                </h1>
+                <p class="text-slate-500 text-xs sm:text-sm max-w-xl">
+                    Interactive JavaScript Form Validation, Real-Time Input Analytics & Dynamic Event Handling System.
+                </p>
+            </div>
+
+            <!-- Student ID & Quick Action Badge -->
+            <div class="relative z-10 flex flex-wrap items-center gap-3">
+                <button type="button" id="autofill-btn" class="bg-pastel-yellow/60 hover:bg-pastel-yellow text-pastel-yellowDark border border-pastel-yellowDark/30 px-4 py-2.5 rounded-2xl flex items-center gap-2 text-xs font-bold transition-all active:scale-95 shadow-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Fill Sample Data
+                </button>
+                <div class="bg-pastel-lavender/40 border border-pastel-lavender px-4 py-2.5 rounded-2xl flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-pastel-lavender flex items-center justify-center text-pastel-purpleDark font-bold">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] uppercase tracking-wider font-bold text-pastel-purpleDark">Student ID</div>
+                        <div class="text-xs font-extrabold text-slate-800">24070521180</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Left Column: Job Application Form (7 cols) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <div class="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-sm relative">
+                    
+                    <!-- Form Header & Actions -->
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-2xl bg-pastel-teal/30 flex items-center justify-center text-pastel-tealDark">
+                                <i class="fa-solid fa-file-signature text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-800">Career Application</h2>
+                                <p class="text-slate-400 text-xs">Fill in your details to apply for open positions</p>
+                            </div>
+                        </div>
+                        <button type="button" id="reset-btn" class="text-xs text-slate-500 hover:text-pastel-pinkDark transition-all flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 hover:border-pastel-pink/50 bg-slate-50 hover:bg-pastel-pink/10 font-medium">
+                            <i class="fa-solid fa-rotate-right"></i> Reset Form
+                        </button>
+                    </div>
+
+                    <!-- Job Application Form -->
+                    <form id="job-form" novalidate class="space-y-6">
+                        
+                        <!-- SECTION 1: Personal Information -->
+                        <div class="space-y-4">
+                            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-teal"></span> 1. Personal Information
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Full Name -->
+                                <div class="space-y-1 sm:col-span-2">
+                                    <label for="full-name" class="block text-xs font-bold text-slate-700">
+                                        Full Name <span class="text-rose-400">*</span>
+                                    </label>
+                                    <div class="relative pastel-focus rounded-2xl">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                            <i class="fa-solid fa-user text-xs"></i>
+                                        </div>
+                                        <input type="text" id="full-name" name="fullName" placeholder="e.g. Pratyaam Sinha" 
+                                            class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                        <div id="name-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden"></div>
+                                    </div>
+                                    <p id="name-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                                </div>
+
+                                <!-- Email Address -->
+                                <div class="space-y-1">
+                                    <label for="email" class="block text-xs font-bold text-slate-700">
+                                        Email Address <span class="text-rose-400">*</span>
+                                    </label>
+                                    <div class="relative pastel-focus rounded-2xl">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                            <i class="fa-solid fa-envelope text-xs"></i>
+                                        </div>
+                                        <input type="email" id="email" name="email" placeholder="pratyaam@example.com" 
+                                            class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                        <div id="email-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden"></div>
+                                    </div>
+                                    <p id="email-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="space-y-1">
+                                    <label for="phone" class="block text-xs font-bold text-slate-700">
+                                        Phone Number <span class="text-rose-400">*</span>
+                                    </label>
+                                    <div class="relative pastel-focus rounded-2xl">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                            <i class="fa-solid fa-phone text-xs"></i>
+                                        </div>
+                                        <input type="tel" id="phone" name="phone" placeholder="10-digit phone number" maxlength="10"
+                                            class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                        <div id="phone-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden"></div>
+                                    </div>
+                                    <p id="phone-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                                </div>
+
+                                <!-- Date of Birth -->
+                                <div class="space-y-1 sm:col-span-2">
+                                    <label for="dob" class="block text-xs font-bold text-slate-700">
+                                        Date of Birth <span class="text-rose-400">*</span>
+                                    </label>
+                                    <div class="relative pastel-focus rounded-2xl">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                            <i class="fa-solid fa-calendar-day text-xs"></i>
+                                        </div>
+                                        <input type="date" id="dob" name="dob" 
+                                            class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:bg-white transition-all">
+                                        <div id="dob-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden"></div>
+                                    </div>
+                                    <p id="dob-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: Position & Availability -->
+                        <div class="space-y-4 pt-3 border-t border-slate-100">
+                            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-pink"></span> 2. Position & Availability
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Position Applied For -->
+                                <div class="space-y-1">
+                                    <label for="position" class="block text-xs font-bold text-slate-700">
+                                        Position Applied For <span class="text-rose-400">*</span>
+                                    </label>
+                                    <div class="relative pastel-focus rounded-2xl">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                            <i class="fa-solid fa-layer-group text-xs"></i>
+                                        </div>
+                                        <select id="position" name="position" 
+                                            class="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:bg-white transition-all appearance-none cursor-pointer">
+                                            <option value="" disabled selected>-- Select Position --</option>
+                                            <option value="Full Stack Developer">Full Stack Developer</option>
+                                            <option value="UI/UX Designer">UI/UX Designer</option>
+                                            <option value="Data Analyst">Data Analyst</option>
+                                            <option value="Product Manager">Product Manager</option>
+                                            <option value="DevOps Engineer">DevOps Engineer</option>
+                                        </select>
+                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <p id="position-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                                </div>
+
+                                <!-- Earliest Start Date -->
+                                <div class="space-y-1">
+                                    <label for="start-date" class="block text-xs font-bold text-slate-700">
+                                        Earliest Start Date <span class="text-rose-400">*</span>
+                                    </label>
+                                    <div class="relative pastel-focus rounded-2xl">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                            <i class="fa-solid fa-clock text-xs"></i>
+                                        </div>
+                                        <input type="date" id="start-date" name="startDate" 
+                                            class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:bg-white transition-all">
+                                    </div>
+                                    <p id="start-date-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                                </div>
+
+                                <!-- Employment Type (Radio Buttons) -->
+                                <div class="space-y-1 sm:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                                        Employment Type <span class="text-rose-400">*</span>
+                                    </label>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                        <label class="flex items-center gap-2 p-2.5 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                            <input type="radio" name="employmentType" value="Full-time" class="accent-pastel-tealDark">
+                                            <span class="font-medium">Full-time</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2.5 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                            <input type="radio" name="employmentType" value="Part-time" class="accent-pastel-tealDark">
+                                            <span class="font-medium">Part-time</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2.5 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                            <input type="radio" name="employmentType" value="Internship" class="accent-pastel-tealDark">
+                                            <span class="font-medium">Internship</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2.5 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                            <input type="radio" name="employmentType" value="Contract" class="accent-pastel-tealDark">
+                                            <span class="font-medium">Contract</span>
+                                        </label>
+                                    </div>
+                                    <p id="employment-type-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1 mt-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                                </div>
+
+                                <!-- Expected Salary (Range Slider with Live Output) -->
+                                <div class="space-y-2 sm:col-span-2 bg-pastel-bg/50 p-4 rounded-2xl border border-slate-200/60">
+                                    <div class="flex justify-between items-center">
+                                        <label for="salary" class="block text-xs font-bold text-slate-700">
+                                            Expected Annual Salary ($)
+                                        </label>
+                                        <span id="salary-value" class="text-xs font-extrabold px-3 py-1 rounded-full bg-pastel-teal/30 text-pastel-tealDark border border-pastel-teal/40 font-mono">
+                                            $75,000 / year
+                                        </span>
+                                    </div>
+                                    <input type="range" id="salary" name="salary" min="30000" max="200000" step="5000" value="75000" 
+                                        class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                                    <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                                        <span>$30k</span>
+                                        <span>$115k</span>
+                                        <span>$200k+</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 3: Experience & Skills -->
+                        <div class="space-y-4 pt-3 border-t border-slate-100">
+                            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-lavender"></span> 3. Experience & Skills
+                            </div>
+
+                            <!-- Years of Experience -->
+                            <div class="space-y-1">
+                                <label for="experience" class="block text-xs font-bold text-slate-700">
+                                    Years of Experience <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative pastel-focus rounded-2xl">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-award text-xs"></i>
+                                    </div>
+                                    <input type="number" id="experience" name="experience" min="0" max="40" placeholder="e.g. 3" 
+                                        class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                </div>
+                                <p id="experience-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+
+                            <!-- Key Skills Checkboxes -->
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-bold text-slate-700">
+                                    Key Technical Skills (Select all that apply) <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                    <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-lavender/20 cursor-pointer transition-colors text-xs text-slate-700">
+                                        <input type="checkbox" name="skills" value="JavaScript" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                        <span>JavaScript</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-lavender/20 cursor-pointer transition-colors text-xs text-slate-700">
+                                        <input type="checkbox" name="skills" value="React" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                        <span>React</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-lavender/20 cursor-pointer transition-colors text-xs text-slate-700">
+                                        <input type="checkbox" name="skills" value="Node.js" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                        <span>Node.js</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-lavender/20 cursor-pointer transition-colors text-xs text-slate-700">
+                                        <input type="checkbox" name="skills" value="Python" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                        <span>Python</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-lavender/20 cursor-pointer transition-colors text-xs text-slate-700">
+                                        <input type="checkbox" name="skills" value="Figma" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                        <span>Figma</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-lavender/20 cursor-pointer transition-colors text-xs text-slate-700">
+                                        <input type="checkbox" name="skills" value="SQL" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                        <span>SQL</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-lavender/20 cursor-pointer transition-colors text-xs text-slate-700">
+                                        <input type="checkbox" name="skills" value="AWS" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                        <span>AWS</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-lavender/20 cursor-pointer transition-colors text-xs text-slate-700">
+                                        <input type="checkbox" name="skills" value="Docker" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                        <span>Docker</span>
+                                    </label>
+                                </div>
+                                <p id="skills-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+
+                            <!-- Cover Letter / Statement of Purpose -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between items-center">
+                                    <label for="cover-letter" class="block text-xs font-bold text-slate-700">
+                                        Cover Letter / Statement of Purpose <span class="text-rose-400">*</span>
+                                    </label>
+                                    <span id="char-counter" class="text-[11px] font-mono font-medium text-slate-400">
+                                        0 / 300 chars
+                                    </span>
+                                </div>
+                                <textarea id="cover-letter" name="coverLetter" rows="4" maxlength="300" placeholder="Briefly describe why you are a great fit for this role..." 
+                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all resize-none"></textarea>
+                                <p id="cover-letter-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 4: Document Upload & Terms -->
+                        <div class="space-y-4 pt-3 border-t border-slate-100">
+                            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-blue"></span> 4. Document Upload & Terms
+                            </div>
+
+                            <!-- Resume / CV Upload -->
+                            <div class="space-y-1">
+                                <label for="resume" class="block text-xs font-bold text-slate-700">
+                                    Resume / CV Upload (.pdf, .docx max 5MB) <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative flex items-center">
+                                    <input type="file" id="resume" name="resume" accept=".pdf,.docx" 
+                                        class="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-pastel-blue/40 file:text-pastel-blueDark hover:file:bg-pastel-blue/60 cursor-pointer border border-slate-200 rounded-2xl bg-slate-50 p-1">
+                                </div>
+                                <p id="resume-info" class="text-[11px] text-slate-400 italic">Upload a valid PDF or DOCX document under 5MB.</p>
+                                <p id="resume-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+
+                            <!-- Terms & Conditions Checkbox -->
+                            <div class="pt-2">
+                                <label class="flex items-start gap-3 cursor-pointer group">
+                                    <div class="relative flex items-center mt-0.5">
+                                        <input type="checkbox" id="terms" name="terms" class="peer sr-only">
+                                        <div class="w-5 h-5 border border-slate-300 rounded-lg bg-slate-50 peer-checked:bg-pastel-tealDark peer-checked:border-pastel-tealDark transition-all flex items-center justify-center">
+                                            <i class="fa-solid fa-check text-xs text-white opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-slate-600 group-hover:text-slate-900 transition-colors">
+                                        I certify that all statements made in this application are true and correct. <span class="text-rose-400">*</span>
+                                    </span>
+                                </label>
+                                <p id="terms-error" class="text-[11px] text-rose-500 font-medium hidden mt-1 flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-3">
+                            <button type="submit" id="submit-btn" 
+                                class="w-full bg-gradient-to-r from-pastel-tealDark to-pastel-blueDark hover:opacity-95 text-white font-bold py-3.5 px-6 rounded-2xl shadow-sm active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 text-sm">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Job Application
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Dynamic Preview & Event Console (5 cols) -->
+            <div class="lg:col-span-5 space-y-6">
+
+                <!-- Dynamic Application Live Summary Card -->
+                <div class="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-pastel-pink animate-pulse"></span>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">
+                                Real-Time Application Summary
+                            </h3>
+                        </div>
+                        <span id="summary-badge" class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Draft</span>
+                    </div>
+
+                    <div id="summary-card-body" class="bg-pastel-bg/60 border border-slate-200/60 rounded-2xl p-4 space-y-3 transition-all">
+                        <div class="flex justify-between items-start border-b border-slate-200/60 pb-3">
+                            <div>
+                                <h4 id="preview-name" class="font-extrabold text-slate-800 text-base">Applicant Name</h4>
+                                <p id="preview-contact" class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-envelope mr-1 text-slate-400"></i> No email provided</p>
+                            </div>
+                            <div class="text-right">
+                                <span id="preview-salary" class="text-lg font-extrabold text-pastel-tealDark">$75,000</span>
+                                <span class="text-[10px] text-slate-400 block font-semibold">/ year expected</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-white p-2.5 rounded-xl border border-slate-100">
+                                <span class="text-[10px] text-slate-400 block font-semibold">Position</span>
+                                <span id="preview-position" class="font-bold text-slate-700">None Selected</span>
+                            </div>
+                            <div class="bg-white p-2.5 rounded-xl border border-slate-100">
+                                <span class="text-[10px] text-slate-400 block font-semibold">Employment Type</span>
+                                <span id="preview-type" class="font-bold text-slate-700">Not Selected</span>
+                            </div>
+                        </div>
+
+                        <div class="text-xs pt-1">
+                            <span class="text-[10px] text-slate-400 block font-semibold mb-1">Key Technical Skills</span>
+                            <div id="preview-skills" class="flex flex-wrap gap-1 text-[11px] text-slate-500">
+                                <span class="italic text-slate-400">No skills selected yet</span>
+                            </div>
+                        </div>
+
+                        <div class="text-xs pt-1 border-t border-slate-200/50">
+                            <span class="text-[10px] text-slate-400 block font-semibold mb-0.5">Resume Status</span>
+                            <span id="preview-resume-status" class="text-slate-500 font-mono text-[11px]">No file attached</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Event Console Monitor -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-xl flex flex-col h-[400px] text-white">
+                    
+                    <!-- Logger Header -->
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <span class="flex gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-pink inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-yellow inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-teal inline-block"></span>
+                            </span>
+                            <span class="text-xs font-mono font-bold text-slate-300 ml-1">Event_Monitor.log</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="event-count-badge" class="text-[10px] font-mono bg-slate-800 text-pastel-teal px-2 py-0.5 rounded-full">0 events</span>
+                            <button id="clear-log-btn" class="text-xs text-slate-400 hover:text-white transition-colors px-2 py-1 rounded bg-slate-800 border border-slate-700 hover:border-slate-600">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Logger Content Stream -->
+                    <div id="event-log-container" class="flex-1 overflow-y-auto log-scrollbar py-3 font-mono text-xs space-y-2 pr-1">
+                        <div class="text-slate-500 italic text-[11px] py-12 text-center">
+                            Interact with the application form to view live JavaScript events in real time.
+                        </div>
+                    </div>
+
+                    <!-- Event Legend -->
+                    <div class="pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2 text-[10px] font-mono text-slate-400">
+                        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-pastel-yellow"></span> focus / blur</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-pastel-blue"></span> input / keyup</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-pastel-lavender"></span> change event</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-pastel-teal"></span> submit / reset</div>
+                    </div>
+
+                </div>
+
+                <!-- Submission Success Modal / Card -->
+                <div id="success-card" class="bg-gradient-to-br from-pastel-mint/80 to-white border border-pastel-tealDark/30 rounded-3xl p-6 shadow-md hidden transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="p-3 bg-pastel-teal/30 rounded-2xl text-pastel-tealDark">
+                            <i class="fa-solid fa-circle-check text-2xl"></i>
+                        </div>
+                        <div class="flex-1 space-y-1">
+                            <h4 class="text-base font-extrabold text-slate-800">Job Application Submitted!</h4>
+                            <p class="text-xs text-slate-600">
+                                Form submitted successfully by <strong class="text-slate-800">Pratyaam Sinha (24070521180)</strong>.
+                            </p>
+                            
+                            <div class="mt-3 bg-white/90 border border-slate-200/80 rounded-2xl p-3 font-mono text-xs text-slate-700 space-y-1">
+                                <div><span class="text-slate-400">Applicant:</span> <span id="summary-name" class="font-bold text-slate-800"></span></div>
+                                <div><span class="text-slate-400">Role:</span> <span id="summary-role" class="font-bold text-pastel-tealDark"></span></div>
+                                <div><span class="text-slate-400">Type:</span> <span id="summary-type" class="font-bold text-slate-800"></span></div>
+                                <div><span class="text-slate-400">Salary:</span> <span id="summary-salary" class="font-bold text-slate-800"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. DOM Element References ---
+            const jobForm = document.getElementById('job-form');
+            const fullNameInput = document.getElementById('full-name');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const dobInput = document.getElementById('dob');
+            
+            const positionSelect = document.getElementById('position');
+            const startDateInput = document.getElementById('start-date');
+            const salaryInput = document.getElementById('salary');
+            const salaryValue = document.getElementById('salary-value');
+            
+            const experienceInput = document.getElementById('experience');
+            const coverLetterInput = document.getElementById('cover-letter');
+            const charCounter = document.getElementById('char-counter');
+            
+            const resumeInput = document.getElementById('resume');
+            const termsCheckbox = document.getElementById('terms');
+            
+            const resetBtn = document.getElementById('reset-btn');
+            const autofillBtn = document.getElementById('autofill-btn');
+
+            // Error Message Elements
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            const phoneError = document.getElementById('phone-error');
+            const dobError = document.getElementById('dob-error');
+            const positionError = document.getElementById('position-error');
+            const startDateError = document.getElementById('start-date-error');
+            const employmentTypeError = document.getElementById('employment-type-error');
+            const experienceError = document.getElementById('experience-error');
+            const skillsError = document.getElementById('skills-error');
+            const coverLetterError = document.getElementById('cover-letter-error');
+            const resumeError = document.getElementById('resume-error');
+            const termsError = document.getElementById('terms-error');
+
+            // Status Icon Containers
+            const nameIcon = document.getElementById('name-status-icon');
+            const emailIcon = document.getElementById('email-status-icon');
+            const phoneIcon = document.getElementById('phone-status-icon');
+            const dobIcon = document.getElementById('dob-status-icon');
+
+            // Live Preview Card Elements
+            const previewName = document.getElementById('preview-name');
+            const previewContact = document.getElementById('preview-contact');
+            const previewSalary = document.getElementById('preview-salary');
+            const previewPosition = document.getElementById('preview-position');
+            const previewType = document.getElementById('preview-type');
+            const previewSkills = document.getElementById('preview-skills');
+            const previewResumeStatus = document.getElementById('preview-resume-status');
+            const summaryBadge = document.getElementById('summary-badge');
+
+            // Event Logger Elements
+            const logContainer = document.getElementById('event-log-container');
+            const clearLogBtn = document.getElementById('clear-log-btn');
+            const eventCountBadge = document.getElementById('event-count-badge');
+
+            // Success Summary Elements
+            const successCard = document.getElementById('success-card');
+            const summaryName = document.getElementById('summary-name');
+            const summaryRole = document.getElementById('summary-role');
+            const summaryType = document.getElementById('summary-type');
+            const summarySalary = document.getElementById('summary-salary');
+
+            let eventCount = 0;
+
+            // --- 2. Real-Time Event Logger Function ---
+            function logEvent(eventName, targetName, detail, badgeColor) {
+                eventCount++;
+                eventCountBadge.textContent = `${eventCount} event${eventCount === 1 ? '' : 's'}`;
+
+                // Clear placeholder on first log
+                const placeholder = logContainer.querySelector('.italic');
+                if (placeholder) {
+                    logContainer.innerHTML = '';
+                }
+
+                const timestamp = new Date().toLocaleTimeString().split(' ')[0];
+                const logItem = document.createElement('div');
+                logItem.className = 'p-2 rounded-xl bg-slate-800/90 border border-slate-700/60 flex items-start justify-between gap-2 text-xs animate-fade-in';
+
+                logItem.innerHTML = `
+                    <div class="flex items-start gap-2 overflow-hidden">
+                        <span class="text-[10px] px-1.5 py-0.5 rounded ${badgeColor} font-bold shrink-0">
+                            ${eventName.toUpperCase()}
+                        </span>
+                        <div class="truncate">
+                            <span class="text-slate-200 font-semibold">&lt;${targetName}&gt;</span>
+                            <span class="text-slate-400 block text-[11px] truncate">${detail}</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-slate-500 shrink-0 font-mono">${timestamp}</span>
+                `;
+
+                logContainer.prepend(logItem);
+            }
+
+            clearLogBtn.addEventListener('click', () => {
+                logContainer.innerHTML = `
+                    <div class="text-slate-500 italic text-[11px] py-12 text-center">
+                        Log cleared. Trigger events by interacting with inputs.
+                    </div>
+                `;
+                eventCount = 0;
+                eventCountBadge.textContent = '0 events';
+            });
+
+            // --- 3. Input Validation Logic & Helpers ---
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const phoneRegex = /^[0-9]{10}$/;
+
+            function setValidStyle(inputEl, errorEl, iconEl) {
+                if (inputEl) {
+                    inputEl.classList.remove('border-rose-400', 'border-slate-200');
+                    inputEl.classList.add('border-pastel-tealDark');
+                }
+                if (errorEl) errorEl.classList.add('hidden');
+                if (iconEl) {
+                    iconEl.classList.remove('hidden');
+                    iconEl.innerHTML = '<i class="fa-solid fa-circle-check text-pastel-tealDark text-xs"></i>';
+                }
+            }
+
+            function setInvalidStyle(inputEl, errorEl, iconEl, message) {
+                if (inputEl) {
+                    inputEl.classList.remove('border-pastel-tealDark', 'border-slate-200');
+                    inputEl.classList.add('border-rose-400');
+                }
+                if (errorEl) {
+                    const span = errorEl.querySelector('span');
+                    if (span) span.textContent = message;
+                    errorEl.classList.remove('hidden');
+                }
+                if (iconEl) {
+                    iconEl.classList.remove('hidden');
+                    iconEl.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-400 text-xs"></i>';
+                }
+            }
+
+            function resetStyle(inputEl, errorEl, iconEl) {
+                if (inputEl) {
+                    inputEl.classList.remove('border-rose-400', 'border-pastel-tealDark');
+                    inputEl.classList.add('border-slate-200');
+                }
+                if (errorEl) errorEl.classList.add('hidden');
+                if (iconEl) iconEl.classList.add('hidden');
+            }
+
+            // Field Validation Functions
+            function validateFullName() {
+                const val = fullNameInput.value.trim();
+                if (val === '') {
+                    setInvalidStyle(fullNameInput, nameError, nameIcon, 'Full name is required.');
+                    return false;
+                } else if (val.length < 3) {
+                    setInvalidStyle(fullNameInput, nameError, nameIcon, 'Name must be at least 3 characters.');
+                    return false;
+                } else {
+                    setValidStyle(fullNameInput, nameError, nameIcon);
+                    return true;
+                }
+            }
+
+            function validateEmail() {
+                const val = emailInput.value.trim();
+                if (val === '') {
+                    setInvalidStyle(emailInput, emailError, emailIcon, 'Email address is required.');
+                    return false;
+                } else if (!emailRegex.test(val)) {
+                    setInvalidStyle(emailInput, emailError, emailIcon, 'Enter a valid email address.');
+                    return false;
+                } else {
+                    setValidStyle(emailInput, emailError, emailIcon);
+                    return true;
+                }
+            }
+
+            function validatePhone() {
+                const val = phoneInput.value.trim();
+                if (val === '') {
+                    setInvalidStyle(phoneInput, phoneError, phoneIcon, 'Phone number is required.');
+                    return false;
+                } else if (!phoneRegex.test(val)) {
+                    setInvalidStyle(phoneInput, phoneError, phoneIcon, 'Enter a valid 10-digit mobile number.');
+                    return false;
+                } else {
+                    setValidStyle(phoneInput, phoneError, phoneIcon);
+                    return true;
+                }
+            }
+
+            function validateDOB() {
+                const val = dobInput.value;
+                if (!val) {
+                    setInvalidStyle(dobInput, dobError, dobIcon, 'Date of Birth is required.');
+                    return false;
+                } else {
+                    setValidStyle(dobInput, dobError, dobIcon);
+                    return true;
+                }
+            }
+
+            function validatePosition() {
+                if (positionSelect.value === '') {
+                    setInvalidStyle(positionSelect, positionError, null, 'Please select a position.');
+                    return false;
+                } else {
+                    setValidStyle(positionSelect, positionError, null);
+                    return true;
+                }
+            }
+
+            function validateStartDate() {
+                if (!startDateInput.value) {
+                    setInvalidStyle(startDateInput, startDateError, null, 'Earliest start date is required.');
+                    return false;
+                } else {
+                    setValidStyle(startDateInput, startDateError, null);
+                    return true;
+                }
+            }
+
+            function validateEmploymentType() {
+                const selected = document.querySelector('input[name="employmentType"]:checked');
+                if (!selected) {
+                    employmentTypeError.querySelector('span').textContent = 'Select an employment type.';
+                    employmentTypeError.classList.remove('hidden');
+                    return false;
+                } else {
+                    employmentTypeError.classList.add('hidden');
+                    return true;
+                }
+            }
+
+            function validateExperience() {
+                const val = experienceInput.value;
+                if (val === '') {
+                    setInvalidStyle(experienceInput, experienceError, null, 'Years of experience is required.');
+                    return false;
+                } else if (parseInt(val, 10) < 0) {
+                    setInvalidStyle(experienceInput, experienceError, null, 'Experience cannot be negative.');
+                    return false;
+                } else {
+                    setValidStyle(experienceInput, experienceError, null);
+                    return true;
+                }
+            }
+
+            function validateSkills() {
+                const checked = document.querySelectorAll('input[name="skills"]:checked');
+                if (checked.length === 0) {
+                    skillsError.querySelector('span').textContent = 'Select at least one skill.';
+                    skillsError.classList.remove('hidden');
+                    return false;
+                } else {
+                    skillsError.classList.add('hidden');
+                    return true;
+                }
+            }
+
+            function validateCoverLetter() {
+                const val = coverLetterInput.value.trim();
+                if (val === '') {
+                    setInvalidStyle(coverLetterInput, coverLetterError, null, 'Cover letter is required.');
+                    return false;
+                } else if (val.length < 20) {
+                    setInvalidStyle(coverLetterInput, coverLetterError, null, 'Provide at least 20 characters.');
+                    return false;
+                } else {
+                    setValidStyle(coverLetterInput, coverLetterError, null);
+                    return true;
+                }
+            }
+
+            function validateResume() {
+                const file = resumeInput.files[0];
+                if (!file) {
+                    resumeError.querySelector('span').textContent = 'Please upload a resume file.';
+                    resumeError.classList.remove('hidden');
+                    return false;
+                }
+                const allowedExts = ['pdf', 'docx'];
+                const fileExt = file.name.split('.').pop().toLowerCase();
+                const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+
+                if (!allowedExts.includes(fileExt)) {
+                    resumeError.querySelector('span').textContent = 'Only .pdf or .docx files are allowed.';
+                    resumeError.classList.remove('hidden');
+                    return false;
+                } else if (file.size > maxSizeInBytes) {
+                    resumeError.querySelector('span').textContent = 'File size exceeds 5MB limit.';
+                    resumeError.classList.remove('hidden');
+                    return false;
+                } else {
+                    resumeError.classList.add('hidden');
+                    return true;
+                }
+            }
+
+            function validateTerms() {
+                if (!termsCheckbox.checked) {
+                    termsError.querySelector('span').textContent = 'You must accept the terms.';
+                    termsError.classList.remove('hidden');
+                    return false;
+                } else {
+                    termsError.classList.add('hidden');
+                    return true;
+                }
+            }
+
+            // --- 4. Event Listeners ---
+
+            // FOCUS EVENTS
+            fullNameInput.addEventListener('focus', () => logEvent('focus', 'input#full-name', 'Focused Full Name input', 'bg-pastel-yellow text-slate-800'));
+            emailInput.addEventListener('focus', () => logEvent('focus', 'input#email', 'Focused Email input', 'bg-pastel-yellow text-slate-800'));
+            phoneInput.addEventListener('focus', () => logEvent('focus', 'input#phone', 'Focused Phone input', 'bg-pastel-yellow text-slate-800'));
+            dobInput.addEventListener('focus', () => logEvent('focus', 'input#dob', 'Focused DOB input', 'bg-pastel-yellow text-slate-800'));
+            positionSelect.addEventListener('focus', () => logEvent('focus', 'select#position', 'Focused Position dropdown', 'bg-pastel-yellow text-slate-800'));
+            experienceInput.addEventListener('focus', () => logEvent('focus', 'input#experience', 'Focused Experience input', 'bg-pastel-yellow text-slate-800'));
+            coverLetterInput.addEventListener('focus', () => logEvent('focus', 'textarea#cover-letter', 'Focused Cover Letter textarea', 'bg-pastel-yellow text-slate-800'));
+
+            // BLUR EVENTS (Trigger Validation)
+            fullNameInput.addEventListener('blur', () => { validateFullName(); logEvent('blur', 'input#full-name', 'Left Full Name input', 'bg-slate-700 text-slate-200'); });
+            emailInput.addEventListener('blur', () => { validateEmail(); logEvent('blur', 'input#email', 'Left Email input', 'bg-slate-700 text-slate-200'); });
+            phoneInput.addEventListener('blur', () => { validatePhone(); logEvent('blur', 'input#phone', 'Left Phone input', 'bg-slate-700 text-slate-200'); });
+            dobInput.addEventListener('blur', () => { validateDOB(); logEvent('blur', 'input#dob', 'Left DOB field', 'bg-slate-700 text-slate-200'); });
+            positionSelect.addEventListener('blur', () => { validatePosition(); logEvent('blur', 'select#position', 'Left Position select', 'bg-slate-700 text-slate-200'); });
+            startDateInput.addEventListener('blur', () => { validateStartDate(); logEvent('blur', 'input#start-date', 'Left Start Date field', 'bg-slate-700 text-slate-200'); });
+            experienceInput.addEventListener('blur', () => { validateExperience(); logEvent('blur', 'input#experience', 'Left Experience field', 'bg-slate-700 text-slate-200'); });
+            coverLetterInput.addEventListener('blur', () => { validateCoverLetter(); logEvent('blur', 'textarea#cover-letter', 'Left Cover Letter field', 'bg-slate-700 text-slate-200'); });
+
+            // INPUT EVENTS (Live Updates)
+            fullNameInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                previewName.textContent = val !== '' ? val : 'Applicant Name';
+                logEvent('input', 'input#full-name', `Typing: "${val}"`, 'bg-pastel-blue text-slate-800');
+                if (val.length > 0) validateFullName(); else resetStyle(fullNameInput, nameError, nameIcon);
+            });
+
+            emailInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                previewContact.innerHTML = val !== '' 
+                    ? `<i class="fa-solid fa-envelope mr-1 text-pastel-tealDark"></i> ${val}`
+                    : `<i class="fa-solid fa-envelope mr-1 text-slate-400"></i> No email provided`;
+                logEvent('input', 'input#email', `Typing: "${val}"`, 'bg-pastel-blue text-slate-800');
+                if (val.length > 0) validateEmail(); else resetStyle(emailInput, emailError, emailIcon);
+            });
+
+            phoneInput.addEventListener('input', (e) => {
+                logEvent('input', 'input#phone', `Length: ${e.target.value.length}/10`, 'bg-pastel-blue text-slate-800');
+                if (e.target.value.length > 0) validatePhone(); else resetStyle(phoneInput, phoneError, phoneIcon);
+            });
+
+            // Salary Range Slider Listener
+            salaryInput.addEventListener('input', (e) => {
+                const formatted = `$${parseInt(e.target.value).toLocaleString()}`;
+                salaryValue.textContent = `${formatted} / year`;
+                previewSalary.textContent = formatted;
+                logEvent('input', 'input#salary', `Salary adjusted: ${formatted}`, 'bg-pastel-blue text-slate-800');
+            });
+
+            // Cover Letter Real-Time Character Counter
+            coverLetterInput.addEventListener('input', (e) => {
+                const len = e.target.value.length;
+                charCounter.textContent = `${len} / 300 chars`;
+                logEvent('input', 'textarea#cover-letter', `Char count: ${len}/300`, 'bg-pastel-blue text-slate-800');
+                if (len > 0) validateCoverLetter(); else resetStyle(coverLetterInput, coverLetterError, null);
+            });
+
+            // CHANGE EVENTS
+            positionSelect.addEventListener('change', (e) => {
+                previewPosition.textContent = e.target.value;
+                summaryBadge.textContent = 'Configured';
+                summaryBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-pastel-teal/30 text-pastel-tealDark';
+                logEvent('change', 'select#position', `Selected: ${e.target.value}`, 'bg-pastel-lavender text-slate-800');
+                validatePosition();
+            });
+
+            const empRadios = document.querySelectorAll('input[name="employmentType"]');
+            empRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    previewType.textContent = e.target.value;
+                    logEvent('change', 'radio[employmentType]', `Selected: ${e.target.value}`, 'bg-pastel-lavender text-slate-800');
+                    validateEmploymentType();
+                });
+            });
+
+            const skillCheckboxes = document.querySelectorAll('input[name="skills"]');
+            skillCheckboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                    const selected = Array.from(skillCheckboxes).filter(c => c.checked).map(c => c.value);
+                    logEvent('change', 'checkbox[skills]', `Selected ${selected.length} skill(s)`, 'bg-pastel-lavender text-slate-800');
+                    if (selected.length > 0) {
+                        previewSkills.innerHTML = selected.map(s => 
+                            `<span class="px-2 py-0.5 rounded-lg bg-pastel-teal/20 text-pastel-tealDark font-semibold border border-pastel-teal/30">${s}</span>`
+                        ).join('');
+                    } else {
+                        previewSkills.innerHTML = `<span class="italic text-slate-400">No skills selected yet</span>`;
+                    }
+                    validateSkills();
+                });
+            });
+
+            // File Upload Validation & Preview
+            resumeInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    previewResumeStatus.textContent = `📎 ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+                    logEvent('change', 'input#resume', `Uploaded file: ${file.name}`, 'bg-pastel-lavender text-slate-800');
+                    validateResume();
+                } else {
+                    previewResumeStatus.textContent = 'No file attached';
+                }
+            });
+
+            termsCheckbox.addEventListener('change', (e) => {
+                logEvent('change', 'input#terms', `Terms checked: ${e.target.checked}`, 'bg-pastel-lavender text-slate-800');
+                validateTerms();
+            });
+
+            // AUTOFILL SAMPLE DATA BUTTON
+            autofillBtn.addEventListener('click', () => {
+                fullNameInput.value = 'Pratyaam Sinha';
+                emailInput.value = 'pratyaam.sinha@example.com';
+                phoneInput.value = '9876543210';
+                dobInput.value = '2002-05-14';
+                positionSelect.value = 'Full Stack Developer';
+                startDateInput.value = '2026-11-01';
+                
+                // Select Full-time radio
+                document.querySelector('input[name="employmentType"][value="Full-time"]').checked = true;
+                
+                salaryInput.value = '95000';
+                salaryValue.textContent = '$95,000 / year';
+                
+                experienceInput.value = '3';
+
+                // Check Skills
+                const defaultSkills = ['JavaScript', 'React', 'Node.js', 'SQL'];
+                skillCheckboxes.forEach(cb => {
+                    cb.checked = defaultSkills.includes(cb.value);
+                });
+
+                coverLetterInput.value = 'Enthusiastic web developer with hands-on experience in modern JavaScript frameworks, API design, and responsive web design looking to drive technological innovation.';
+                charCounter.textContent = `${coverLetterInput.value.length} / 300 chars`;
+
+                termsCheckbox.checked = true;
+
+                // Trigger events to refresh previews
+                fullNameInput.dispatchEvent(new Event('input'));
+                emailInput.dispatchEvent(new Event('input'));
+                positionSelect.dispatchEvent(new Event('change'));
+                salaryInput.dispatchEvent(new Event('input'));
+                skillCheckboxes[0].dispatchEvent(new Event('change'));
+
+                logEvent('autofill', 'DOM', 'Sample data populated into form', 'bg-pastel-yellowDark text-white font-bold');
+            });
+
+            // SUBMIT FORM EVENT
+            jobForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                logEvent('submit', 'form#job-form', 'Submission intercepted via event.preventDefault()', 'bg-pastel-teal text-slate-900 font-extrabold');
+
+                const isNameValid = validateFullName();
+                const isEmailValid = validateEmail();
+                const isPhoneValid = validatePhone();
+                const isDobValid = validateDOB();
+                const isPosValid = validatePosition();
+                const isStartValid = validateStartDate();
+                const isEmpValid = validateEmploymentType();
+                const isExpValid = validateExperience();
+                const isSkillsValid = validateSkills();
+                const isCoverValid = validateCoverLetter();
+                const isResumeValid = validateResume();
+                const isTermsValid = validateTerms();
+
+                const isFormValid = isNameValid && isEmailValid && isPhoneValid && isDobValid &&
+                                    isPosValid && isStartValid && isEmpValid && isExpValid &&
+                                    isSkillsValid && isCoverValid && isResumeValid && isTermsValid;
+
+                if (isFormValid) {
+                    const empType = document.querySelector('input[name="employmentType"]:checked').value;
+                    
+                    summaryName.textContent = fullNameInput.value.trim();
+                    summaryRole.textContent = positionSelect.value;
+                    summaryType.textContent = empType;
+                    summarySalary.textContent = `$${parseInt(salaryInput.value).toLocaleString()}`;
+
+                    successCard.classList.remove('hidden');
+                    successCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                    summaryBadge.textContent = 'Application Submitted';
+                    summaryBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-pastel-mintDark text-white';
+
+                    logEvent('success', 'DOM', 'Application validated & processed for Pratyaam Sinha (24070521180)!', 'bg-pastel-mintDark text-white font-bold');
+                } else {
+                    successCard.classList.add('hidden');
+                    logEvent('error', 'DOM', 'Validation failed! Check highlighted form fields.', 'bg-rose-500 text-white font-bold');
+                }
+            });
+
+            // RESET FORM EVENT
+            resetBtn.addEventListener('click', () => {
+                jobForm.reset();
+
+                // Clear Styles & Tooltips
+                resetStyle(fullNameInput, nameError, nameIcon);
+                resetStyle(emailInput, emailError, emailIcon);
+                resetStyle(phoneInput, phoneError, phoneIcon);
+                resetStyle(dobInput, dobError, dobIcon);
+                resetStyle(positionSelect, positionError, null);
+                resetStyle(startDateInput, startDateError, null);
+                resetStyle(experienceInput, experienceError, null);
+                resetStyle(coverLetterInput, coverLetterError, null);
+                
+                employmentTypeError.classList.add('hidden');
+                skillsError.classList.add('hidden');
+                resumeError.classList.add('hidden');
+                termsError.classList.add('hidden');
+
+                // Reset Dynamic Displays
+                salaryValue.textContent = '$75,000 / year';
+                charCounter.textContent = '0 / 300 chars';
+
+                // Reset Preview Card
+                previewName.textContent = 'Applicant Name';
+                previewContact.innerHTML = `<i class="fa-solid fa-envelope mr-1 text-slate-400"></i> No email provided`;
+                previewSalary.textContent = '$75,000';
+                previewPosition.textContent = 'None Selected';
+                previewType.textContent = 'Not Selected';
+                previewSkills.innerHTML = `<span class="italic text-slate-400">No skills selected yet</span>`;
+                previewResumeStatus.textContent = 'No file attached';
+                
+                summaryBadge.textContent = 'Draft';
+                summaryBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500';
+
+                successCard.classList.add('hidden');
+                logEvent('reset', 'form#job-form', 'Reset all fields & state parameters', 'bg-slate-600 text-white');
+            });
+
+        });
+    </script>
+</body>
+</html>

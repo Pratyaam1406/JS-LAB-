@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sakura">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanismo Application Suite - Pratyaam Sinha (24070521180)</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Noto Serif JP & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Noto Serif JP', 'serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        jp: {
+                            washi: 'var(--jp-washi)',
+                            card: 'var(--jp-card)',
+                            text: 'var(--jp-text)',
+                            muted: 'var(--jp-muted)',
+                            sakura: 'var(--jp-sakura)',
+                            indigo: 'var(--jp-indigo)',
+                            vermilion: 'var(--jp-vermilion)',
+                            matcha: 'var(--jp-matcha)',
+                            border: 'var(--jp-border)',
+                            accentBg: 'var(--jp-accent-bg)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Japanismo Theme Definitions */
+        :root[data-theme="sakura"] {
+            --jp-washi: #FDFBF7;
+            --jp-card: #FFFFFF;
+            --jp-text: #2B2D2F;
+            --jp-muted: #787D82;
+            --jp-sakura: #F7E1E6;
+            --jp-indigo: #2B3A42;
+            --jp-vermilion: #E05A47;
+            --jp-matcha: #8A9A86;
+            --jp-border: #EFE9E1;
+            --jp-accent-bg: #FAF3F4;
+        }
+
+        :root[data-theme="fuji"] {
+            --jp-washi: #F4F7F9;
+            --jp-card: #FFFFFF;
+            --jp-text: #1E293B;
+            --jp-muted: #64748B;
+            --jp-sakura: #D0E1FD;
+            --jp-indigo: #1E3A8A;
+            --jp-vermilion: #DC2626;
+            --jp-matcha: #475569;
+            --jp-border: #E2E8F0;
+            --jp-accent-bg: #EFF6FF;
+        }
+
+        :root[data-theme="matcha"] {
+            --jp-washi: #F7F9F6;
+            --jp-card: #FFFFFF;
+            --jp-text: #233122;
+            --jp-muted: #5C6E5A;
+            --jp-sakura: #E2ECE9;
+            --jp-indigo: #2D4030;
+            --jp-vermilion: #C85A32;
+            --jp-matcha: #688264;
+            --jp-border: #E1E8E0;
+            --jp-accent-bg: #F0F4EF;
+        }
+
+        :root[data-theme="sumi"] {
+            --jp-washi: #14181C;
+            --jp-card: #1E232A;
+            --jp-text: #EAEFEB;
+            --jp-muted: #8E9BA8;
+            --jp-sakura: #3B2A30;
+            --jp-indigo: #81A1C1;
+            --jp-vermilion: #EF695A;
+            --jp-matcha: #A3BE8C;
+            --jp-border: #2C3440;
+            --jp-accent-bg: #252D37;
+        }
+
+        body {
+            background-color: var(--jp-washi);
+            color: var(--jp-text);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        /* Seigaiha (Traditional Wave Pattern Accent) Overlay */
+        .seigaiha-pattern {
+            background-color: transparent;
+            background-image: radial-gradient(circle at 100% 150%, transparent 20px, var(--jp-border) 21px, var(--jp-border) 22px, transparent 23px),
+                              radial-gradient(circle at 0% 150%, transparent 20px, var(--jp-border) 21px, var(--jp-border) 22px, transparent 23px),
+                              radial-gradient(circle at 50% 100%, transparent 20px, var(--jp-border) 21px, var(--jp-border) 22px, transparent 23px);
+            background-size: 40px 20px;
+            opacity: 0.35;
+        }
+
+        .jp-card {
+            background-color: var(--jp-card);
+            border: 1px solid var(--jp-border);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .jp-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .jp-input {
+            background-color: var(--jp-washi);
+            border: 1px solid var(--jp-border);
+            color: var(--jp-text);
+            transition: all 0.2s ease;
+        }
+
+        .jp-input:focus {
+            outline: none;
+            border-color: var(--jp-vermilion);
+            box-shadow: 0 0 0 3px rgba(224, 90, 71, 0.15);
+        }
+
+        /* Floating Sakura Petal Animation */
+        @keyframes floatPetal {
+            0% { transform: translateY(-10px) rotate(0deg) translateX(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg) translateX(80px); opacity: 0; }
+        }
+
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            background: linear-gradient(135deg, #F7E1E6, #F9C5B2);
+            border-radius: 15px 0 15px 0;
+            opacity: 0.6;
+            animation: floatPetal 12s linear infinite;
+        }
+
+        .log-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+        .log-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.03); }
+        .log-scrollbar::-webkit-scrollbar-thumb { background: var(--jp-muted); border-radius: 4px; }
+
+        /* Custom Modal Transitions */
+        .modal-enter { opacity: 0; transform: scale(0.96); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    </style>
+</head>
+<body class="font-sans min-h-screen relative pb-12">
+
+    <!-- Background Sakura Petals Containers -->
+    <div id="sakura-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="petal w-3 h-4 left-[10%]" style="animation-duration: 11s; animation-delay: 0s;"></div>
+        <div class="petal w-4 h-5 left-[25%]" style="animation-duration: 14s; animation-delay: 2s;"></div>
+        <div class="petal w-2 h-3 left-[45%]" style="animation-duration: 9s; animation-delay: 4s;"></div>
+        <div class="petal w-3 h-4 left-[70%]" style="animation-duration: 13s; animation-delay: 1s;"></div>
+        <div class="petal w-4 h-4 left-[88%]" style="animation-duration: 10s; animation-delay: 3s;"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 relative z-10 space-y-6">
+
+        <!-- HEADER & STUDENT BADGE -->
+        <header class="jp-card rounded-2xl p-6 sm:p-8 relative overflow-hidden border-t-4 border-t-[var(--jp-vermilion)]">
+            <div class="absolute right-0 top-0 bottom-0 w-64 seigaiha-pattern pointer-events-none hidden md:block"></div>
+            
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 relative z-10">
+                <div class="space-y-2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[var(--jp-accent-bg)] border border-[var(--jp-border)]">
+                        <span class="w-2 h-2 rounded-full bg-[var(--jp-vermilion)]"></span>
+                        <span class="font-serif tracking-wider text-[var(--jp-text)]">日本主義 • Fetch API &amp; AJAX Suite</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-serif font-bold tracking-tight flex flex-wrap items-center gap-3">
+                        Pratyaam Sinha 
+                        <span class="text-base sm:text-xl font-sans font-normal px-3 py-1 rounded-xl bg-[var(--jp-indigo)] text-white font-mono">
+                            24070521180
+                        </span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-[var(--jp-muted)]">
+                        Dual Data Fetching Architectures (Native Fetch API vs. jQuery $.getJSON) with Real-Time Table Analytics &amp; Japanismo Design System
+                    </p>
+                </div>
+
+                <!-- Theme Selector & Preference Toolbar -->
+                <div class="flex flex-wrap items-center gap-3 bg-[var(--jp-washi)] p-3 rounded-2xl border border-[var(--jp-border)] w-full lg:w-auto">
+                    <div class="flex items-center gap-2 text-xs font-semibold">
+                        <i class="fa-solid fa-palette text-[var(--jp-vermilion)]"></i>
+                        <span>Theme:</span>
+                    </div>
+                    <div class="grid grid-cols-4 gap-1.5 w-full sm:w-auto">
+                        <button type="button" data-theme-btn="sakura" class="px-3 py-1.5 rounded-xl text-xs font-semibold border border-[var(--jp-border)] bg-white shadow-xs hover:scale-105 transition-transform flex items-center gap-1.5">
+                            <span>🌸</span> Sakura
+                        </button>
+                        <button type="button" data-theme-btn="fuji" class="px-3 py-1.5 rounded-xl text-xs font-semibold border border-[var(--jp-border)] bg-white shadow-xs hover:scale-105 transition-transform flex items-center gap-1.5">
+                            <span>🗻</span> Fuji
+                        </button>
+                        <button type="button" data-theme-btn="matcha" class="px-3 py-1.5 rounded-xl text-xs font-semibold border border-[var(--jp-border)] bg-white shadow-xs hover:scale-105 transition-transform flex items-center gap-1.5">
+                            <span>🍵</span> Matcha
+                        </button>
+                        <button type="button" data-theme-btn="sumi" class="px-3 py-1.5 rounded-xl text-xs font-semibold border border-[var(--jp-border)] bg-white shadow-xs hover:scale-105 transition-transform flex items-center gap-1.5">
+                            <span>🖌️</span> Sumi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTROLS & DUAL FETCHING TRIGGER PANEL -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left Data Controls (8 Cols) -->
+            <div class="lg:col-span-8 space-y-6">
+                
+                <div class="jp-card rounded-2xl p-6 space-y-5">
+                    
+                    <!-- Execution Header & Fetch Mode Buttons -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--jp-border)]">
+                        <div>
+                            <h2 class="font-serif font-bold text-lg flex items-center gap-2">
+                                <span class="text-[var(--jp-vermilion)]">❖</span> Fetch Data Source Engine
+                            </h2>
+                            <p class="text-xs text-[var(--jp-muted)]">Select execution method to retrieve structured JSON records</p>
+                        </div>
+                        
+                        <div class="flex items-center gap-2">
+                            <button id="btn-fetch-native" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[var(--jp-vermilion)] hover:opacity-90 transition-all shadow-sm flex items-center gap-2">
+                                <i class="fa-solid fa-code"></i> Native fetch()
+                            </button>
+                            <button id="btn-fetch-jquery" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[var(--jp-indigo)] hover:opacity-90 transition-all shadow-sm flex items-center gap-2">
+                                <i class="fa-solid fa-bolt"></i> jQuery $.getJSON()
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Controls & Live Search -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        
+                        <!-- Search Box -->
+                        <div class="relative sm:col-span-1">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-xs text-[var(--jp-muted)]"></i>
+                            <input type="text" id="search-input" placeholder="Search applicant, skill..." 
+                                class="w-full pl-9 pr-3 py-2 jp-input rounded-xl text-xs font-medium">
+                        </div>
+
+                        <!-- Department Filter -->
+                        <div>
+                            <select id="filter-dept" class="w-full p-2 jp-input rounded-xl text-xs font-medium cursor-pointer">
+                                <option value="">All Departments</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Design">Design</option>
+                                <option value="Data & AI">Data &amp; AI</option>
+                                <option value="DevOps">DevOps</option>
+                            </select>
+                        </div>
+
+                        <!-- Status Filter -->
+                        <div>
+                            <select id="filter-status" class="w-full p-2 jp-input rounded-xl text-xs font-medium cursor-pointer">
+                                <option value="">All Statuses</option>
+                                <option value="Under Review">Under Review</option>
+                                <option value="Shortlisted">Shortlisted</option>
+                                <option value="Interviewed">Interviewed</option>
+                                <option value="Hired">Hired</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- DYNAMIC APPLICANTS TABLE -->
+                    <div class="overflow-x-auto rounded-xl border border-[var(--jp-border)]">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-[var(--jp-accent-bg)] border-b border-[var(--jp-border)] font-serif text-[var(--jp-text)]">
+                                    <th class="p-3 font-bold cursor-pointer hover:bg-black/5" data-sort="name">
+                                        Applicant <i class="fa-solid fa-sort text-[10px] opacity-40"></i>
+                                    </th>
+                                    <th class="p-3 font-bold cursor-pointer hover:bg-black/5" data-sort="department">
+                                        Department <i class="fa-solid fa-sort text-[10px] opacity-40"></i>
+                                    </th>
+                                    <th class="p-3 font-bold cursor-pointer hover:bg-black/5" data-sort="role">
+                                        Role <i class="fa-solid fa-sort text-[10px] opacity-40"></i>
+                                    </th>
+                                    <th class="p-3 font-bold cursor-pointer hover:bg-black/5" data-sort="experience">
+                                        Exp <i class="fa-solid fa-sort text-[10px] opacity-40"></i>
+                                    </th>
+                                    <th class="p-3 font-bold cursor-pointer hover:bg-black/5" data-sort="status">
+                                        Status <i class="fa-solid fa-sort text-[10px] opacity-40"></i>
+                                    </th>
+                                    <th class="p-3 font-bold text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body" class="divide-y divide-[var(--jp-border)]">
+                                <tr>
+                                    <td colspan="6" class="p-8 text-center text-[var(--jp-muted)] italic">
+                                        Click a fetch button above to load JSON applicant data.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination & Summary Stats -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs pt-2">
+                        <div id="table-stats" class="text-[var(--jp-muted)] font-medium">
+                            Showing 0 entries
+                        </div>
+                        <div class="flex items-center gap-1.5" id="pagination-controls">
+                            <!-- Pagination buttons dynamically rendered -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Sidebar: Code Comparison & Live Network Log (4 Cols) -->
+            <div class="lg:col-span-4 space-y-6">
+
+                <!-- CODE INSPECTOR: FETCH VS JQUERY -->
+                <div class="jp-card rounded-2xl p-5 space-y-3">
+                    <div class="flex items-center justify-between pb-3 border-b border-[var(--jp-border)]">
+                        <h3 class="font-serif font-bold text-xs uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-laptop-code text-[var(--jp-vermilion)]"></i> Code Inspector
+                        </h3>
+                        <span id="active-method-tag" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--jp-accent-bg)] border border-[var(--jp-border)] font-bold">
+                            Idle
+                        </span>
+                    </div>
+
+                    <!-- Toggle Code View Tabs -->
+                    <div class="flex border-b border-[var(--jp-border)] text-xs font-semibold">
+                        <button id="tab-btn-fetch" class="py-1.5 px-3 border-b-2 border-[var(--jp-vermilion)] text-[var(--jp-vermilion)]">
+                            fetch() Syntax
+                        </button>
+                        <button id="tab-btn-jquery" class="py-1.5 px-3 border-b-2 border-transparent text-[var(--jp-muted)] hover:text-[var(--jp-text)]">
+                            $.getJSON() Syntax
+                        </button>
+                    </div>
+
+                    <!-- Code Display Box -->
+                    <div class="relative bg-slate-900 rounded-xl p-3 font-mono text-[11px] text-slate-200 overflow-x-auto log-scrollbar min-h-[140px]">
+                        <pre id="code-snippet-box"><code>// Select fetch method above to view implementation details...</code></pre>
+                    </div>
+                </div>
+
+                <!-- NETWORK PERFORMANCE & EVENT LOG -->
+                <div class="jp-card rounded-2xl p-5 space-y-3 bg-slate-950 text-white border-slate-800">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <span class="flex gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                            </span>
+                            <span class="text-xs font-mono font-bold text-slate-300 ml-1">Event_Network.log</span>
+                        </div>
+                        <button id="clear-log-btn" class="text-[10px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800 border border-slate-700">
+                            Clear
+                        </button>
+                    </div>
+
+                    <div id="event-log-container" class="h-48 overflow-y-auto log-scrollbar font-mono text-[11px] space-y-2 pr-1">
+                        <div class="text-slate-500 italic text-center py-8">
+                            No event network traces recorded yet.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- APPLICANT DETAIL MODAL DIALOG -->
+    <div id="applicant-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs hidden">
+        <div class="jp-card w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-6 relative border-2 border-[var(--jp-vermilion)] modal-enter shadow-2xl">
+            <button id="close-modal-btn" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-[var(--jp-washi)] border border-[var(--jp-border)] flex items-center justify-center text-xs font-bold hover:bg-[var(--jp-vermilion)] hover:text-white transition-colors">
+                &times;
+            </button>
+
+            <div class="flex items-center gap-4">
+                <div id="modal-avatar" class="w-14 h-14 rounded-2xl bg-[var(--jp-sakura)] flex items-center justify-center font-serif text-xl font-bold text-[var(--jp-vermilion)] border border-[var(--jp-border)]">
+                    PS
+                </div>
+                <div>
+                    <h3 id="modal-name" class="font-serif font-bold text-xl">Applicant Name</h3>
+                    <p id="modal-role" class="text-xs text-[var(--jp-muted)]">Senior Software Engineer</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-xs">
+                <div class="p-3 rounded-xl bg-[var(--jp-washi)] border border-[var(--jp-border)] space-y-1">
+                    <span class="text-[var(--jp-muted)] text-[10px] uppercase tracking-wider block font-bold">Department</span>
+                    <span id="modal-dept" class="font-bold">Engineering</span>
+                </div>
+                <div class="p-3 rounded-xl bg-[var(--jp-washi)] border border-[var(--jp-border)] space-y-1">
+                    <span class="text-[var(--jp-muted)] text-[10px] uppercase tracking-wider block font-bold">Experience</span>
+                    <span id="modal-exp" class="font-bold">5 Years</span>
+                </div>
+                <div class="p-3 rounded-xl bg-[var(--jp-washi)] border border-[var(--jp-border)] space-y-1">
+                    <span class="text-[var(--jp-muted)] text-[10px] uppercase tracking-wider block font-bold">Email</span>
+                    <span id="modal-email" class="font-mono text-[11px] truncate block">email@domain.com</span>
+                </div>
+                <div class="p-3 rounded-xl bg-[var(--jp-washi)] border border-[var(--jp-border)] space-y-1">
+                    <span class="text-[var(--jp-muted)] text-[10px] uppercase tracking-wider block font-bold">Status</span>
+                    <span id="modal-status" class="font-bold text-[var(--jp-vermilion)]">Under Review</span>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-xs font-bold text-[var(--jp-muted)] uppercase tracking-wider">Technical Skills</span>
+                <div id="modal-skills" class="flex flex-wrap gap-1.5">
+                    <!-- Skills badges injected dynamically -->
+                </div>
+            </div>
+
+            <div class="pt-2 border-t border-[var(--jp-border)] flex justify-end">
+                <button id="modal-ok-btn" class="px-5 py-2 rounded-xl text-xs font-bold text-white bg-[var(--jp-indigo)] hover:opacity-90 transition-opacity">
+                    Close Profile
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAX & FETCH ENGINE JAVASCRIPT LOGIC -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. MOCK JSON DATA BLOB (Inline Data Payload) ---
+            const mockApplicants = [
+                { id: 1, name: "Pratyaam Sinha", department: "Engineering", role: "Full Stack Lead", experience: "4 Yrs", status: "Hired", email: "pratyaam@example.com", skills: ["JavaScript", "React", "Node.js", "Python"] },
+                { id: 2, name: "Aoi Takahashi", department: "Design", role: "UI/UX Designer", experience: "3 Yrs", status: "Shortlisted", email: "aoi.takahashi@japan.jp", skills: ["Figma", "Design Systems", "CSS3"] },
+                { id: 3, name: "Kenji Sato", department: "Data & AI", role: "Data Scientist", experience: "5 Yrs", status: "Interviewed", email: "kenji.sato@ai.io", skills: ["Python", "TensorFlow", "SQL"] },
+                { id: 4, name: "Ren Tanaka", department: "DevOps", role: "Cloud Architect", experience: "6 Yrs", status: "Under Review", email: "ren.tanaka@cloud.jp", skills: ["Docker", "Kubernetes", "AWS"] },
+                { id: 5, name: "Yuki Watanabe", department: "Engineering", role: "Frontend Dev", experience: "2 Yrs", status: "Shortlisted", email: "yuki.w@dev.com", skills: ["Vue.js", "TypeScript", "Tailwind"] },
+                { id: 6, name: "Sakura Ito", department: "Design", role: "Product Illustrator", experience: "4 Yrs", status: "Hired", email: "sakura.ito@art.jp", skills: ["SVG", "Photoshop", "Brand Design"] },
+                { id: 7, name: "Hiroshi Yamamoto", department: "Engineering", role: "Backend Engineer", experience: "5 Yrs", status: "Under Review", email: "hiroshi@server.org", skills: ["Go", "PostgreSQL", "Redis"] },
+                { id: 8, name: "Mei Suzuki", department: "Data & AI", role: "ML Engineer", experience: "3 Yrs", status: "Interviewed", email: "mei.s@machinelearning.io", skills: ["PyTorch", "Scikit-Learn", "R"] }
+            ];
+
+            // Convert to Data URI for real fetch API simulation
+            const jsonBlobUri = "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mockApplicants));
+
+            // --- 2. STATE MANAGEMENT & STORAGE KEYS ---
+            const LOCAL_THEME_KEY = 'pratyaam_japanismo_theme';
+            const SESSION_STATE_KEY = 'pratyaam_japanismo_session';
+
+            let appState = {
+                data: [],
+                filteredData: [],
+                currentPage: 1,
+                pageSize: 4,
+                sortColumn: 'name',
+                sortAsc: true,
+                activeMethod: 'none',
+                searchQuery: '',
+                selectedDept: '',
+                selectedStatus: ''
+            };
+
+            // Syntax Code Templates
+            const syntaxTemplates = {
+                fetch: `// Native ES6 Fetch API Implementation
+async function loadApplicantsFetch() {
+    const startTime = performance.now();
+    try {
+        const response = await fetch(jsonBlobUri);
+        if (!response.ok) throw new Error('HTTP Error ' + response.status);
+        const data = await response.json();
+        const duration = (performance.now() - startTime).toFixed(2);
+        console.log('Fetched successfully in ' + duration + 'ms');
+        return data;
+    } catch (err) {
+        console.error('Fetch Error:', err);
+    }
+}`,
+                jquery: `// jQuery $.getJSON() Implementation
+function loadApplicantsJQuery() {
+    const startTime = performance.now();
+    $.getJSON(jsonBlobUri)
+        .done(function(data) {
+            const duration = (performance.now() - startTime).toFixed(2);
+            console.log('jQuery JSON loaded in ' + duration + 'ms', data);
+        })
+        .fail(function(jqxhr, textStatus, error) {
+            console.error('jQuery Error:', textStatus, error);
+        });
+}`
+            };
+
+            // DOM Elements
+            const tableBody = document.getElementById('table-body');
+            const searchInput = document.getElementById('search-input');
+            const filterDept = document.getElementById('filter-dept');
+            const filterStatus = document.getElementById('filter-status');
+            const tableStats = document.getElementById('table-stats');
+            const paginationControls = document.getElementById('pagination-controls');
+            
+            const activeMethodTag = document.getElementById('active-method-tag');
+            const codeSnippetBox = document.getElementById('code-snippet-box');
+            const tabBtnFetch = document.getElementById('tab-btn-fetch');
+            const tabBtnJQuery = document.getElementById('tab-btn-jquery');
+            const eventLogContainer = document.getElementById('event-log-container');
+
+            // --- 3. EVENT LOGGER & METRICS ---
+            function logNetworkEvent(method, url, status, durationMs, count) {
+                const placeholder = eventLogContainer.querySelector('.italic');
+                if (placeholder) eventLogContainer.innerHTML = '';
+
+                const timestamp = new Date().toLocaleTimeString();
+                const logItem = document.createElement('div');
+                logItem.className = 'p-2 rounded-lg bg-slate-900 border border-slate-800 flex flex-col gap-1 text-[11px]';
+
+                logItem.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold ${method === 'FETCH' ? 'text-emerald-400' : 'text-sky-400'}">[${method}]</span>
+                        <span class="text-slate-400 text-[10px]">${timestamp}</span>
+                    </div>
+                    <div class="text-slate-300 font-mono truncate text-[10px]">${url.substring(0, 35)}...</div>
+                    <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800/80">
+                        <span>Status: <strong class="text-emerald-400">${status}</strong></span>
+                        <span>Latency: <strong class="text-amber-300">${durationMs} ms</strong></span>
+                        <span>Records: <strong class="text-white">${count}</strong></span>
+                    </div>
+                `;
+
+                eventLogContainer.prepend(logItem);
+            }
+
+            document.getElementById('clear-log-btn').addEventListener('click', () => {
+                eventLogContainer.innerHTML = '<div class="text-slate-500 italic text-center py-8">Log cleared.</div>';
+            });
+
+            // --- 4. THEME & STORAGE MANAGEMENT ---
+            function applyTheme(themeName) {
+                document.documentElement.setAttribute('data-theme', themeName);
+                localStorage.setItem(LOCAL_THEME_KEY, themeName);
+            }
+
+            // Restore Theme from localStorage
+            const savedTheme = localStorage.getItem(LOCAL_THEME_KEY) || 'sakura';
+            applyTheme(savedTheme);
+
+            document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const theme = btn.getAttribute('data-theme-btn');
+                    applyTheme(theme);
+                });
+            });
+
+            // Save Filter Draft to sessionStorage
+            function saveSessionFilters() {
+                const sessionPayload = {
+                    search: appState.searchQuery,
+                    dept: appState.selectedDept,
+                    status: appState.selectedStatus
+                };
+                sessionStorage.setItem(SESSION_STATE_KEY, JSON.stringify(sessionPayload));
+            }
+
+            function restoreSessionFilters() {
+                try {
+                    const raw = sessionStorage.getItem(SESSION_STATE_KEY);
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        appState.searchQuery = parsed.search || '';
+                        appState.selectedDept = parsed.dept || '';
+                        appState.selectedStatus = parsed.status || '';
+
+                        searchInput.value = appState.searchQuery;
+                        filterDept.value = appState.selectedDept;
+                        filterStatus.value = appState.selectedStatus;
+                    }
+                } catch(e) {
+                    console.error('Session restore error', e);
+                }
+            }
+
+            // --- 5. DATA FETCHING IMPLEMENTATIONS ---
+            
+            // Native fetch()
+            async function executeNativeFetch() {
+                const start = performance.now();
+                activeMethodTag.textContent = 'Native fetch()';
+                activeMethodTag.className = 'text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold';
+                showSnippet('fetch');
+
+                try {
+                    const res = await fetch(jsonBlobUri);
+                    const data = await res.json();
+                    const duration = (performance.now() - start).toFixed(2);
+                    
+                    appState.data = data;
+                    appState.activeMethod = 'Native fetch()';
+                    logNetworkEvent('FETCH', 'data:application/json...', '200 OK', duration, data.length);
+                    applyFiltersAndRender();
+                } catch (err) {
+                    console.error('Fetch error', err);
+                }
+            }
+
+            // jQuery $.getJSON()
+            function executeJQueryFetch() {
+                const start = performance.now();
+                activeMethodTag.textContent = 'jQuery $.getJSON()';
+                activeMethodTag.className = 'text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold';
+                showSnippet('jquery');
+
+                $.getJSON(jsonBlobUri)
+                    .done((data) => {
+                        const duration = (performance.now() - start).toFixed(2);
+                        appState.data = data;
+                        appState.activeMethod = 'jQuery $.getJSON()';
+                        logNetworkEvent('JQUERY', 'data:application/json...', '200 OK', duration, data.length);
+                        applyFiltersAndRender();
+                    })
+                    .fail((err) => {
+                        console.error('jQuery fetch error', err);
+                    });
+            }
+
+            document.getElementById('btn-fetch-native').addEventListener('click', executeNativeFetch);
+            document.getElementById('btn-fetch-jquery').addEventListener('click', executeJQueryFetch);
+
+            // --- 6. FILTERING, SORTING & TABLE RENDERING ---
+            function applyFiltersAndRender() {
+                let items = [...appState.data];
+
+                // Live Search Filter
+                if (appState.searchQuery) {
+                    const q = appState.searchQuery.toLowerCase();
+                    items = items.filter(item => 
+                        item.name.toLowerCase().includes(q) ||
+                        item.role.toLowerCase().includes(q) ||
+                        item.skills.some(s => s.toLowerCase().includes(q))
+                    );
+                }
+
+                // Department Filter
+                if (appState.selectedDept) {
+                    items = items.filter(item => item.department === appState.selectedDept);
+                }
+
+                // Status Filter
+                if (appState.selectedStatus) {
+                    items = items.filter(item => item.status === appState.selectedStatus);
+                }
+
+                // Sorting
+                items.sort((a, b) => {
+                    let valA = a[appState.sortColumn];
+                    let valB = b[appState.sortColumn];
+                    if (typeof valA === 'string') valA = valA.toLowerCase();
+                    if (typeof valB === 'string') valB = valB.toLowerCase();
+
+                    if (valA < valB) return appState.sortAsc ? -1 : 1;
+                    if (valA > valB) return appState.sortAsc ? 1 : -1;
+                    return 0;
+                });
+
+                appState.filteredData = items;
+                renderTablePage();
+            }
+
+            function renderTablePage() {
+                const total = appState.filteredData.length;
+                const totalPages = Math.ceil(total / appState.pageSize) || 1;
+                
+                if (appState.currentPage > totalPages) appState.currentPage = totalPages;
+                
+                const startIdx = (appState.currentPage - 1) * appState.pageSize;
+                const pageItems = appState.filteredData.slice(startIdx, startIdx + appState.pageSize);
+
+                if (pageItems.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="p-8 text-center text-[var(--jp-muted)]">
+                                No matching records found.
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    tableBody.innerHTML = pageItems.map(item => `
+                        <tr class="hover:bg-[var(--jp-accent-bg)]/50 transition-colors">
+                            <td class="p-3 font-medium flex items-center gap-2.5">
+                                <span class="w-7 h-7 rounded-lg bg-[var(--jp-sakura)] text-[var(--jp-vermilion)] font-serif font-bold text-xs flex items-center justify-center border border-[var(--jp-border)]">
+                                    ${item.name.charAt(0)}
+                                </span>
+                                <span>${item.name}</span>
+                            </td>
+                            <td class="p-3 text-[var(--jp-muted)]">${item.department}</td>
+                            <td class="p-3 font-semibold">${item.role}</td>
+                            <td class="p-3">${item.experience}</td>
+                            <td class="p-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${getStatusBadgeClass(item.status)}">
+                                    ${item.status}
+                                </span>
+                            </td>
+                            <td class="p-3 text-center">
+                                <button onclick="window.viewApplicant(${item.id})" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[var(--jp-accent-bg)] text-[var(--jp-indigo)] border border-[var(--jp-border)] hover:bg-[var(--jp-indigo)] hover:text-white transition-colors">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Table Summary Stats & Pagination
+                tableStats.textContent = `Showing ${pageItems.length ? startIdx + 1 : 0} to ${Math.min(startIdx + appState.pageSize, total)} of ${total} entries`;
+                renderPaginationControls(totalPages);
+            }
+
+            function getStatusBadgeClass(status) {
+                switch(status) {
+                    case 'Hired': return 'bg-emerald-100 text-emerald-800 border border-emerald-200';
+                    case 'Shortlisted': return 'bg-sky-100 text-sky-800 border border-sky-200';
+                    case 'Interviewed': return 'bg-purple-100 text-purple-800 border border-purple-200';
+                    default: return 'bg-amber-100 text-amber-800 border border-amber-200';
+                }
+            }
+
+            function renderPaginationControls(totalPages) {
+                let html = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const isActive = i === appState.currentPage;
+                    html += `
+                        <button onclick="window.goToPage(${i})" class="w-7 h-7 rounded-lg text-xs font-bold border ${isActive ? 'bg-[var(--jp-vermilion)] text-white border-[var(--jp-vermilion)]' : 'bg-white border-[var(--jp-border)] text-[var(--jp-text)] hover:bg-[var(--jp-accent-bg)]'} transition-all">
+                            ${i}
+                        </button>
+                    `;
+                }
+                paginationControls.innerHTML = html;
+            }
+
+            window.goToPage = (page) => {
+                appState.currentPage = page;
+                renderTablePage();
+            };
+
+            // Sorting Column Click Handlers
+            document.querySelectorAll('th[data-sort]').forEach(th => {
+                th.addEventListener('click', () => {
+                    const col = th.getAttribute('data-sort');
+                    if (appState.sortColumn === col) {
+                        appState.sortAsc = !appState.sortAsc;
+                    } else {
+                        appState.sortColumn = col;
+                        appState.sortAsc = true;
+                    }
+                    applyFiltersAndRender();
+                });
+            });
+
+            // Filter Event Listeners
+            searchInput.addEventListener('input', (e) => {
+                appState.searchQuery = e.target.value;
+                saveSessionFilters();
+                applyFiltersAndRender();
+            });
+
+            filterDept.addEventListener('change', (e) => {
+                appState.selectedDept = e.target.value;
+                saveSessionFilters();
+                applyFiltersAndRender();
+            });
+
+            filterStatus.addEventListener('change', (e) => {
+                appState.selectedStatus = e.target.value;
+                saveSessionFilters();
+                applyFiltersAndRender();
+            });
+
+            // --- 7. MODAL DIALOG DISPLAY ---
+            const modal = document.getElementById('applicant-modal');
+            
+            window.viewApplicant = (id) => {
+                const item = appState.data.find(a => a.id === id);
+                if (!item) return;
+
+                document.getElementById('modal-avatar').textContent = item.name.split(' ').map(n=>n[0]).join('');
+                document.getElementById('modal-name').textContent = item.name;
+                document.getElementById('modal-role').textContent = item.role;
+                document.getElementById('modal-dept').textContent = item.department;
+                document.getElementById('modal-exp').textContent = item.experience;
+                document.getElementById('modal-email').textContent = item.email;
+                document.getElementById('modal-status').textContent = item.status;
+
+                document.getElementById('modal-skills').innerHTML = item.skills.map(s => 
+                    `<span class="px-2 py-0.5 rounded-md bg-[var(--jp-accent-bg)] border border-[var(--jp-border)] text-[10px] font-bold text-[var(--jp-indigo)]">${s}</span>`
+                ).join('');
+
+                modal.classList.remove('hidden');
+            };
+
+            document.getElementById('close-modal-btn').addEventListener('click', () => modal.classList.add('hidden'));
+            document.getElementById('modal-ok-btn').addEventListener('click', () => modal.classList.add('hidden'));
+
+            // --- 8. CODE INSPECTOR TABS ---
+            function showSnippet(type) {
+                if (type === 'fetch') {
+                    codeSnippetBox.textContent = syntaxTemplates.fetch;
+                    tabBtnFetch.className = 'py-1.5 px-3 border-b-2 border-[var(--jp-vermilion)] text-[var(--jp-vermilion)] font-bold';
+                    tabBtnJQuery.className = 'py-1.5 px-3 border-b-2 border-transparent text-[var(--jp-muted)] hover:text-[var(--jp-text)]';
+                } else {
+                    codeSnippetBox.textContent = syntaxTemplates.jquery;
+                    tabBtnJQuery.className = 'py-1.5 px-3 border-b-2 border-[var(--jp-indigo)] text-[var(--jp-indigo)] font-bold';
+                    tabBtnFetch.className = 'py-1.5 px-3 border-b-2 border-transparent text-[var(--jp-muted)] hover:text-[var(--jp-text)]';
+                }
+            }
+
+            tabBtnFetch.addEventListener('click', () => showSnippet('fetch'));
+            tabBtnJQuery.addEventListener('click', () => showSnippet('jquery'));
+
+            // INITIALIZATION
+            restoreSessionFilters();
+            executeNativeFetch(); // Initial Load
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberText AI Analyzer</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #e8faff;
+            background: #030712;
+            overflow-x: hidden;
+        }
+
+        /* FUTURISTIC BACKGROUND */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(rgba(0, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: #00eaff;
+            filter: blur(180px);
+            opacity: 0.08;
+            top: -200px;
+            left: -150px;
+            z-index: -3;
+        }
+
+        .purple-glow {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: #8a2be2;
+            filter: blur(180px);
+            opacity: 0.08;
+            bottom: -200px;
+            right: -150px;
+            z-index: -3;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1050px;
+            margin: auto;
+            padding: 35px 0;
+        }
+
+        /* HEADER */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 45px 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 24px;
+            background: rgba(5, 13, 28, 0.8);
+            backdrop-filter: blur(15px);
+            box-shadow:
+                0 0 35px rgba(0, 234, 255, 0.08),
+                inset 0 0 30px rgba(0, 234, 255, 0.02);
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #00eaff,
+                transparent
+            );
+            animation: scan 4s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .system {
+            color: #647b91;
+            font-size: 11px;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            font-size: clamp(28px, 6vw, 48px);
+            color: #00eaff;
+            letter-spacing: 2px;
+            text-shadow:
+                0 0 5px #00eaff,
+                0 0 15px #00eaff,
+                0 0 35px rgba(0, 234, 255, 0.8);
+        }
+
+        header p {
+            color: #8498ad;
+            margin-top: 12px;
+            font-size: 15px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 8px 15px;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            border-radius: 30px;
+            color: #00ffaa;
+            background: rgba(0, 255, 170, 0.05);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #00ffaa;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ffaa;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* SECTION */
+        .section {
+            position: relative;
+            background: rgba(6, 14, 29, 0.85);
+            border: 1px solid rgba(90, 120, 150, 0.2);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 22px;
+            backdrop-filter: blur(15px);
+            transition: 0.3s;
+        }
+
+        .section:hover {
+            border-color: rgba(0, 234, 255, 0.35);
+            box-shadow:
+                0 0 30px rgba(0, 234, 255, 0.05),
+                inset 0 0 20px rgba(0, 234, 255, 0.02);
+            transform: translateY(-2px);
+        }
+
+        .section-number {
+            position: absolute;
+            right: 25px;
+            top: 22px;
+            color: rgba(0, 234, 255, 0.2);
+            font-size: 35px;
+            font-weight: 900;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .icon {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 234, 255, 0.35);
+            background: rgba(0, 234, 255, 0.06);
+            font-size: 21px;
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.05);
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #e8faff;
+        }
+
+        .subtitle {
+            color: #63778e;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        label {
+            display: block;
+            color: #9eb4c8;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            color: #dffaff;
+            background: #020812;
+            border: 1px solid #1b3045;
+            border-radius: 11px;
+            padding: 14px 16px;
+            outline: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #41566b;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #00eaff;
+            box-shadow:
+                0 0 0 2px rgba(0, 234, 255, 0.06),
+                0 0 20px rgba(0, 234, 255, 0.1);
+        }
+
+        textarea {
+            min-height: 135px;
+            resize: vertical;
+        }
+
+        /* BUTTON */
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 14px;
+            border: 1px solid #00eaff;
+            border-radius: 10px;
+            color: #001116;
+            background: #00eaff;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.15);
+        }
+
+        button:hover {
+            background: #8cffff;
+            box-shadow:
+                0 0 15px #00eaff,
+                0 0 35px rgba(0, 234, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* RESULT */
+        .result,
+        .extracted {
+            margin-top: 15px;
+            padding: 16px;
+            background: #020a15;
+            border: 1px solid #172d42;
+            border-radius: 11px;
+            color: #849caf;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .valid {
+            color: #00ffaa;
+            font-weight: 700;
+        }
+
+        .invalid {
+            color: #ff4f7b;
+            font-weight: 700;
+        }
+
+        .extracted strong {
+            color: #00eaff;
+        }
+
+        /* ANALYSIS */
+        .analysis {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 20px 8px;
+            background: #020a15;
+            border: 1px solid #172d42;
+            border-radius: 14px;
+            transition: 0.3s;
+        }
+
+        .stat:hover {
+            border-color: #00eaff;
+            box-shadow: 0 0 18px rgba(0, 234, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .stat-value {
+            color: #00eaff;
+            font-size: 27px;
+            font-weight: 800;
+            text-shadow: 0 0 12px rgba(0, 234, 255, 0.4);
+        }
+
+        .stat-name {
+            color: #61758b;
+            font-size: 11px;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #40566b;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .footer-line {
+            width: 100px;
+            height: 1px;
+            margin: 0 auto 15px;
+            background: #00eaff;
+            box-shadow: 0 0 10px #00eaff;
+        }
+
+        /* MOBILE */
+        @media (max-width: 750px) {
+            .analysis {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 450px) {
+            .container {
+                width: 95%;
+                padding: 20px 0;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .analysis {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            header {
+                padding: 35px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="purple-glow"></div>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="system">
+            // TEXT PROCESSING SYSTEM
+        </div>
+
+        <h1>Pratyaam (24070521180)</h1>
+
+        <p>
+            String Functions & Regular Expression Analyzer
+        </p>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+
+    </header>
+
+
+    <!-- EMAIL VALIDATION -->
+    <section class="section">
+
+        <span class="section-number">01</span>
+
+        <div class="title">
+
+            <div class="icon">✉</div>
+
+            <div>
+                <h2>Email Validation</h2>
+                <div class="subtitle">
+                    REGEX AUTHENTICATION MODULE
+                </div>
+            </div>
+
+        </div>
+
+        <label for="email">
+            ENTER EMAIL ADDRESS
+        </label>
+
+        <input
+            id="email"
+            type="text"
+            placeholder="user@example.com"
+        >
+
+        <button onclick="validateEmail()">
+            ▶ VALIDATE EMAIL
+        </button>
+
+        <div id="emailResult" class="result">
+            Awaiting input...
+        </div>
+
+    </section>
+
+
+    <!-- DATA EXTRACTION -->
+    <section class="section">
+
+        <span class="section-number">02</span>
+
+        <div class="title">
+
+            <div class="icon">⌕</div>
+
+            <div>
+                <h2>Data Extraction</h2>
+                <div class="subtitle">
+                    PATTERN DETECTION & EXTRACTION
+                </div>
+            </div>
+
+        </div>
+
+        <label for="extractText">
+            INPUT TEXT DATA
+        </label>
+
+        <textarea
+            id="extractText"
+            placeholder="Example: Contact admin@gmail.com or call 9876543210. Visit https://example.com"
+        ></textarea>
+
+        <button onclick="extractData()">
+            ▶ SCAN & EXTRACT DATA
+        </button>
+
+        <div id="extractResult" class="extracted">
+            Scan results will appear here...
+        </div>
+
+    </section>
+
+
+    <!-- TEXT ANALYSIS -->
+    <section class="section">
+
+        <span class="section-number">03</span>
+
+        <div class="title">
+
+            <div class="icon">▦</div>
+
+            <div>
+                <h2>Text Analysis</h2>
+                <div class="subtitle">
+                    STRING PROCESSING & STATISTICS
+                </div>
+            </div>
+
+        </div>
+
+        <label for="analysisText">
+            ENTER TEXT FOR ANALYSIS
+        </label>
+
+        <textarea
+            id="analysisText"
+            placeholder="Enter text containing words, numbers, sentences and #hashtags..."
+        ></textarea>
+
+        <button onclick="analyzeText()">
+            ▶ ANALYZE TEXT
+        </button>
+
+
+        <div class="analysis">
+
+            <div class="stat">
+                <div id="characters" class="stat-value">0</div>
+                <div class="stat-name">Characters</div>
+            </div>
+
+            <div class="stat">
+                <div id="words" class="stat-value">0</div>
+                <div class="stat-name">Words</div>
+            </div>
+
+            <div class="stat">
+                <div id="numbers" class="stat-value">0</div>
+                <div class="stat-name">Numbers</div>
+            </div>
+
+            <div class="stat">
+                <div id="sentences" class="stat-value">0</div>
+                <div class="stat-name">Sentences</div>
+            </div>
+
+            <div class="stat">
+                <div id="hashtags" class="stat-value">0</div>
+                <div class="stat-name">Hashtags</div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <div class="footer-line"></div>
+
+        STRING FUNCTIONS
+        &nbsp;•&nbsp;
+        REGEX
+        &nbsp;•&nbsp;
+        DATA EXTRACTION
+        &nbsp;•&nbsp;
+        TEXT ANALYSIS
+
+    </footer>
+
+</div>
+
+
+<script>
+
+    // ==========================================
+    // 1. EMAIL VALIDATION USING REGEX
+    // ==========================================
+
+    function validateEmail() {
+
+        // String function: trim()
+        const email =
+            document.getElementById("email").value.trim();
+
+        // Regular Expression
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const result =
+            document.getElementById("emailResult");
+
+        if (emailRegex.test(email)) {
+
+            result.innerHTML =
+                "● STATUS: <span class='valid'>VALID EMAIL DETECTED</span>";
+
+        } else {
+
+            result.innerHTML =
+                "● STATUS: <span class='invalid'>INVALID EMAIL FORMAT</span>";
+        }
+    }
+
+
+    // ==========================================
+    // 2. DATA EXTRACTION USING REGEX
+    // ==========================================
+
+    function extractData() {
+
+        const text =
+            document.getElementById("extractText").value;
+
+        // Email extraction
+        const emailRegex =
+            /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+
+        // Phone extraction
+        const phoneRegex =
+            /\b\d{10}\b/g;
+
+        // URL extraction
+        const urlRegex =
+            /https?:\/\/[^\s]+/g;
+
+        // Number extraction
+        const numberRegex =
+            /\b\d+(?:\.\d+)?\b/g;
+
+
+        const emails =
+            text.match(emailRegex) || [];
+
+        const phones =
+            text.match(phoneRegex) || [];
+
+        const urls =
+            text.match(urlRegex) || [];
+
+        const numbers =
+            text.match(numberRegex) || [];
+
+
+        document.getElementById("extractResult").innerHTML =
+
+            "<strong>EMAILS:</strong> " +
+            (emails.length
+                ? emails.join(", ")
+                : "None detected") +
+
+            "<br><strong>PHONE:</strong> " +
+            (phones.length
+                ? phones.join(", ")
+                : "None detected") +
+
+            "<br><strong>URLS:</strong> " +
+            (urls.length
+                ? urls.join(", ")
+                : "None detected") +
+
+            "<br><strong>NUMBERS:</strong> " +
+            (numbers.length
+                ? numbers.join(", ")
+                : "None detected");
+    }
+
+
+    // ==========================================
+    // 3. TEXT ANALYSIS
+    // ==========================================
+
+    function analyzeText() {
+
+        const text =
+            document.getElementById("analysisText").value;
+
+
+        // String function: length
+        const characters =
+            text.length;
+
+
+        // String functions: trim() + split()
+        const words =
+            text.trim()
+                ? text.trim().split(/\s+/).length
+                : 0;
+
+
+        // Regex: find numbers
+        const numbers =
+            text.match(/\b\d+(?:\.\d+)?\b/g) || [];
+
+
+        // Regex: find sentences
+        const sentences =
+            text.match(/[.!?]+/g) || [];
+
+
+        // Regex: find hashtags
+        const hashtags =
+            text.match(/#[a-zA-Z0-9_]+/g) || [];
+
+
+        document.getElementById("characters")
+            .textContent = characters;
+
+        document.getElementById("words")
+            .textContent = words;
+
+        document.getElementById("numbers")
+            .textContent = numbers.length;
+
+        document.getElementById("sentences")
+            .textContent = sentences.length;
+
+        document.getElementById("hashtags")
+            .textContent = hashtags.length;
+    }
+
+</script>
+
+</body>
+</html>

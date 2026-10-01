@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Maximum & Minimum</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffe5ec, #e2f0ff, #e8f8e8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(100, 120, 150, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Neon Blue Header */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #00bfff;
+            font-size: 30px;
+            font-weight: 800;
+            text-shadow:
+                0 0 5px #00bfff,
+                0 0 10px #00bfff,
+                0 0 20px #00bfff;
+        }
+
+        header p {
+            margin-top: 8px;
+            color: #777;
+            font-size: 15px;
+        }
+
+        .card {
+            background: #fff7fb;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #d9eaff;
+            border-radius: 12px;
+            outline: none;
+            font-size: 16px;
+            background: #f8fbff;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #8ed8ff;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.2);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .calculate {
+            background: #bde7ff;
+            color: #15516b;
+        }
+
+        .calculate:hover {
+            transform: translateY(-3px);
+            background: #9cddff;
+        }
+
+        .clear {
+            background: #ffd0dc;
+            color: #743b4a;
+        }
+
+        .clear:hover {
+            transform: translateY(-3px);
+            background: #ffb9ca;
+        }
+
+        .results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .result-box {
+            padding: 22px;
+            border-radius: 18px;
+            text-align: center;
+        }
+
+        .maximum {
+            background: #d9f5e5;
+        }
+
+        .minimum {
+            background: #fff0c9;
+        }
+
+        .result-box h3 {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .result-box span {
+            font-size: 30px;
+            font-weight: 800;
+            color: #333;
+        }
+
+        #arrayDisplay {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            font-size: 15px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        @media (max-width: 550px) {
+            .container {
+                padding: 25px;
+            }
+
+            .results {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Pratyaam Sinha (24070521180)</h1>
+            <p>Array Maximum & Minimum Finder</p>
+        </header>
+
+        <div class="card">
+
+            <label for="numbers">
+                Enter numbers separated by commas
+            </label>
+
+            <input
+                type="text"
+                id="numbers"
+                placeholder="Example: 25, 10, 48, 7, 32"
+            >
+
+            <div class="buttons">
+                <button class="calculate" onclick="findValues()">
+                    ✨ Find Values
+                </button>
+
+                <button class="clear" onclick="clearAll()">
+                    🗑 Clear
+                </button>
+            </div>
+
+            <p id="arrayDisplay"></p>
+
+        </div>
+
+        <div class="results">
+
+            <div class="result-box maximum">
+                <h3>⬆ Maximum</h3>
+                <span id="maxValue">—</span>
+            </div>
+
+            <div class="result-box minimum">
+                <h3>⬇ Minimum</h3>
+                <span id="minValue">—</span>
+            </div>
+
+        </div>
+
+        <footer>
+            JavaScript Array Methods • Max & Min Calculator
+        </footer>
+
+    </div>
+
+    <script>
+        function findValues() {
+
+            const input = document.getElementById("numbers").value;
+
+            const numbers = input
+                .split(",")
+                .map(Number)
+                .filter(num => !isNaN(num));
+
+            if (numbers.length === 0) {
+                alert("Please enter valid numbers!");
+                return;
+            }
+
+            // Find maximum and minimum using Math.max() and Math.min()
+            const maximum = Math.max(...numbers);
+            const minimum = Math.min(...numbers);
+
+            document.getElementById("maxValue").textContent = maximum;
+            document.getElementById("minValue").textContent = minimum;
+
+            document.getElementById("arrayDisplay").textContent =
+                "Array: [ " + numbers.join(", ") + " ]";
+        }
+
+        function clearAll() {
+            document.getElementById("numbers").value = "";
+            document.getElementById("maxValue").textContent = "—";
+            document.getElementById("minValue").textContent = "—";
+            document.getElementById("arrayDisplay").textContent = "";
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

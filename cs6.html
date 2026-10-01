@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Operations</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #030712;
+            color: #e8faff;
+            padding: 30px 15px;
+        }
+
+        /* Futuristic grid */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(rgba(0, 234, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 234, 255, 0.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 24px;
+            background: rgba(5, 13, 28, 0.85);
+            box-shadow: 0 0 35px rgba(0, 234, 255, 0.08);
+        }
+
+        header h1 {
+            font-size: clamp(28px, 6vw, 45px);
+            color: #00eaff;
+            text-shadow:
+                0 0 5px #00eaff,
+                0 0 15px #00eaff,
+                0 0 30px #00eaff;
+        }
+
+        header p {
+            margin-top: 10px;
+            color: #71869c;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 7px 15px;
+            border: 1px solid #00ffaa;
+            border-radius: 30px;
+            color: #00ffaa;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(6, 14, 29, 0.9);
+            border: 1px solid #1b3045;
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 22px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #00eaff;
+            box-shadow: 0 0 25px rgba(0, 234, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(0, 234, 255, 0.08);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            font-size: 20px;
+        }
+
+        h2 {
+            color: #e8faff;
+            font-size: 20px;
+        }
+
+        .subtitle {
+            color: #61758b;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        label {
+            display: block;
+            color: #9eb4c8;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border-radius: 11px;
+            border: 1px solid #1b3045;
+            background: #020812;
+            color: #e8faff;
+            outline: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #00eaff;
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.12);
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #00eaff;
+            color: #001116;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #8cffff;
+            box-shadow:
+                0 0 15px #00eaff,
+                0 0 30px rgba(0, 234, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Result */
+        .result {
+            margin-top: 15px;
+            padding: 18px;
+            background: #020a15;
+            border: 1px solid #172d42;
+            border-radius: 12px;
+            color: #9eb4c8;
+            line-height: 1.8;
+            word-break: break-word;
+        }
+
+        .result strong {
+            color: #00eaff;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 20px 10px;
+            border-radius: 14px;
+            background: #020a15;
+            border: 1px solid #172d42;
+        }
+
+        .stat-number {
+            color: #00eaff;
+            font-size: 28px;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(0, 234, 255, 0.4);
+        }
+
+        .stat-label {
+            color: #61758b;
+            font-size: 11px;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        footer {
+            text-align: center;
+            color: #40566b;
+            font-size: 11px;
+            padding: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <h1>Pratyaam (24070521180)</h1>
+        <p>String Operations & Text Analyzer</p>
+
+        <div class="status">
+            ● SYSTEM READY
+        </div>
+    </header>
+
+
+    <!-- BASIC STRING OPERATIONS -->
+    <div class="card">
+
+        <div class="title">
+            <div class="icon">⌘</div>
+
+            <div>
+                <h2>Basic String Operations</h2>
+                <div class="subtitle">
+                    STRING PROCESSING MODULE
+                </div>
+            </div>
+        </div>
+
+        <label for="stringInput">
+            ENTER A STRING
+        </label>
+
+        <input
+            type="text"
+            id="stringInput"
+            placeholder="Enter your string..."
+        >
+
+        <button onclick="basicOperations()">
+            ▶ PROCESS STRING
+        </button>
+
+        <div id="stringResult" class="result">
+            Results will appear here...
+        </div>
+
+    </div>
+
+
+    <!-- REVERSE STRING -->
+    <div class="card">
+
+        <div class="title">
+            <div class="icon">↔</div>
+
+            <div>
+                <h2>Reverse String</h2>
+                <div class="subtitle">
+                    STRING REVERSAL ENGINE
+                </div>
+            </div>
+        </div>
+
+        <label for="reverseInput">
+            ENTER STRING TO REVERSE
+        </label>
+
+        <input
+            type="text"
+            id="reverseInput"
+            placeholder="Hello World"
+        >
+
+        <button onclick="reverseString()">
+            ▶ REVERSE STRING
+        </button>
+
+        <div id="reverseResult" class="result">
+            Reversed string will appear here...
+        </div>
+
+    </div>
+
+
+    <!-- VOWEL COUNTER -->
+    <div class="card">
+
+        <div class="title">
+            <div class="icon">Aa</div>
+
+            <div>
+                <h2>Vowel Counter</h2>
+                <div class="subtitle">
+                    PARAGRAPH TEXT ANALYSIS
+                </div>
+            </div>
+        </div>
+
+        <label for="paragraph">
+            ENTER PARAGRAPH
+        </label>
+
+        <textarea
+            id="paragraph"
+            placeholder="Enter a paragraph here to count the number of vowels..."
+        ></textarea>
+
+        <button onclick="countVowels()">
+            ▶ ANALYZE VOWELS
+        </button>
+
+        <div class="stats">
+
+            <div class="stat">
+                <div id="vowelCount" class="stat-number">0</div>
+                <div class="stat-label">Vowels</div>
+            </div>
+
+            <div class="stat">
+                <div id="charCount" class="stat-number">0</div>
+                <div class="stat-label">Characters</div>
+            </div>
+
+            <div class="stat">
+                <div id="wordCount" class="stat-number">0</div>
+                <div class="stat-label">Words</div>
+            </div>
+
+            <div class="stat">
+                <div id="sentenceCount" class="stat-number">0</div>
+                <div class="stat-label">Sentences</div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        STRING FUNCTIONS • REVERSAL • VOWEL ANALYSIS
+    </footer>
+
+</div>
+
+
+<script>
+
+    // ==========================================
+    // BASIC STRING OPERATIONS
+    // ==========================================
+
+    function basicOperations() {
+
+        const text =
+            document.getElementById("stringInput").value;
+
+        const result =
+            document.getElementById("stringResult");
+
+        if (text.trim() === "") {
+            result.innerHTML =
+                "⚠ Please enter a string.";
+            return;
+        }
+
+        // String functions
+        const length = text.length;
+        const upper = text.toUpperCase();
+        const lower = text.toLowerCase();
+        const trimmed = text.trim();
+
+        result.innerHTML =
+            "<strong>Original:</strong> " + text +
+            "<br>" +
+            "<strong>Length:</strong> " + length +
+            "<br>" +
+            "<strong>Uppercase:</strong> " + upper +
+            "<br>" +
+            "<strong>Lowercase:</strong> " + lower +
+            "<br>" +
+            "<strong>Trimmed:</strong> " + trimmed;
+    }
+
+
+    // ==========================================
+    // REVERSE STRING
+    // ==========================================
+
+    function reverseString() {
+
+        const text =
+            document.getElementById("reverseInput").value;
+
+        if (text.trim() === "") {
+
+            document.getElementById("reverseResult")
+                .innerHTML =
+                "⚠ Please enter a string.";
+
+            return;
+        }
+
+        // Convert string to array,
+        // reverse it, then join it again.
+        const reversed =
+            text.split("").reverse().join("");
+
+        document.getElementById("reverseResult")
+            .innerHTML =
+            "<strong>Original:</strong> " + text +
+            "<br>" +
+            "<strong>Reversed:</strong> " + reversed;
+    }
+
+
+    // ==========================================
+    // COUNT VOWELS
+    // ==========================================
+
+    function countVowels() {
+
+        const text =
+            document.getElementById("paragraph").value;
+
+        // Regex to find vowels
+        const vowels =
+            text.match(/[aeiouAEIOU]/g) || [];
+
+        // String length
+        const characters =
+            text.length;
+
+        // Count words
+        const words =
+            text.trim()
+                ? text.trim().split(/\s+/).length
+                : 0;
+
+        // Count sentences
+        const sentences =
+            text.match(/[.!?]+/g) || [];
+
+
+        document.getElementById("vowelCount")
+            .textContent = vowels.length;
+
+        document.getElementById("charCount")
+            .textContent = characters;
+
+        document.getElementById("wordCount")
+            .textContent = words;
+
+        document.getElementById("sentenceCount")
+            .textContent = sentences.length;
+    }
+
+</script>
+
+</body>
+</html>

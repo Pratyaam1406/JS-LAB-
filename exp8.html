@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Admission Form - Pratyaam Sinha (24070521180)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        pastel: {
+                            bg: '#F8F6F0',         /* Soft Cream background */
+                            card: '#FFFFFF',       /* Crisp white cards */
+                            teal: '#9CD2C2',       /* Pastel Sage Teal */
+                            tealDark: '#4A8173',
+                            pink: '#F6C1CB',       /* Blush Pink */
+                            pinkDark: '#B85065',
+                            lavender: '#E0D6F5',   /* Soft Lavender */
+                            purpleDark: '#604C8D',
+                            yellow: '#F9E5AD',     /* Pastel Buttercup */
+                            yellowDark: '#8A7029',
+                            blue: '#BCE2EF',       /* Sky Pastel */
+                            blueDark: '#3A7085',
+                            mint: '#D1EAD8',       /* Soft Mint */
+                            mintDark: '#3C6B48',
+                            slate: '#5A626A'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom pastel scrollbar */
+        .log-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .log-scrollbar::-webkit-scrollbar-track {
+            background: #EAE6DF;
+            border-radius: 4px;
+        }
+        .log-scrollbar::-webkit-scrollbar-thumb {
+            background: #9CD2C2;
+            border-radius: 4px;
+        }
+        .log-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #7DB9A7;
+        }
+
+        /* Subtle focus glow effects with pastel colors */
+        .pastel-focus:focus-within {
+            box-shadow: 0 0 0 3px rgba(156, 210, 194, 0.4);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-pastel-bg text-slate-700 font-sans min-h-screen p-3 sm:p-6 md:p-10">
+
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- Header Section -->
+        <header class="bg-white border border-slate-200/80 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
+            <!-- Decorative Pastel Gradient Background Circle -->
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-gradient-to-tr from-pastel-pink/40 to-pastel-teal/40 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -left-10 -top-10 w-40 h-40 bg-gradient-to-br from-pastel-lavender/40 to-pastel-blue/40 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-1">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-pastel-teal/20 text-pastel-tealDark mb-1 border border-pastel-teal/30">
+                    <i class="fa-solid fa-dumbbell text-xs"></i> FitLife Gym Admission Portal
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">
+                    Pratyaam Sinha <span class="text-pastel-pinkDark font-bold text-xl sm:text-2xl">(24070521180)</span>
+                </h1>
+                <p class="text-slate-500 text-xs sm:text-sm max-w-xl">
+                    JavaScript Event Handling & Live Form Validation Demonstration with dynamic element manipulation and live state logging.
+                </p>
+            </div>
+
+            <!-- Student / Quick Status Badge -->
+            <div class="relative z-10 flex flex-wrap items-center gap-3">
+                <div class="bg-pastel-lavender/40 border border-pastel-lavender px-4 py-2.5 rounded-2xl flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-pastel-lavender flex items-center justify-center text-pastel-purpleDark font-bold">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] uppercase tracking-wider font-bold text-pastel-purpleDark">Student ID</div>
+                        <div class="text-xs font-extrabold text-slate-800">24070521180</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Left Column: Gym Admission Form (7 cols) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <div class="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-sm relative">
+                    
+                    <!-- Form Header & Actions -->
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-2xl bg-pastel-pink/30 flex items-center justify-center text-pastel-pinkDark">
+                                <i class="fa-solid fa-id-card text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-800">Admission Registration</h2>
+                                <p class="text-slate-400 text-xs">Fill details to join our fitness community</p>
+                            </div>
+                        </div>
+                        <button type="button" id="reset-btn" class="text-xs text-slate-500 hover:text-pastel-pinkDark transition-all flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 hover:border-pastel-pink/50 bg-slate-50 hover:bg-pastel-pink/10 font-medium">
+                            <i class="fa-solid fa-rotate-right"></i> Reset Form
+                        </button>
+                    </div>
+
+                    <!-- Admission Form -->
+                    <form id="gym-form" novalidate class="space-y-5">
+                        
+                        <!-- Section 1: Personal Details -->
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-pastel-teal"></span> 1. Personal Information
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Field 1: Full Name -->
+                            <div class="space-y-1 sm:col-span-2">
+                                <label for="full-name" class="block text-xs font-bold text-slate-700">
+                                    Full Name <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative pastel-focus rounded-2xl">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-user text-xs"></i>
+                                    </div>
+                                    <input type="text" id="full-name" name="fullName" placeholder="e.g. Pratyaam Sinha" 
+                                        class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                    <div id="name-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden">
+                                    </div>
+                                </div>
+                                <p id="name-help" class="text-[11px] text-pastel-tealDark hidden"><i class="fa-solid fa-circle-info mr-1"></i>Enter your first and last name (at least 3 letters).</p>
+                                <p id="name-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+
+                            <!-- Field 2: Email Address -->
+                            <div class="space-y-1">
+                                <label for="email" class="block text-xs font-bold text-slate-700">
+                                    Email Address <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative pastel-focus rounded-2xl">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-envelope text-xs"></i>
+                                    </div>
+                                    <input type="email" id="email" name="email" placeholder="pratyaam@example.com" 
+                                        class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                    <div id="email-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden">
+                                    </div>
+                                </div>
+                                <p id="email-help" class="text-[11px] text-pastel-tealDark hidden"><i class="fa-solid fa-circle-info mr-1"></i>Valid email required for membership receipts.</p>
+                                <p id="email-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+
+                            <!-- Field 3: Phone Number -->
+                            <div class="space-y-1">
+                                <label for="phone" class="block text-xs font-bold text-slate-700">
+                                    Phone Number <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative pastel-focus rounded-2xl">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-phone text-xs"></i>
+                                    </div>
+                                    <input type="tel" id="phone" name="phone" placeholder="10-digit number" maxlength="10"
+                                        class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                    <div id="phone-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden">
+                                    </div>
+                                </div>
+                                <p id="phone-help" class="text-[11px] text-pastel-tealDark hidden"><i class="fa-solid fa-circle-info mr-1"></i>Enter a valid 10-digit mobile number.</p>
+                                <p id="phone-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+
+                            <!-- Field 4: Age / DOB -->
+                            <div class="space-y-1">
+                                <label for="age" class="block text-xs font-bold text-slate-700">
+                                    Age (Years) <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative pastel-focus rounded-2xl">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-cake-candles text-xs"></i>
+                                    </div>
+                                    <input type="number" id="age" name="age" placeholder="e.g. 21" min="14" max="80"
+                                        class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                    <div id="age-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden">
+                                    </div>
+                                </div>
+                                <p id="age-help" class="text-[11px] text-pastel-tealDark hidden"><i class="fa-solid fa-circle-info mr-1"></i>Age must be between 14 and 80 years.</p>
+                                <p id="age-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+
+                            <!-- Field 5: Gender Selection -->
+                            <div class="space-y-1">
+                                <label for="gender" class="block text-xs font-bold text-slate-700">
+                                    Gender <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative pastel-focus rounded-2xl">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-venus-mars text-xs"></i>
+                                    </div>
+                                    <select id="gender" name="gender" 
+                                        class="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:bg-white transition-all appearance-none cursor-pointer">
+                                        <option value="" disabled selected>-- Select Gender --</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Non-binary">Non-binary / Other</option>
+                                        <option value="Prefer not to say">Prefer not to say</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                                    </div>
+                                </div>
+                                <p id="gender-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Membership & Schedule -->
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2 pt-3 border-t border-slate-100">
+                            <span class="w-2 h-2 rounded-full bg-pastel-pink"></span> 2. Plan & Slot Preferences
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Field 6: Membership Plan -->
+                            <div class="space-y-1">
+                                <label for="plan" class="block text-xs font-bold text-slate-700">
+                                    Membership Tier <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative pastel-focus rounded-2xl">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-crown text-xs"></i>
+                                    </div>
+                                    <select id="plan" name="plan" 
+                                        class="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:bg-white transition-all appearance-none cursor-pointer">
+                                        <option value="" disabled selected>-- Choose Plan --</option>
+                                        <option value="basic">Basic Gym - $25/mo</option>
+                                        <option value="standard">Standard + Trainer - $45/mo</option>
+                                        <option value="premium">Premium All-Access - $70/mo</option>
+                                        <option value="vip">VIP Platinum Suite - $100/mo</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                                    </div>
+                                </div>
+                                <p id="plan-help" class="text-[11px] text-pastel-tealDark hidden"><i class="fa-solid fa-circle-info mr-1"></i>Select your preferred tier for custom perks.</p>
+                                <p id="plan-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+
+                            <!-- Field 7: Preferred Slot -->
+                            <div class="space-y-1">
+                                <label for="slot" class="block text-xs font-bold text-slate-700">
+                                    Preferred Time Slot <span class="text-rose-400">*</span>
+                                </label>
+                                <div class="relative pastel-focus rounded-2xl">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-clock text-xs"></i>
+                                    </div>
+                                    <select id="slot" name="slot" 
+                                        class="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:bg-white transition-all appearance-none cursor-pointer">
+                                        <option value="" disabled selected>-- Select Time Slot --</option>
+                                        <option value="Morning (06:00 AM - 10:00 AM)">Morning (06:00 AM - 10:00 AM)</option>
+                                        <option value="Afternoon (12:00 PM - 04:00 PM)">Afternoon (12:00 PM - 04:00 PM)</option>
+                                        <option value="Evening (05:00 PM - 09:00 PM)">Evening (05:00 PM - 09:00 PM)</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                                    </div>
+                                </div>
+                                <p id="slot-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Field 8: Fitness Goals (Checkboxes) -->
+                        <div class="space-y-1.5 pt-2">
+                            <label class="block text-xs font-bold text-slate-700">
+                                Primary Fitness Goals (Select all that apply)
+                            </label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                    <input type="checkbox" name="goals" value="Weight Loss" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                    <span>Weight Loss</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                    <input type="checkbox" name="goals" value="Muscle Building" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                    <span>Muscle Building</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                    <input type="checkbox" name="goals" value="Cardio Fitness" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                    <span>Cardio Fitness</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                    <input type="checkbox" name="goals" value="Flexibility" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                    <span>Flexibility & Yoga</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pastel-teal/10 cursor-pointer transition-colors text-xs text-slate-700">
+                                    <input type="checkbox" name="goals" value="General Health" class="rounded text-pastel-tealDark focus:ring-pastel-teal">
+                                    <span>General Health</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Safety & Agreement -->
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2 pt-3 border-t border-slate-100">
+                            <span class="w-2 h-2 rounded-full bg-pastel-lavender"></span> 3. Safety & Emergency
+                        </div>
+
+                        <!-- Field 9: Emergency Contact Number -->
+                        <div class="space-y-1">
+                            <label for="emergency-phone" class="block text-xs font-bold text-slate-700">
+                                Emergency Contact Phone <span class="text-rose-400">*</span>
+                            </label>
+                            <div class="relative pastel-focus rounded-2xl">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-phone-volume text-xs"></i>
+                                </div>
+                                <input type="tel" id="emergency-phone" name="emergencyPhone" placeholder="Guardian / Relative contact" maxlength="10"
+                                    class="w-full pl-9 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white transition-all">
+                                <div id="emergency-status-icon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none hidden">
+                                </div>
+                            </div>
+                            <p id="emergency-help" class="text-[11px] text-pastel-tealDark hidden"><i class="fa-solid fa-circle-info mr-1"></i>Must be different from primary phone.</p>
+                            <p id="emergency-error" class="text-[11px] text-rose-500 font-medium hidden flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                        </div>
+
+                        <!-- Field 10: Terms & Conditions Checkbox -->
+                        <div class="pt-2">
+                            <label class="flex items-start gap-3 cursor-pointer group">
+                                <div class="relative flex items-center mt-0.5">
+                                    <input type="checkbox" id="terms" name="terms" class="peer sr-only">
+                                    <div class="w-5 h-5 border border-slate-300 rounded-lg bg-slate-50 peer-checked:bg-pastel-tealDark peer-checked:border-pastel-tealDark transition-all flex items-center justify-center">
+                                        <i class="fa-solid fa-check text-xs text-white opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-slate-600 group-hover:text-slate-900 transition-colors">
+                                    I agree to the <a href="#rules" class="text-pastel-tealDark font-semibold underline">Gym Safety Rules</a> and <a href="#privacy" class="text-pastel-tealDark font-semibold underline">Liability Waiver</a>. <span class="text-rose-400">*</span>
+                                </span>
+                            </label>
+                            <p id="terms-error" class="text-[11px] text-rose-500 font-medium hidden mt-1 flex items-center gap-1"><i class="fa-solid fa-circle-exclamation"></i><span></span></p>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-3">
+                            <button type="submit" id="submit-btn" 
+                                class="w-full bg-gradient-to-r from-pastel-tealDark to-pastel-blueDark hover:opacity-95 text-white font-bold py-3.5 px-6 rounded-2xl shadow-sm active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 text-sm">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Gym Admission
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Dynamic Preview Card & Event Console (5 cols) -->
+            <div class="lg:col-span-5 space-y-6">
+
+                <!-- Dynamic Dynamic Admission Summary Card -->
+                <div class="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-pastel-pink animate-pulse"></span>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">
+                                Live Admission Summary
+                            </h3>
+                        </div>
+                        <span id="summary-badge" class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Draft</span>
+                    </div>
+
+                    <div id="summary-card-body" class="bg-pastel-bg/60 border border-slate-200/60 rounded-2xl p-4 space-y-3 transition-all">
+                        <div class="flex justify-between items-start border-b border-slate-200/60 pb-3">
+                            <div>
+                                <h4 id="preview-name" class="font-extrabold text-slate-800 text-base">Applicant Name</h4>
+                                <p id="preview-contact" class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-envelope mr-1 text-slate-400"></i> No email provided</p>
+                            </div>
+                            <div class="text-right">
+                                <span id="preview-price" class="text-xl font-extrabold text-pastel-tealDark">$0</span>
+                                <span class="text-[10px] text-slate-400 block font-semibold">/ month</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-white p-2.5 rounded-xl border border-slate-100">
+                                <span class="text-[10px] text-slate-400 block font-semibold">Plan Selected</span>
+                                <span id="preview-plan" class="font-bold text-slate-700">None Selected</span>
+                            </div>
+                            <div class="bg-white p-2.5 rounded-xl border border-slate-100">
+                                <span class="text-[10px] text-slate-400 block font-semibold">Time Slot</span>
+                                <span id="preview-slot" class="font-bold text-slate-700">Not Chosen</span>
+                            </div>
+                        </div>
+
+                        <div class="text-xs pt-1">
+                            <span class="text-[10px] text-slate-400 block font-semibold mb-1">Selected Fitness Goals</span>
+                            <div id="preview-goals" class="flex flex-wrap gap-1 text-[11px] text-slate-500">
+                                <span class="italic text-slate-400">No goals selected yet</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Console Log Panel -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-xl flex flex-col h-[380px] text-white">
+                    
+                    <!-- Logger Header -->
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <span class="flex gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-pink inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-yellow inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-pastel-teal inline-block"></span>
+                            </span>
+                            <span class="text-xs font-mono font-bold text-slate-300 ml-1">Event_Monitor.log</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="event-count-badge" class="text-[10px] font-mono bg-slate-800 text-pastel-teal px-2 py-0.5 rounded-full">0 events</span>
+                            <button id="clear-log-btn" class="text-xs text-slate-400 hover:text-white transition-colors px-2 py-1 rounded bg-slate-800 border border-slate-700 hover:border-slate-600">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Logger Content -->
+                    <div id="event-log-container" class="flex-1 overflow-y-auto log-scrollbar py-3 font-mono text-xs space-y-2 pr-1">
+                        <div class="text-slate-500 italic text-[11px] py-8 text-center">
+                            Interact with the form to view real-time JavaScript events (focus, blur, input, change, submit).
+                        </div>
+                    </div>
+
+                    <!-- Event Legend -->
+                    <div class="pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2 text-[10px] font-mono text-slate-400">
+                        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-pastel-yellow"></span> focus / blur</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-pastel-blue"></span> input / typing</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-pastel-lavender"></span> change event</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded bg-pastel-teal"></span> submit event</div>
+                    </div>
+
+                </div>
+
+                <!-- Submission Success Modal / Summary Box -->
+                <div id="success-card" class="bg-gradient-to-br from-pastel-mint/80 to-white border border-pastel-tealDark/30 rounded-3xl p-6 shadow-md hidden transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="p-3 bg-pastel-teal/30 rounded-2xl text-pastel-tealDark">
+                            <i class="fa-solid fa-circle-check text-2xl"></i>
+                        </div>
+                        <div class="flex-1 space-y-1">
+                            <h4 class="text-base font-extrabold text-slate-800">Gym Admission Confirmed!</h4>
+                            <p class="text-xs text-slate-600">
+                                Form submitted by <strong class="text-slate-800">Pratyaam Sinha (24070521180)</strong>.
+                            </p>
+                            
+                            <div class="mt-3 bg-white/90 border border-slate-200/80 rounded-2xl p-3 font-mono text-xs text-slate-700 space-y-1">
+                                <div><span class="text-slate-400">Applicant:</span> <span id="summary-name" class="font-bold text-slate-800"></span></div>
+                                <div><span class="text-slate-400">Email:</span> <span id="summary-email" class="font-bold text-slate-800"></span></div>
+                                <div><span class="text-slate-400">Plan:</span> <span id="summary-plan" class="font-bold text-pastel-tealDark"></span></div>
+                                <div><span class="text-slate-400">Slot:</span> <span id="summary-slot" class="font-bold text-slate-800"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. DOM Element References ---
+            const gymForm = document.getElementById('gym-form');
+            const fullNameInput = document.getElementById('full-name');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const ageInput = document.getElementById('age');
+            const genderSelect = document.getElementById('gender');
+            const planSelect = document.getElementById('plan');
+            const slotSelect = document.getElementById('slot');
+            const emergencyPhoneInput = document.getElementById('emergency-phone');
+            const termsCheckbox = document.getElementById('terms');
+            const resetBtn = document.getElementById('reset-btn');
+
+            // Help Tooltip Elements
+            const nameHelp = document.getElementById('name-help');
+            const emailHelp = document.getElementById('email-help');
+            const phoneHelp = document.getElementById('phone-help');
+            const ageHelp = document.getElementById('age-help');
+            const planHelp = document.getElementById('plan-help');
+            const emergencyHelp = document.getElementById('emergency-help');
+
+            // Error Elements
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            const phoneError = document.getElementById('phone-error');
+            const ageError = document.getElementById('age-error');
+            const genderError = document.getElementById('gender-error');
+            const planError = document.getElementById('plan-error');
+            const slotError = document.getElementById('slot-error');
+            const emergencyError = document.getElementById('emergency-error');
+            const termsError = document.getElementById('terms-error');
+
+            // Status Icon Containers
+            const nameIcon = document.getElementById('name-status-icon');
+            const emailIcon = document.getElementById('email-status-icon');
+            const phoneIcon = document.getElementById('phone-status-icon');
+            const ageIcon = document.getElementById('age-status-icon');
+            const emergencyIcon = document.getElementById('emergency-status-icon');
+
+            // Live Preview Card Elements
+            const previewName = document.getElementById('preview-name');
+            const previewContact = document.getElementById('preview-contact');
+            const previewPrice = document.getElementById('preview-price');
+            const previewPlan = document.getElementById('preview-plan');
+            const previewSlot = document.getElementById('preview-slot');
+            const previewGoals = document.getElementById('preview-goals');
+            const summaryBadge = document.getElementById('summary-badge');
+
+            // Event Logger Elements
+            const logContainer = document.getElementById('event-log-container');
+            const clearLogBtn = document.getElementById('clear-log-btn');
+            const eventCountBadge = document.getElementById('event-count-badge');
+
+            // Success Summary Elements
+            const successCard = document.getElementById('success-card');
+            const summaryName = document.getElementById('summary-name');
+            const summaryEmail = document.getElementById('summary-email');
+            const summaryPlan = document.getElementById('summary-plan');
+            const summarySlot = document.getElementById('summary-slot');
+
+            let eventCount = 0;
+
+            // Plan Pricing Map
+            const planPrices = {
+                basic: { name: 'Basic Gym', price: '$25' },
+                standard: { name: 'Standard + Trainer', price: '$45' },
+                premium: { name: 'Premium All-Access', price: '$70' },
+                vip: { name: 'VIP Platinum', price: '$100' }
+            };
+
+            // --- 2. Real-Time Event Logger Function ---
+            function logEvent(eventName, targetName, detail, badgeColor) {
+                eventCount++;
+                eventCountBadge.textContent = `${eventCount} event${eventCount === 1 ? '' : 's'}`;
+
+                // Remove placeholder text
+                const placeholder = logContainer.querySelector('.italic');
+                if (placeholder) {
+                    logContainer.innerHTML = '';
+                }
+
+                const timestamp = new Date().toLocaleTimeString().split(' ')[0];
+                const logItem = document.createElement('div');
+                logItem.className = 'p-2 rounded-xl bg-slate-800/90 border border-slate-700/60 flex items-start justify-between gap-2 text-xs animate-fade-in';
+
+                logItem.innerHTML = `
+                    <div class="flex items-start gap-2 overflow-hidden">
+                        <span class="text-[10px] px-1.5 py-0.5 rounded ${badgeColor} font-bold shrink-0">
+                            ${eventName.toUpperCase()}
+                        </span>
+                        <div class="truncate">
+                            <span class="text-slate-200 font-semibold">&lt;${targetName}&gt;</span>
+                            <span class="text-slate-400 block text-[11px] truncate">${detail}</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-slate-500 shrink-0 font-mono">${timestamp}</span>
+                `;
+
+                logContainer.prepend(logItem);
+            }
+
+            clearLogBtn.addEventListener('click', () => {
+                logContainer.innerHTML = `
+                    <div class="text-slate-500 italic text-[11px] py-8 text-center">
+                        Log cleared. Trigger events by interacting with inputs.
+                    </div>
+                `;
+                eventCount = 0;
+                eventCountBadge.textContent = '0 events';
+            });
+
+            // --- 3. Input Validation Logic ---
+
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const phoneRegex = /^[0-9]{10}$/;
+
+            function setValidStyle(inputEl, errorEl, iconEl) {
+                inputEl.classList.remove('border-rose-400', 'border-slate-200');
+                inputEl.classList.add('border-pastel-tealDark');
+                if (errorEl) errorEl.classList.add('hidden');
+                if (iconEl) {
+                    iconEl.classList.remove('hidden');
+                    iconEl.innerHTML = '<i class="fa-solid fa-circle-check text-pastel-tealDark text-xs"></i>';
+                }
+            }
+
+            function setInvalidStyle(inputEl, errorEl, iconEl, message) {
+                inputEl.classList.remove('border-pastel-tealDark', 'border-slate-200');
+                inputEl.classList.add('border-rose-400');
+                if (errorEl) {
+                    errorEl.querySelector('span').textContent = message;
+                    errorEl.classList.remove('hidden');
+                }
+                if (iconEl) {
+                    iconEl.classList.remove('hidden');
+                    iconEl.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-400 text-xs"></i>';
+                }
+            }
+
+            function resetStyle(inputEl, errorEl, iconEl) {
+                inputEl.classList.remove('border-rose-400', 'border-pastel-tealDark');
+                inputEl.classList.add('border-slate-200');
+                if (errorEl) errorEl.classList.add('hidden');
+                if (iconEl) iconEl.classList.add('hidden');
+            }
+
+            // Individual field validators
+            function validateFullName() {
+                const val = fullNameInput.value.trim();
+                if (val === '') {
+                    setInvalidStyle(fullNameInput, nameError, nameIcon, 'Full Name is required.');
+                    return false;
+                } else if (val.length < 3) {
+                    setInvalidStyle(fullNameInput, nameError, nameIcon, 'Name must be at least 3 characters.');
+                    return false;
+                } else {
+                    setValidStyle(fullNameInput, nameError, nameIcon);
+                    return true;
+                }
+            }
+
+            function validateEmail() {
+                const val = emailInput.value.trim();
+                if (val === '') {
+                    setInvalidStyle(emailInput, emailError, emailIcon, 'Email is required.');
+                    return false;
+                } else if (!emailRegex.test(val)) {
+                    setInvalidStyle(emailInput, emailError, emailIcon, 'Enter a valid email address.');
+                    return false;
+                } else {
+                    setValidStyle(emailInput, emailError, emailIcon);
+                    return true;
+                }
+            }
+
+            function validatePhone() {
+                const val = phoneInput.value.trim();
+                if (val === '') {
+                    setInvalidStyle(phoneInput, phoneError, phoneIcon, 'Phone number is required.');
+                    return false;
+                } else if (!phoneRegex.test(val)) {
+                    setInvalidStyle(phoneInput, phoneError, phoneIcon, 'Enter a valid 10-digit phone number.');
+                    return false;
+                } else {
+                    setValidStyle(phoneInput, phoneError, phoneIcon);
+                    return true;
+                }
+            }
+
+            function validateAge() {
+                const val = parseInt(ageInput.value, 10);
+                if (isNaN(val)) {
+                    setInvalidStyle(ageInput, ageError, ageIcon, 'Age is required.');
+                    return false;
+                } else if (val < 14 || val > 80) {
+                    setInvalidStyle(ageInput, ageError, ageIcon, 'Age must be between 14 and 80.');
+                    return false;
+                } else {
+                    setValidStyle(ageInput, ageError, ageIcon);
+                    return true;
+                }
+            }
+
+            function validateGender() {
+                if (genderSelect.value === '') {
+                    setInvalidStyle(genderSelect, genderError, null, 'Please select your gender.');
+                    return false;
+                } else {
+                    setValidStyle(genderSelect, genderError, null);
+                    return true;
+                }
+            }
+
+            function validatePlan() {
+                if (planSelect.value === '') {
+                    setInvalidStyle(planSelect, planError, null, 'Please select a membership plan.');
+                    return false;
+                } else {
+                    setValidStyle(planSelect, planError, null);
+                    return true;
+                }
+            }
+
+            function validateSlot() {
+                if (slotSelect.value === '') {
+                    setInvalidStyle(slotSelect, slotError, null, 'Please choose a preferred time slot.');
+                    return false;
+                } else {
+                    setValidStyle(slotSelect, slotError, null);
+                    return true;
+                }
+            }
+
+            function validateEmergencyPhone() {
+                const val = emergencyPhoneInput.value.trim();
+                const primaryVal = phoneInput.value.trim();
+
+                if (val === '') {
+                    setInvalidStyle(emergencyPhoneInput, emergencyError, emergencyIcon, 'Emergency phone is required.');
+                    return false;
+                } else if (!phoneRegex.test(val)) {
+                    setInvalidStyle(emergencyPhoneInput, emergencyError, emergencyIcon, 'Enter a valid 10-digit number.');
+                    return false;
+                } else if (val === primaryVal) {
+                    setInvalidStyle(emergencyPhoneInput, emergencyError, emergencyIcon, 'Must differ from primary phone.');
+                    return false;
+                } else {
+                    setValidStyle(emergencyPhoneInput, emergencyError, emergencyIcon);
+                    return true;
+                }
+            }
+
+            function validateTerms() {
+                if (!termsCheckbox.checked) {
+                    termsError.querySelector('span').textContent = 'You must accept the terms.';
+                    termsError.classList.remove('hidden');
+                    return false;
+                } else {
+                    termsError.classList.add('hidden');
+                    return true;
+                }
+            }
+
+            // --- 4. JavaScript Event Listeners ---
+
+            // FOCUS EVENTS
+            fullNameInput.addEventListener('focus', () => {
+                nameHelp.classList.remove('hidden');
+                logEvent('focus', 'input#full-name', 'Focused Full Name input', 'bg-pastel-yellow text-slate-800');
+            });
+            emailInput.addEventListener('focus', () => {
+                emailHelp.classList.remove('hidden');
+                logEvent('focus', 'input#email', 'Focused Email address input', 'bg-pastel-yellow text-slate-800');
+            });
+            phoneInput.addEventListener('focus', () => {
+                phoneHelp.classList.remove('hidden');
+                logEvent('focus', 'input#phone', 'Focused Primary Phone input', 'bg-pastel-yellow text-slate-800');
+            });
+            ageInput.addEventListener('focus', () => {
+                ageHelp.classList.remove('hidden');
+                logEvent('focus', 'input#age', 'Focused Age input field', 'bg-pastel-yellow text-slate-800');
+            });
+            planSelect.addEventListener('focus', () => {
+                planHelp.classList.remove('hidden');
+                logEvent('focus', 'select#plan', 'Focused Membership Plan select', 'bg-pastel-yellow text-slate-800');
+            });
+            emergencyPhoneInput.addEventListener('focus', () => {
+                emergencyHelp.classList.remove('hidden');
+                logEvent('focus', 'input#emergency-phone', 'Focused Emergency Contact input', 'bg-pastel-yellow text-slate-800');
+            });
+
+            // BLUR EVENTS
+            fullNameInput.addEventListener('blur', () => {
+                nameHelp.classList.add('hidden');
+                validateFullName();
+                logEvent('blur', 'input#full-name', 'Left Full Name input', 'bg-slate-700 text-slate-200');
+            });
+            emailInput.addEventListener('blur', () => {
+                emailHelp.classList.add('hidden');
+                validateEmail();
+                logEvent('blur', 'input#email', 'Left Email input', 'bg-slate-700 text-slate-200');
+            });
+            phoneInput.addEventListener('blur', () => {
+                phoneHelp.classList.add('hidden');
+                validatePhone();
+                logEvent('blur', 'input#phone', 'Left Primary Phone input', 'bg-slate-700 text-slate-200');
+            });
+            ageInput.addEventListener('blur', () => {
+                ageHelp.classList.add('hidden');
+                validateAge();
+                logEvent('blur', 'input#age', 'Left Age input', 'bg-slate-700 text-slate-200');
+            });
+            genderSelect.addEventListener('blur', () => {
+                validateGender();
+                logEvent('blur', 'select#gender', 'Left Gender dropdown', 'bg-slate-700 text-slate-200');
+            });
+            planSelect.addEventListener('blur', () => {
+                planHelp.classList.add('hidden');
+                validatePlan();
+                logEvent('blur', 'select#plan', 'Left Plan dropdown', 'bg-slate-700 text-slate-200');
+            });
+            slotSelect.addEventListener('blur', () => {
+                validateSlot();
+                logEvent('blur', 'select#slot', 'Left Slot dropdown', 'bg-slate-700 text-slate-200');
+            });
+            emergencyPhoneInput.addEventListener('blur', () => {
+                emergencyHelp.classList.add('hidden');
+                validateEmergencyPhone();
+                logEvent('blur', 'input#emergency-phone', 'Left Emergency Phone input', 'bg-slate-700 text-slate-200');
+            });
+
+            // INPUT EVENTS (Live UI Updates)
+            fullNameInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                previewName.textContent = val !== '' ? val : 'Applicant Name';
+                logEvent('input', 'input#full-name', `Typing name: "${val}"`, 'bg-pastel-blue text-slate-800');
+                if (val.length > 0) validateFullName();
+                else resetStyle(fullNameInput, nameError, nameIcon);
+            });
+
+            emailInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                previewContact.innerHTML = val !== '' 
+                    ? `<i class="fa-solid fa-envelope mr-1 text-pastel-tealDark"></i> ${val}`
+                    : `<i class="fa-solid fa-envelope mr-1 text-slate-400"></i> No email provided`;
+                logEvent('input', 'input#email', `Typing email: "${val}"`, 'bg-pastel-blue text-slate-800');
+                if (val.length > 0) validateEmail();
+                else resetStyle(emailInput, emailError, emailIcon);
+            });
+
+            phoneInput.addEventListener('input', (e) => {
+                logEvent('input', 'input#phone', `Digits entered: ${e.target.value.length}/10`, 'bg-pastel-blue text-slate-800');
+                if (e.target.value.length > 0) validatePhone();
+                else resetStyle(phoneInput, phoneError, phoneIcon);
+            });
+
+            ageInput.addEventListener('input', (e) => {
+                logEvent('input', 'input#age', `Value: ${e.target.value}`, 'bg-pastel-blue text-slate-800');
+                if (e.target.value.length > 0) validateAge();
+                else resetStyle(ageInput, ageError, ageIcon);
+            });
+
+            emergencyPhoneInput.addEventListener('input', (e) => {
+                logEvent('input', 'input#emergency-phone', `Emergency digits: ${e.target.value.length}/10`, 'bg-pastel-blue text-slate-800');
+                if (e.target.value.length > 0) validateEmergencyPhone();
+                else resetStyle(emergencyPhoneInput, emergencyError, emergencyIcon);
+            });
+
+            // CHANGE EVENTS
+            genderSelect.addEventListener('change', (e) => {
+                logEvent('change', 'select#gender', `Selected: ${e.target.value}`, 'bg-pastel-lavender text-slate-800');
+                validateGender();
+            });
+
+            planSelect.addEventListener('change', (e) => {
+                const key = e.target.value;
+                const info = planPrices[key];
+                if (info) {
+                    previewPlan.textContent = info.name;
+                    previewPrice.textContent = info.price;
+                    summaryBadge.textContent = 'Configured';
+                    summaryBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-pastel-teal/30 text-pastel-tealDark';
+                }
+                logEvent('change', 'select#plan', `Changed plan to: ${info ? info.name : key}`, 'bg-pastel-lavender text-slate-800');
+                validatePlan();
+            });
+
+            slotSelect.addEventListener('change', (e) => {
+                previewSlot.textContent = e.target.value;
+                logEvent('change', 'select#slot', `Selected slot: ${e.target.value}`, 'bg-pastel-lavender text-slate-800');
+                validateSlot();
+            });
+
+            // Goal Checkboxes Change Event
+            const goalCheckboxes = document.querySelectorAll('input[name="goals"]');
+            goalCheckboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                    const selectedGoals = Array.from(goalCheckboxes)
+                        .filter(c => c.checked)
+                        .map(c => c.value);
+
+                    logEvent('change', 'checkbox[goals]', `Selected ${selectedGoals.length} fitness goal(s)`, 'bg-pastel-lavender text-slate-800');
+
+                    if (selectedGoals.length > 0) {
+                        previewGoals.innerHTML = selectedGoals.map(g => 
+                            `<span class="px-2 py-0.5 rounded-lg bg-pastel-teal/20 text-pastel-tealDark font-semibold border border-pastel-teal/30">${g}</span>`
+                        ).join('');
+                    } else {
+                        previewGoals.innerHTML = `<span class="italic text-slate-400">No goals selected yet</span>`;
+                    }
+                });
+            });
+
+            termsCheckbox.addEventListener('change', (e) => {
+                logEvent('change', 'input#terms', `Terms agreed: ${e.target.checked}`, 'bg-pastel-lavender text-slate-800');
+                validateTerms();
+            });
+
+            // SUBMIT EVENT (Form Handling)
+            gymForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // Prevent standard page reload
+
+                logEvent('submit', 'form#gym-form', 'Form submission intercepted with event.preventDefault()', 'bg-pastel-teal text-slate-900 font-extrabold');
+
+                // Validate all fields on submit
+                const isNameValid = validateFullName();
+                const isEmailValid = validateEmail();
+                const isPhoneValid = validatePhone();
+                const isAgeValid = validateAge();
+                const isGenderValid = validateGender();
+                const isPlanValid = validatePlan();
+                const isSlotValid = validateSlot();
+                const isEmergencyValid = validateEmergencyPhone();
+                const isTermsValid = validateTerms();
+
+                const isFormValid = isNameValid && isEmailValid && isPhoneValid && isAgeValid && 
+                                    isGenderValid && isPlanValid && isSlotValid && isEmergencyValid && isTermsValid;
+
+                if (isFormValid) {
+                    // Update Summary Modal
+                    summaryName.textContent = fullNameInput.value.trim();
+                    summaryEmail.textContent = emailInput.value.trim();
+                    summaryPlan.textContent = planPrices[planSelect.value].name;
+                    summarySlot.textContent = slotSelect.value;
+
+                    successCard.classList.remove('hidden');
+                    successCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                    summaryBadge.textContent = 'Active Member';
+                    summaryBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-pastel-mintDark text-white';
+
+                    logEvent('success', 'DOM', 'Validation passed! Admission generated for Pratyaam Sinha (24070521180).', 'bg-pastel-mintDark text-white font-bold');
+                } else {
+                    successCard.classList.add('hidden');
+                    logEvent('error', 'DOM', 'Validation failed! Correct highlighted fields.', 'bg-rose-500 text-white font-bold');
+                }
+            });
+
+            // RESET EVENT
+            resetBtn.addEventListener('click', () => {
+                gymForm.reset();
+
+                // Clear Styles & Tooltips
+                resetStyle(fullNameInput, nameError, nameIcon);
+                resetStyle(emailInput, emailError, emailIcon);
+                resetStyle(phoneInput, phoneError, phoneIcon);
+                resetStyle(ageInput, ageError, ageIcon);
+                resetStyle(genderSelect, genderError, null);
+                resetStyle(planSelect, planError, null);
+                resetStyle(slotSelect, slotError, null);
+                resetStyle(emergencyPhoneInput, emergencyError, emergencyIcon);
+                termsError.classList.add('hidden');
+
+                // Reset Preview Card
+                previewName.textContent = 'Applicant Name';
+                previewContact.innerHTML = `<i class="fa-solid fa-envelope mr-1 text-slate-400"></i> No email provided`;
+                previewPrice.textContent = '$0';
+                previewPlan.textContent = 'None Selected';
+                previewSlot.textContent = 'Not Chosen';
+                previewGoals.innerHTML = `<span class="italic text-slate-400">No goals selected yet</span>`;
+                summaryBadge.textContent = 'Draft';
+                summaryBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500';
+
+                successCard.classList.add('hidden');
+                logEvent('reset', 'form#gym-form', 'All form fields & state reset', 'bg-slate-600 text-white');
+            });
+
+        });
+    </script>
+</body>
+</html>
